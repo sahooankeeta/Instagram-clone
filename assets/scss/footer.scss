@@ -1,0 +1,62 @@
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone-mini {
+    @media only screen and (max-width: 31.25em) {
+      @content;
+    } //500px
+  }
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    } //600px
+  }
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 62.5em) {
+      @content;
+    } //1000px
+  }
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 75em) {
+      @content;
+    } //1200px
+  }
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+.footer {
+  background-color: #f3eded;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 5rem 0;
+  margin: 0 auto;
+  @include respond(phone) {
+    flex-wrap: wrap;
+  }
+  &-left {
+    ul {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    li {
+      font-size: 1.6rem;
+      text-transform: uppercase;
+      margin-right: 1.5rem;
+      color: rgb(19, 19, 92);
+      cursor: pointer;
+    }
+    @include respond(phone) {
+      width: 100%;
+      margin-bottom: 2rem;
+    }
+  }
+  &-right {
+    font-size: 1.6rem;
+    color: gray;
+  }
+}

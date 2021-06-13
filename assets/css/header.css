@@ -1,0 +1,106 @@
+html {
+  font-size: 62.5%; }
+
+.header {
+  background-color: #fff;
+  border-bottom: 1px solid #dbdbdb;
+  display: grid;
+  grid-template-columns: 1fr [start-head] 95vw [end-head] 1fr;
+  position: fixed;
+  width: 100%;
+  z-index: 5;
+  padding: 1rem 0; }
+  .header-content {
+    grid-column: start-head/end-head;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    @media only screen and (max-width: 37.5em) {
+      .header-content {
+        flex-wrap: wrap; } }
+  .header-logo {
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly; }
+    .header-logo svg {
+      height: 5rem;
+      width: 5rem; }
+    .header-logo span {
+      text-decoration: none;
+      font-family: "Courier New", Courier, monospace;
+      font-size: 3rem; }
+  .header-search {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45%; }
+    .header-search > * {
+      border-radius: 100px;
+      background-color: #f5f1f1; }
+    .header-search input {
+      border: none;
+      font-size: 1.6rem;
+      padding: 1rem 1.5rem;
+      width: 100%;
+      margin-right: -3.5rem; }
+      .header-search input:active, .header-search input:focus {
+        outline: none;
+        border: none; }
+    .header-search button {
+      outline: none;
+      border: none; }
+    .header-search-icon {
+      height: 2rem;
+      width: 2rem;
+      fill: grey; }
+    @media only screen and (max-width: 37.5em) {
+      .header-search {
+        order: 1;
+        flex: 0 0 80%;
+        margin: 1rem auto; } }
+  .header-actions {
+    width: 20%; }
+    .header-actions-list {
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      height: 100%; }
+      .header-actions-list li a {
+        text-decoration: none;
+        color: blue;
+        font-size: 1.6rem;
+        text-transform: capitalize; }
+    @media only screen and (max-width: 37.5em) {
+      .header-actions {
+        width: 40%; } }
+
+.new-post {
+  padding-top: 15rem;
+  background-color: #f3eded; }
+  .new-post-container {
+    display: grid;
+    width: 50%;
+    margin: 0 auto;
+    grid-template-rows: repeat(2, min-content); }
+    @media only screen and (max-width: 37.5em) {
+      .new-post-container {
+        width: 70%; } }
+  .new-post-caption {
+    margin: 1.5rem 0;
+    padding: 1rem 1.5rem;
+    background-color: #fff;
+    outline: none;
+    border: none; }
+  .new-post-submit {
+    width: 10rem;
+    cursor: pointer;
+    background-color: blue;
+    color: #fff;
+    text-transform: uppercase;
+    padding: 1rem 2rem;
+    outline: none;
+    border: none; }
+
+.hide {
+  display: none; }

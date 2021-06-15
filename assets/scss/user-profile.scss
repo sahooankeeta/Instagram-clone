@@ -1,0 +1,421 @@
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone-mini {
+    @media only screen and (max-width: 31.25em) {
+      @content;
+    } //500px
+  }
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    } //600px
+  }
+  @if $breakpoint == tab-mini {
+    @media only screen and (max-width: 50em) {
+      @content;
+    } //800px
+  }
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 62.5em) {
+      @content;
+    } //1000px
+  }
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 75em) {
+      @content;
+    } //1200px
+  }
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: sans-serif;
+}
+.profile {
+  &-container {
+    overflow-x: hidden;
+    display: grid;
+    background-color: #f3eded;
+    padding-top: 12rem;
+    grid-template-columns:
+      [full-start] 1fr [center-start] repeat(
+        8,
+        [col-start] minmax(min-content, 12rem) [col-end]
+      )
+      [center-end] 1fr [full-end];
+    justify-content: center;
+    @include respond(tab-port) {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+  }
+  &-header {
+    grid-column: center-start/center-end;
+    @include respond(tab-port) {
+      grid-column: full-start/full-end;
+    }
+    display: grid;
+    grid-template-columns: min-content 1fr;
+    grid-column-gap: 5%;
+    justify-items: start;
+    padding: 2rem 5rem;
+    border-bottom: 1px solid grey;
+    align-items: center;
+    @include respond(phone) {
+      padding: 2rem 2rem;
+    }
+    &-img {
+      width: 18rem;
+      height: 18rem;
+      border-radius: 100%;
+      object-fit: cover;
+      @include respond(phone) {
+        height: 15rem;
+        width: 15rem;
+      }
+    }
+    &-info {
+      display: grid;
+      grid-template-rows: min-content;
+      grid-gap: 1rem;
+      @include respond(phone) {
+      }
+    }
+  }
+  &-buttons {
+    display: flex;
+
+    align-items: center;
+    // width: 100%;
+    @include respond(phone) {
+      display: grid;
+      grid-template-rows: repeat(2, min-content);
+      grid-gap: 1rem;
+    }
+  }
+  &-username {
+    font-size: 3rem;
+    font-weight: 200;
+    margin-right: 5rem;
+  }
+  &-btn {
+    text-decoration: none;
+    background-color: blue;
+    color: white;
+    text-transform: uppercase;
+    padding: 0.8rem 0.5rem;
+    text-align: center;
+    font-size: 1.6rem;
+    //width: 9rem;
+  }
+  &-stats {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 1.8rem;
+    &-unit {
+      font-weight: 700;
+    }
+    @include respond(phone) {
+    }
+  }
+  &-about {
+    @include respond(phone) {
+    }
+  }
+  &-name {
+    font-weight: 700;
+    font-size: 2rem;
+  }
+  &-bio {
+    font-size: 1.7rem;
+  }
+  &-categories {
+    grid-column: center-start/center-end;
+    padding: 1rem 0;
+  }
+  &-category {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    &-icon {
+      svg {
+        width: 3rem;
+        height: 3rem;
+        fill: gray;
+      }
+    }
+    &-name {
+      font-size: 2rem;
+      text-transform: uppercase;
+      margin-left: 1rem;
+    }
+  }
+  &-images {
+    grid-column: center-start/center-end;
+    @include respond(tab-port) {
+      grid-column: full-start/full-end;
+    }
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 2.5rem;
+    @include respond(tab-port) {
+      grid-gap: 0.5rem;
+    }
+  }
+}
+.preview {
+  position: relative;
+  cursor: pointer;
+  height: 100%;
+  &-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  &-overlay {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(38, 38, 38, 0.4);
+    top: 0;
+    left: 0;
+    opacity: 0;
+    color: white;
+    fill: white;
+    &-content {
+      display: flex;
+      flex-wrap: wrap;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+
+      transform: translate(-50%, -50%);
+
+      align-items: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+    &-item {
+      display: flex;
+      align-items: center;
+      &:not(:last-child) {
+        margin-right: 2rem;
+      }
+    }
+    &-unit {
+      font-size: 2rem;
+    }
+    &-icon {
+      height: 3rem;
+      width: 3rem;
+      fill: currentColor;
+      margin-right: 1rem;
+    }
+  }
+  &:hover {
+    .preview-overlay {
+      opacity: 1;
+    }
+  }
+}
+.post-popup {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+  &-overlay {
+    background-color: rgba(34, 32, 32, 0.8);
+    position: absolute;
+    // z-index: 10;
+    height: inherit;
+    width: inherit;
+  }
+  &-delete {
+    position: absolute;
+    right: 0;
+    top: -7%;
+    fill: white;
+    height: 3rem;
+    width: 3rem;
+    //top: -5rem;
+    @include respond(tab-land) {
+      right: 2%;
+      top: -7%;
+    }
+    @include respond(tab-port) {
+      top: -4%;
+    }
+  }
+
+  &-dialog {
+    position: absolute;
+    height: 60vh;
+    width: 70vw;
+    display: grid;
+    grid-template-rows: 6rem 1fr;
+    grid-template-columns: minmax(25vw, 35vw) 1fr;
+    max-width: 100vw;
+    background-color: white;
+    position: absolute;
+    z-index: 20;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    @include respond(tab-land) {
+      width: 90vw;
+
+      grid-template-columns: minmax(25vw, 1.2fr) 1fr;
+    }
+    @include respond(tab-port) {
+      height: 90vh;
+      width: 60vw;
+      grid-template-columns: 1fr;
+      grid-template-rows: min-content 50% 1fr;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @include respond(tab-mini) {
+      width: 85vw;
+    }
+  }
+  &-image {
+    width: 100%;
+    height: 100%;
+    grid-row: 1/-1;
+    grid-column: 1 / span 1;
+    @include respond(tab-port) {
+      grid-row: 2/3;
+    }
+  }
+}
+.hide {
+  opacity: 0;
+  visibility: hidden;
+}
+.popup {
+  &-header {
+    grid-row: 1/2;
+    grid-column: 2/-1;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid rgb(165, 162, 162);
+    background-color: white;
+    @include respond(tab-port) {
+      grid-column: 1/-1;
+      grid-row: 1/2;
+    }
+    &-image {
+      height: 3rem;
+      width: 3rem;
+      border-radius: 100%;
+      margin-right: 2rem;
+    }
+    &-name {
+      text-decoration: none;
+      font-size: 1.4rem;
+      color: black;
+      font-family: "Lato", sans-serif;
+    }
+    &-more {
+      cursor: pointer;
+      margin-left: auto;
+      &-icon {
+        height: 2rem;
+        width: 2rem;
+      }
+    }
+  }
+  &-content {
+    grid-row: 2/-1;
+    overflow-y: auto;
+    display: grid;
+
+    grid-template-rows: 1fr repeat(2, min-content);
+    background-color: white;
+    @include respond(tab-port) {
+      grid-row: 3/-1;
+    }
+  }
+  &-comments {
+    padding: 2rem;
+    overflow-y: scroll;
+    &-form {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgb(189, 182, 182);
+      input {
+        width: 100%;
+        border: none;
+        outline: none;
+        padding: 1rem 2rem;
+      }
+      button {
+        background-color: transparent;
+        color: blue;
+        text-transform: capitalize;
+        outline: none;
+        border: none;
+        font-size: 1.6rem;
+        padding: 1rem;
+        cursor: pointer;
+      }
+    }
+  }
+  &-comment {
+    display: grid;
+    grid-template-columns: min-content 5fr repeat(2, min-content);
+    grid-gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    &-user {
+      height: 5.5rem;
+      width: 5.5rem;
+      object-fit: cover;
+      border-radius: 100%;
+    }
+    &-body {
+      font-size: 1.6rem;
+    }
+    &-username {
+      font-weight: 600;
+    }
+    &-content {
+    }
+    &-like {
+      svg {
+        height: 2rem;
+        width: 2rem;
+        fill: rgb(44, 4, 4);
+      }
+    }
+    &-delete {
+      svg {
+        height: 2rem;
+        width: 2rem;
+        fill: rgb(80, 8, 8);
+      }
+    }
+  }
+  &-stats {
+    padding: 1rem 1.5rem;
+    &-icons {
+      display: flex;
+    }
+    &-icon {
+      svg {
+        height: 2.5rem;
+        width: 2.5rem;
+      }
+      &:not(:last-child) {
+        margin-right: 1rem;
+      }
+    }
+    &-count {
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+  }
+}

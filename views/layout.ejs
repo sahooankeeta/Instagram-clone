@@ -5,18 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet"> -->
-    <link rel="stylesheet" href="css/home.css" />
-    <link rel="stylesheet" href="css/header.css" />
-    <link rel="stylesheet" href="css/footer.css" />
     <link rel="stylesheet" href="css/layout.css" />
+
+    <link rel="stylesheet" href="/css/header.css" />
+
+    <link rel="stylesheet" href="/css/footer.css" />
+
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
 
-    <title>ex</title>
+    <title><%=title%></title>
   </head>
   <body>
     <%- include('header')%> <%- include('new-post')%> <%- body%> <%-
     include('footer')%>
 
-    <script src="js/new-post.js"></script>
+    <script src="/js/new-post.js"></script>
   </body>
 </html>

@@ -1,0 +1,60 @@
+<link rel="stylesheet" href="/css/sign-in.css" />
+<div class="content">
+  <div class="container">
+    <div class="overlay" id="overlay">
+      <div class="sign-in" id="sign-in">
+        <div class="overlay-icon">
+          <svg>
+            <use xlink:href="image/sprite.svg#icon-instagram"></use>
+          </svg>
+        </div>
+        <div class="overlay-heading">Welcome Back!</div>
+        <div class="overlay-description">
+          To keep connected with us please login with your personal info
+        </div>
+        <div class="overlay-signup">
+          <span>or</span><a href="/users/sign-up">sign up</a>
+        </div>
+      </div>
+      <!-- <div class="sign-up" id="sign-up">
+            <h1>Hello, Friend!</h1>
+            <p>Enter your personal details and start a journey with us</p>
+            <button class="switch-button" id="slide-left-button">Sign Up</button>
+          </div> -->
+    </div>
+    <div class="form">
+      <div class="sign-in-info" id="sign-in-info">
+        <h1 class="form-heading">Sign In</h1>
+        <div class="social-media-buttons">
+          <a href="#" class="icon">
+            <svg>
+              <use xlink:href="/image/sprite.svg#icon-google"></use>
+            </svg>
+          </a>
+          <a href="#" class="icon">
+            <svg>
+              <use xlink:href="/image/sprite.svg#icon-github"></use>
+            </svg>
+          </a>
+        </div>
+        <p class="small">or use your email account:</p>
+        <form
+          action="/users/create-session"
+          class="sign-in-form"
+          id="sign-in-form"
+          method="POST"
+        >
+          <input type="email" class="input" placeholder="Email" name="email" />
+          <input
+            type="password"
+            class="input"
+            placeholder="Password"
+            name="password"
+          />
+          <p class="forgot-password small">Forgot your password?</p>
+          <button class="control-button" type="submit">Sign In</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

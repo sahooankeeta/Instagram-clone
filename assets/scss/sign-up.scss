@@ -1,0 +1,246 @@
+/*
+
+// MEDIA QUERY MANAGER
+/*
+  0 - 600px:      Phone
+  600 - 900px:    Tablet portrait
+  900 - 1200px:   Tablet landscape
+  [1200 - 1800] is where our normal styles apply
+  1800px + :      Big desktop
+  
+  $breakpoint arguement choices:
+  - phone
+  - tab-port
+  - tab-land
+  - big-desktop
+  
+  ORDER: Base + typography > general layout + grid > page layout > components
+  
+  1em = 16px
+  */
+*,
+*::after,
+*::before {
+  padding: 0;
+  margin: 0;
+}
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone-mini {
+    @media only screen and (max-width: 31.25em) {
+      @content;
+    } //500px
+  }
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    } //600px
+  }
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 56.25em) {
+      @content;
+    } //900px
+  }
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 75em) {
+      @content;
+    } //1200px
+  }
+  @if $breakpoint == big-desktop {
+    @media only screen and (min-width: 112.5em) {
+      @content;
+    } //1800
+  }
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 62.5%;
+  @include respond(tab-land) {
+    // width < 1200?
+    // font-size: 56.25%; //1 rem = 9px, 9/16 = 50%
+  }
+
+  @include respond(tab-port) {
+    // width < 900?
+    // font-size: 50%; //1 rem = 8px, 8/16 = 50%
+  }
+
+  @include respond(big-desktop) {
+    // font-size: 75%; //1rem = 12, 12/16
+  }
+}
+
+:root {
+  --base-color-dark: rgb(26 115 133);
+
+  --base-color-light: rgb(127, 140, 165);
+}
+.content {
+  background-color: #f3eded;
+}
+.container {
+  // height: 70vh;
+  width: 70vw;
+  //background-color: #b996e2;
+  padding-top: 15rem;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1.5fr;
+  overflow: hidden;
+
+  border-radius: 10px;
+  @include respond(tab-land) {
+    width: 90vw;
+  }
+  @include respond(tab-port) {
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+  }
+}
+.overlay {
+  background-color: var(--base-color-dark);
+  color: white;
+  display: grid;
+
+  padding: 0 5rem;
+  align-items: center;
+  @include respond(tab-port) {
+    width: 100%;
+    grid-row: 1/2;
+    padding: 0;
+  }
+  &-heading {
+    font-size: 3.5rem;
+    //  grid-row: 1/2;
+  }
+  &-description {
+    font-size: 2rem;
+    // grid-row: 2/-1;
+  }
+  &-signin {
+    span {
+      font-size: 1.6rem;
+      display: block;
+    }
+    a {
+      text-decoration: none;
+      color: white;
+      font-size: 2rem;
+      text-transform: uppercase;
+      display: inline-block;
+      margin: 2rem 0;
+      border: 1px solid transparent;
+      letter-spacing: 5px;
+      padding: 1rem 1.5rem;
+      font-weight: 600;
+      &:hover {
+        border: 1px solid white;
+      }
+    }
+  }
+  &-icon {
+    svg {
+      height: 3.5rem;
+      fill: white;
+    }
+  }
+}
+.sign-up {
+  display: grid;
+  grid-template-rows: repeat(3, min-content);
+  grid-gap: 2rem;
+  align-items: center;
+  text-align: center;
+  padding: 3rem;
+  &-form {
+    display: grid;
+    justify-self: center;
+    justify-items: center;
+    .input {
+      margin: 12px;
+      font-size: 14px;
+      padding: 15px;
+      width: 100%;
+      font-weight: 300;
+      border: none;
+      background-color: #e4e4e494;
+      font-family: "Helvetica Neue", sans-serif;
+      letter-spacing: 1.5px;
+      padding-left: 20px;
+      display: block;
+      border-bottom: 2px solid transparent;
+      color: var(--base-color-dark);
+      &:focus {
+        outline: none;
+        border-bottom: 2px solid var(--base-color-dark);
+      }
+    }
+  }
+}
+.sign-up-info {
+  display: grid;
+  grid-template-rows: repeat(4, min-content);
+  align-items: center;
+  text-align: center;
+  form {
+    text-align: center;
+    @include respond(tab-port) {
+      width: 90%;
+    }
+  }
+}
+.form {
+  grid-template-rows: repeat(7, 1fr);
+  padding: 2rem;
+  &-heading {
+    font-size: 3.2rem;
+    color: var(--base-color-dark);
+  }
+}
+
+.small {
+  font-size: 1.5rem;
+
+  font-weight: 200;
+  margin: 5px;
+  color: var(--base-color-light);
+}
+
+#sign-up-form input::placeholder {
+  letter-spacing: 1px;
+  color: var(--base-color-light);
+}
+
+.social-media-buttons {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+.icon {
+  width: 4rem;
+  height: 4rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  fill: var(--base-color-dark);
+  margin: 1rem;
+  svg {
+    height: 3rem;
+  }
+}
+.control-button {
+  cursor: pointer;
+  background: none;
+  border: none;
+  display: block;
+  background-color: var(--base-color-dark);
+  padding: 1rem 1.2rem;
+  width: 12rem;
+  font-size: 14px;
+  text-transform: uppercase;
+  margin: 1rem 0;
+  border-radius: 20px;
+  color: white;
+  letter-spacing: 1px;
+}

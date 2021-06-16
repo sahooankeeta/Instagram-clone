@@ -1,20 +1,34 @@
 const User = require("../models/user");
 
 module.exports.profile = function (req, res) {
-  if (req.cookies.user_id) {
-    User.findById(req.cookies.user_id, function (err, user) {
-      if (user) {
-        return res.render("user-profile", {
-          title: "Insta | Profile",
-          user: user,
-        });
-      } else {
-        return res.redirect("/users/sign-in");
-      }
-    });
-  } else {
-    return res.redirect("/users/sign-in");
-  }
+  console.log(req.cookies.user_id);
+  // if (req.cookies.user_id) {
+  //   console.log("cookie present");
+  //   User.findById(req.cookies.user_id, function (err, user) {
+  //     if (user) {
+  //       console.log("user found");
+  //       return res.render("user-profile", {
+  //         title: "Insta | Profile",
+  //         user: user,
+  //       });
+  //     } else {
+  //       return res.redirect("/users/sign-in");
+  //     }
+  //   });
+  // } else {
+  //   return res.redirect("/users/sign-in");
+  // }
+  User.findById(req.user.id, function (err, user) {
+        if (user) {
+          console.log("user found");
+          return res.render("user-profile", {
+            title: "Insta | Profile",
+            user: user,
+          });
+        } else {
+          return res.redirect("/users/sign-in");
+        }
+      });
 };
 //render sign up page
 module.exports.signUp = function (req, res) {
@@ -81,8 +95,8 @@ module.exports.createSession = function (req, res) {
   //   }
   // });
 };
-// module.exports.destroySession = function (req, res) {
-//   req.logout();
-//  // req.flash("success", "logged out ");
-//   return res.redirect("/");
-// };
+module.exports.destroySession = function (req, res) {
+  req.logout();
+  // req.flash("success", "logged out ");
+  return res.redirect("/");
+};

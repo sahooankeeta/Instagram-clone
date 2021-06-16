@@ -6,9 +6,9 @@ passport.use(
   new LocalStrategy(
     {
       usernameField: "email",
-      // passReqToCallback: true,
+      passReqToCallback: true,
     },
-    function (email, password, done) {
+    function (req, email, password, done) {
       //find user and establish identity
       User.findOne(
         {
@@ -16,15 +16,14 @@ passport.use(
         },
         function (err, user) {
           if (err) {
-            console.log("error in finding user passport");
-            // req.flash("error", err);
+            //req.flash("error", err);
             return done(err);
           }
           if (!user || user.password != password) {
-            console.log("invalid username/password");
-            //  req.flash("error", "Invalid username/password");
+            // req.flash("error", "Invalid username/password");
             return done(null, false);
           }
+          console.log("sent to serial");
           return done(null, user);
         }
       );
@@ -33,10 +32,11 @@ passport.use(
 );
 //serializing
 passport.serializeUser(function (user, done) {
+  console.log("in serial");
   done(null, user.id);
 });
-//deserializer
 passport.deserializeUser(function (id, done) {
+  console.log("deserial");
   User.findById(id, function (err, user) {
     if (err) {
       console.log("Err in finding user");

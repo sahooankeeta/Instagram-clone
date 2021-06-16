@@ -1,11 +1,16 @@
 <div class="new-post hide">
-  <div class="new-post-container">
-    <input type="file" name="new-post-pic" />
+  <form
+    action="/posts/create"
+    enctype="multipart/form-data"
+    class="new-post-container"
+    method="POST"
+  >
+    <input type="file" name="image" />
     <textarea
-      name="new-post-caption"
+      name="caption"
       placeholder="Write a caption"
       class="new-post-caption"
     ></textarea>
     <input class="new-post-submit" type="submit" value="Share" />
-  </div>
+  </form>
 </div>

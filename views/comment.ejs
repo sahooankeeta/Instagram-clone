@@ -1,0 +1,22 @@
+<div class="post-comment">
+  <a href="#">
+    <img class="post-comment-user" src="/image/profile-pic.jpg" />
+  </a>
+
+  <p class="post-comment-body">
+    <a href="#" class="post-comment-username"><%=comment.user.username%></a>
+    <span class="post-comment-content"><%=comment.content%></span>
+  </p>
+  <%if(locals.user && locals.user.id==comment.user.id){%>
+  <a class="post-comment-like" href="#">
+    <svg>
+      <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
+    </svg>
+  </a>
+  <a class="post-comment-delete" href="/comments/destroy/<%=comment.id%>">
+    <svg>
+      <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
+    </svg>
+  </a>
+  <%}%>
+</div>

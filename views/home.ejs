@@ -73,6 +73,7 @@
     </div> -->
     <%}%>
   </div>
+  <%if(locals.user){%>
   <div class="sidebar">
     <div class="sidebar-content">
       <div class="sidebar-header">
@@ -80,35 +81,19 @@
           <img src="/image/profile-pic.jpg" alt="" class="sidebar-user-image" />
         </a>
         <div class="sidebar-user-details">
-          <a href="#" class="sidebar-username">hanna.khandwal</a>
-          <p class="sidebar-name">hanna khandwal</p>
+          <a href="#" class="sidebar-username"><%=locals.user.username%></a>
+          <p class="sidebar-name" id="<%=locals.user.id%>">
+            <%=locals.user.name%>
+          </p>
         </div>
       </div>
       <div class="suggested-users">
         <h3>suggestions for you</h3>
         <div class="suggested-cards">
-          <div class="user-card">
-            <a href="#">
-              <img src="/image/preview-4.jpg" alt="" class="user-card-image" />
-            </a>
-            <div class="user-card-details">
-              <a href="#" class="user-card-username">hanna.khandwal</a>
-              <p class="user-card-name">hanna khandwal</p>
-            </div>
-            <a href="#" class="user-card-follow">follow</a>
-          </div>
-          <div class="user-card">
-            <a href="#">
-              <img src="/image/preview-4.jpg" alt="" class="user-card-image" />
-            </a>
-            <div class="user-card-details">
-              <a href="#" class="user-card-username">hanna.khandwal</a>
-              <p class="user-card-name">hanna khandwal</p>
-            </div>
-            <a href="#" class="user-card-follow">follow</a>
-          </div>
+          <%for(user of all_users){%> <%- include('suggested-user')%> <%}%>
         </div>
       </div>
     </div>
   </div>
+  <%}%>
 </div>

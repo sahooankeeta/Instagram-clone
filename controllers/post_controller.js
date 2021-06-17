@@ -1,4 +1,5 @@
 const Post = require("../models/post");
+const Comment = require("../models/comment");
 const path = require("path");
 const fs = require("fs");
 module.exports.create = function (req, res) {
@@ -20,5 +21,24 @@ module.exports.create = function (req, res) {
         return res.redirect("back");
       }
     );
+  });
+};
+module.exports.destroy = function (req, res) {
+  Post.findById(req.params.id, function (err, post) {
+    if (post.user == req.user.id) {
+      const p = path.join(__dirname, "..", post.image);
+      fs.unlink(p, (err) => {
+        if (err) {
+          console.log("err in removing file");
+          return;
+        }
+      });
+      post.remove();
+      Comment.deleteMany({ post: req.params.id }, function (err) {
+        return res.redirect("back");
+      });
+    } else {
+      return res.redirect("back");
+    }
   });
 };

@@ -1,5 +1,5 @@
 const User = require("../models/user");
-
+const Post = require("../models/post");
 module.exports.profile = function (req, res) {
   console.log(req.cookies.user_id);
   // if (req.cookies.user_id) {
@@ -19,16 +19,16 @@ module.exports.profile = function (req, res) {
   //   return res.redirect("/users/sign-in");
   // }
   User.findById(req.user.id, function (err, user) {
-        if (user) {
-          console.log("user found");
-          return res.render("user-profile", {
-            title: "Insta | Profile",
-            user: user,
-          });
-        } else {
-          return res.redirect("/users/sign-in");
-        }
+    if (user) {
+      console.log("user found");
+      return res.render("user-profile", {
+        title: "Insta | Profile",
+        user: user,
       });
+    } else {
+      return res.redirect("/users/sign-in");
+    }
+  });
 };
 //render sign up page
 module.exports.signUp = function (req, res) {

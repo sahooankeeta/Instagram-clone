@@ -23,7 +23,7 @@ passport.use(
             // req.flash("error", "Invalid username/password");
             return done(null, false);
           }
-          console.log("sent to serial");
+          // console.log("sent to serial");
           return done(null, user);
         }
       );
@@ -32,11 +32,11 @@ passport.use(
 );
 //serializing
 passport.serializeUser(function (user, done) {
-  console.log("in serial");
+  //console.log("in serial");
   done(null, user.id);
 });
 passport.deserializeUser(function (id, done) {
-  console.log("deserial");
+  //console.log("deserial");
   User.findById(id, function (err, user) {
     if (err) {
       console.log("Err in finding user");

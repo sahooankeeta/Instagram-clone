@@ -5,35 +5,30 @@
     /></a>
     <a class="post-header-name" href="#"><b><%=post.user.username%></b></a>
     <div class="post-header-more">
-      <svg class="post-header-more-icon">
-        <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
-      </svg>
+      <%if(locals.user && locals.user.id==post.user.id){%>
+      <a href="/posts/destroy/<%=post.id%>">
+        <svg class="post-header-more-icon">
+          <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
+        </svg>
+      </a>
+      <%}%>
     </div>
   </div>
   <img src="<%= post.image%>" alt="" class="post-image" />
 
   <div class="post-content">
-    <div class="post-comments">
-      <div class="post-comment">
-        <a href="#">
-          <img class="post-comment-user" src="/image/profile-pic.jpg" />
-        </a>
+    <div class="post-caption">
+      <a href="#">
+        <img class="post-caption-user" src="/image/profile-pic.jpg" />
+      </a>
 
-        <p class="post-comment-body">
-          <a href="#" class="post-comment-username"><%=post.user.username%></a>
-          <span class="post-comment-content"><%=post.caption%></span>
-        </p>
-        <a class="post-comment-like" href="#">
-          <svg>
-            <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
-          </svg>
-        </a>
-        <a class="post-comment-delete" href="#">
-          <svg>
-            <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
-          </svg>
-        </a>
-      </div>
+      <p class="post-caption-body">
+        <a href="#" class="post-caption-username"><%=post.user.username%></a>
+        <span class="post-caption-content"><%=post.caption%></span>
+      </p>
+    </div>
+    <div class="post-comments">
+      <%for( comment of post.comments){%> <%- include('comment')%> <%}%>
       <!-- <div class="post-comment">
           <a href="#">
             <img class="post-comment-user" src="/image/profile-pic.jpg" />
@@ -81,9 +76,17 @@
         <span class="popup-stats-unit">14</span> likes
       </p>
     </div>
-    <form class="post-comments-form" action="#">
-      <input type="text" name="comment" placeholder="Add comments . . ." />
+    <%if(locals.user){%>
+    <form class="post-comments-form" action="/comments/create" method="POST">
+      <input
+        type="text"
+        name="content"
+        placeholder="Add comments . . ."
+        required
+      />
+      <input type="hidden" name="post" value="<%=post._id%>" />
       <button type="submit">Post</button>
     </form>
+    <%}%>
   </div>
 </div>

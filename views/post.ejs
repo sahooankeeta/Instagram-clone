@@ -1,9 +1,11 @@
 <div class="post-dialog">
   <div class="post-header">
     <a href="#"
-      ><img class="post-header-image" src="/image/default-user.jpg"
+      ><img class="post-header-image" src="<%=post.user.avatar%>"
     /></a>
-    <a class="post-header-name" href="#"><b><%=post.user.username%></b></a>
+    <a class="post-header-name" href="/users/profile/<%=post.user.id%>"
+      ><b><%=post.user.username%></b></a
+    >
     <div class="post-header-more">
       <%if(locals.user && locals.user.id==post.user.id){%>
       <a href="/posts/destroy/<%=post.id%>">
@@ -19,7 +21,7 @@
   <div class="post-content">
     <div class="post-caption">
       <a href="#">
-        <img class="post-caption-user" src="/image/profile-pic.jpg" />
+        <img class="post-caption-user" src="<%=post.user.avatar%>" />
       </a>
 
       <p class="post-caption-body">

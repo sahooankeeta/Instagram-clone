@@ -1,0 +1,98 @@
+@mixin respond($breakpoint) {
+  @if $breakpoint == phone-mini {
+    @media only screen and (max-width: 31.25em) {
+      @content;
+    } //500px
+  }
+  @if $breakpoint == phone {
+    @media only screen and (max-width: 37.5em) {
+      @content;
+    } //600px
+  }
+  @if $breakpoint == tab-mini {
+    @media only screen and (max-width: 50em) {
+      @content;
+    } //800px
+  }
+  @if $breakpoint == tab-port {
+    @media only screen and (max-width: 62.5em) {
+      @content;
+    } //1000px
+  }
+  @if $breakpoint == tab-land {
+    @media only screen and (max-width: 75em) {
+      @content;
+    } //1200px
+  }
+}
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+}
+html {
+  font-size: 62.5%;
+}
+body {
+  font-family: sans-serif;
+}
+.settings {
+  &-container {
+    // width: 100vw;
+    background-color: #f3eded;
+    height: auto;
+    min-height: 42rem;
+    padding-top: 18rem;
+  }
+  &-form {
+    margin: 0 auto;
+    width: 40vw;
+    @include respond(tab-land) {
+      width: 70vw;
+    }
+    @include respond(tab-port) {
+      width: 80vw;
+    }
+    button {
+      text-decoration: none;
+      background-color: blue;
+      color: white;
+      text-transform: uppercase;
+      padding: 0.8rem 0.5rem;
+      text-align: center;
+      font-size: 1.6rem;
+      border: none;
+      outline: none;
+      cursor: pointer;
+    }
+  }
+  &-item {
+    display: grid;
+    grid-template-columns: 15rem 1fr;
+
+    grid-column-gap: 4rem;
+    width: 100%;
+    align-items: center;
+    @include respond(phone) {
+      grid-template-rows: repeat(2, 1fr);
+      grid-template-columns: 1fr;
+      grid-gap: 1rem 0;
+    }
+    label {
+      text-transform: capitalize;
+      font-size: 2rem;
+      font-weight: 600;
+    }
+    input,
+    textarea {
+      padding: 1rem 1.5rem;
+      border: none;
+      outline: none;
+      font-size: 1.5rem;
+    }
+    &:not(:last-child) {
+      margin-bottom: 2rem;
+    }
+  }
+}

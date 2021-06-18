@@ -1,7 +1,7 @@
 <header class="header">
   <div class="header-content">
     <div class="header-logo">
-      <a href="/users/home">
+      <a href="/">
         <svg class="header-logo-icon">
           <use xlink:href="/image/sprite.svg#icon-instagram"></use>
         </svg>
@@ -20,7 +20,9 @@
     <div class="header-actions">
       <ul class="header-actions-list">
         <li><a class="header-post">post</a></li>
-        <li><a href="/users/profile">profile</a></li>
+        <li>
+          <a href="/users/profile/<%=user.id%>"><%=user.username%></a>
+        </li>
         <li><a href="/users/sign-out">logout</a></li>
       </ul>
     </div>

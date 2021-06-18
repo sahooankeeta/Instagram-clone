@@ -1,9 +1,11 @@
 <div class="user-card" id="<%=user.id%>">
   <a href="#">
-    <img src="/image/preview-4.jpg" alt="" class="user-card-image" />
+    <img src="<%=user.avatar%>" alt="" class="user-card-image" />
   </a>
   <div class="user-card-details">
-    <a href="#" class="user-card-username"><%=user.username%></a>
+    <a href="/users/profile/<%=user.id%>" class="user-card-username"
+      ><%=user.username%></a
+    >
     <p class="user-card-name"><%=user.name%></p>
   </div>
   <a href="#" class="user-card-follow">follow</a>

@@ -1,10 +1,12 @@
 <div class="post-comment">
   <a href="#">
-    <img class="post-comment-user" src="/image/profile-pic.jpg" />
+    <img class="post-comment-user" src="<%=comment.user.avatar%>" />
   </a>
 
   <p class="post-comment-body">
-    <a href="#" class="post-comment-username"><%=comment.user.username%></a>
+    <a href="/users/profile/<%=post.user.id%>" class="post-comment-username"
+      ><%=comment.user.username%></a
+    >
     <span class="post-comment-content"><%=comment.content%></span>
   </p>
   <%if(locals.user && locals.user.id==comment.user.id){%>

@@ -23,8 +23,9 @@ module.exports.create = function (req, res) {
     );
   });
 };
-module.exports.destroy = function (req, res) {
-  Post.findById(req.params.id, function (err, post) {
+module.exports.destroy = async function (req, res) {
+  try {
+    let post = await Post.findById(req.params.id);
     if (post.user == req.user.id) {
       const p = path.join(__dirname, "..", post.image);
       fs.unlink(p, (err) => {
@@ -34,11 +35,11 @@ module.exports.destroy = function (req, res) {
         }
       });
       post.remove();
-      Comment.deleteMany({ post: req.params.id }, function (err) {
-        return res.redirect("back");
-      });
-    } else {
+      await Comment.deleteMany({ post: req.params.id });
       return res.redirect("back");
     }
-  });
+  } catch (err) {
+    console.log("err in destroy post,err");
+    return;
+  }
 };

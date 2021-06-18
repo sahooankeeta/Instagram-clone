@@ -1,0 +1,79 @@
+*,
+*::after,
+*::before {
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+.settings-container {
+  background-color: #f3eded;
+  height: auto;
+  min-height: 42rem;
+  padding-top: 18rem;
+}
+
+.settings-form {
+  margin: 0 auto;
+  width: 40vw;
+  height: auto;
+}
+@media only screen and (max-width: 75em) {
+  .settings-form {
+    width: 70vw;
+  }
+}
+@media only screen and (max-width: 62.5em) {
+  .settings-form {
+    width: 80vw;
+  }
+}
+.settings-form button {
+  text-decoration: none;
+  background-color: blue;
+  color: white;
+  text-transform: uppercase;
+  padding: 0.8rem 0.5rem;
+  text-align: center;
+  font-size: 1.6rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.settings-item {
+  display: grid;
+  grid-template-columns: 15rem 1fr;
+  grid-column-gap: 4rem;
+  width: 100%;
+  align-items: center;
+}
+@media only screen and (max-width: 37.5em) {
+  .settings-item {
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: 1fr;
+    grid-gap: 1rem 0;
+  }
+}
+.settings-item label {
+  text-transform: capitalize;
+  font-size: 2rem;
+  font-weight: 600;
+}
+.settings-item input,
+.settings-item textarea {
+  padding: 1rem 1.5rem;
+  border: none;
+  outline: none;
+  font-size: 1.5rem;
+}
+.settings-item:not(:last-child) {
+  margin-bottom: 2rem;
+}

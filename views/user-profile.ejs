@@ -168,15 +168,24 @@
 </div>
 <section class="profile-container">
   <div class="profile-header">
-    <img src="/image/profile-pic.jpg" alt="" class="profile-header-img" />
+    <img src="<%=profile_user.avatar%>" alt="" class="profile-header-img" />
     <div class="profile-header-info">
       <div class="profile-buttons">
-        <div class="profile-username"><%=user.username%></div>
+        <div class="profile-username"><%=profile_user.username%></div>
+        <%if(locals.user.id==profile_user.id){%>
+        <a
+          href="/users/update-settings/<%=profile_user.id%>"
+          class="profile-btn"
+          >update</a
+        >
+        <%}else{%>
         <a href="#" class="profile-btn">follow</a>
+        <%}%>
       </div>
       <div class="profile-stats">
         <p class="stat-posts">
-          <span class="profile-stats-unit posts-unit">3</span> post
+          <span class="profile-stats-unit posts-unit"><%=posts.length%></span>
+          post
         </p>
         <p class="stat-followers">
           <span class="profile-stats-unit followers-unit">3</span> followers
@@ -186,11 +195,8 @@
         </p>
       </div>
       <div class="profile-about">
-        <div class="profile-name"><%=user.name%></div>
-        <div class="profile-bio">
-          Sometimes we could always use a little magic don’t hide the magic
-          within you 🎇🌟
-        </div>
+        <div class="profile-name"><%=profile_user.name%></div>
+        <div class="profile-bio"><%=profile_user.bio%></div>
       </div>
     </div>
   </div>
@@ -205,8 +211,9 @@
     </div>
   </div>
   <div class="profile-images">
+    <%for (post of posts){%>
     <figure class="preview">
-      <img class="preview-image" src="/image/preview-1.png" />
+      <img class="preview-image" src="<%=post.image%>" />
       <div class="preview-overlay">
         <div class="preview-overlay-content">
           <div class="preview-overlay-item">
@@ -224,8 +231,8 @@
         </div>
       </div>
     </figure>
-
-    <figure class="preview">
+    <%}%>
+    <!-- <figure class="preview">
       <img class="preview-image" src="/image/preview-2.jpg" />
       <div class="preview-overlay">
         <div class="preview-overlay-content">
@@ -282,7 +289,7 @@
           </div>
         </div>
       </div>
-    </figure>
+    </figure> -->
   </div>
 </section>
 <script src="/js/user-profile.js"></script>

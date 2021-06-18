@@ -1,87 +1,23 @@
 <link rel="stylesheet" href="/css/home.css" />
 <div class="home-container">
   <div class="post-feed">
-    <% for(post of posts){%> <%- include('post')%>
-    <!-- <div class="post-dialog">
-      <div class="post-header">
-        <a href="#"
-          ><img class="post-header-image" src="/image/default-user.jpg"
-        /></a>
-        <a class="post-header-name" href="#"><b>hanna.khandwal</b></a>
-        <div class="post-header-more">
-          <svg class="post-header-more-icon">
-            <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
-          </svg>
-        </div>
-      </div>
-      <img src="/image/preview-4.jpg" alt="" class="post-image" />
-
-      <div class="post-content">
-        <div class="post-comments">
-          <div class="post-comment">
-            <a href="#">
-              <img class="post-comment-user" src="/image/profile-pic.jpg" />
-            </a>
-
-            <p class="post-comment-body">
-              <a href="#" class="post-comment-username">hanna.khandwal</a>
-              <span class="post-comment-content"
-                >its so much fun we will never forget🤩🤩</span
-              >
-            </p>
-            <a class="post-comment-like" href="#">
-              <svg>
-                <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
-              </svg>
-            </a>
-            <a class="post-comment-delete" href="#">
-              <svg>
-                <use
-                  xlink:href="/image/sprite.svg#icon-circle-with-cross"
-                ></use>
-              </svg>
-            </a>
-          </div>
-        </div>
-        <div class="post-stats">
-          <div class="post-stats-icons">
-            <a href="#" class="post-stats-icon">
-              <svg class="">
-                <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
-              </svg>
-            </a>
-            <a href="#" class="post-stats-icon">
-              <svg class="">
-                <use xlink:href="/image/sprite.svg#icon-bubble2"></use>
-              </svg>
-            </a>
-            <a href="#" class="post-stats-icon">
-              <svg class="">
-                <use xlink:href="/image/sprite.svg#icon-direction"></use>
-              </svg>
-            </a>
-          </div>
-          <p class="post-stats-count">
-            <span class="popup-stats-unit">14</span> likes
-          </p>
-        </div>
-        <form class="post-comments-form" action="#">
-          <input type="text" name="comment" placeholder="Add comments . . ." />
-          <button type="submit">Post</button>
-        </form>
-      </div>
-    </div> -->
-    <%}%>
+    <% for(post of posts){%> <%- include('post')%> <%}%>
   </div>
   <%if(locals.user){%>
   <div class="sidebar">
     <div class="sidebar-content">
       <div class="sidebar-header">
         <a href="#">
-          <img src="/image/profile-pic.jpg" alt="" class="sidebar-user-image" />
+          <img
+            src="<%=locals.user.avatar%>"
+            alt=""
+            class="sidebar-user-image"
+          />
         </a>
         <div class="sidebar-user-details">
-          <a href="#" class="sidebar-username"><%=locals.user.username%></a>
+          <a href="/users/profile/<%=locals.user.id%>" class="sidebar-username"
+            ><%=locals.user.username%></a
+          >
           <p class="sidebar-name" id="<%=locals.user.id%>">
             <%=locals.user.name%>
           </p>

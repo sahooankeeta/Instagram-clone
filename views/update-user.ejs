@@ -1,0 +1,31 @@
+<!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet"> -->
+<link rel="stylesheet" href="/css/update-user.css" />
+
+<div class="settings-container">
+  <form
+    action="/users/update/<%=update_user.id%>"
+    method="POST"
+    enctype="multipart/form-data"
+    class="settings-form"
+  >
+    <div class="settings-item">
+      <label for="name">name</label>
+      <input name="name" value="<%=update_user.name%>" type="text" />
+    </div>
+    <div class="settings-item">
+      <label for="username">username</label>
+      <input name="username" value="<%=update_user.username%>" type="text" />
+    </div>
+    <div class="settings-item">
+      <label for="bio">bio</label>
+      <textarea name="bio" type="text" class="mytextarea">
+<%=update_user.bio%></textarea
+      >
+    </div>
+    <div class="settings-item">
+      <label for="avatar">profile image</label>
+      <input type="file" name="avatar" />
+    </div>
+    <button type="submit">submit</button>
+  </form>
+</div>

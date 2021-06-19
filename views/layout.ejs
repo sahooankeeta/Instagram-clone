@@ -3,14 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"
+    />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
 
-    <!-- <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600" rel="stylesheet"> -->
     <link rel="stylesheet" href="css/layout.css" />
 
     <link rel="stylesheet" href="/css/header.css" />
 
     <link rel="stylesheet" href="/css/footer.css" />
-
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css"
+      integrity="sha512-vEia6TQGr3FqC6h55/NdU3QSM5XR6HSl5fW71QTKrgeER98LIMGwymBVM867C1XHIkYD9nMTfWK2A0xcodKHNA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
     <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
 
     <title><%=title%></title>
@@ -18,6 +28,43 @@
   <body>
     <%- include('header')%> <%- include('new-post')%> <%- body%> <%-
     include('footer')%>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"
+      integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="text/javascript">
+      $(".mytextarea").emojioneArea({
+        pickerPosition: "right",
+      });
+    </script>
+    <script>
+      <% if(flash.success && flash.success.length>0){ %>
+        new Noty({
+            theme:'relax',
+            text: '<%=flash.success%>',
+            type:'success',
+            layout:'bottomRight',
+            timeout:1500
+        }).show();
+      <% } %>
+      <% if(flash.error && flash.error.length>0){ %>
+        new Noty({
+            theme:'relax',
+            text: '<%=flash.error%>',
+            type:'error',
+            layout:'topRight',
+            timeout:1500
+        }).show();
+      <% } %>
+    </script>
 
     <script src="/js/new-post.js"></script>
   </body>

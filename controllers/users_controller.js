@@ -109,6 +109,7 @@ module.exports.create = function (req, res) {
   });
 };
 module.exports.createSession = function (req, res) {
+  req.flash("success", "logged in successfully");
   return res.redirect("/");
   // User.findOne({ email: req.body.email }, function (err, user) {
   //   if (err) {
@@ -133,7 +134,8 @@ module.exports.createSession = function (req, res) {
   // });
 };
 module.exports.destroySession = function (req, res) {
+  req.flash("success", "logged out");
   req.logout();
-  // req.flash("success", "logged out ");
+
   return res.redirect("/");
 };

@@ -12,6 +12,8 @@ const MongoStore = require("connect-mongo");
 const passportGoogle = require("./config/passport-google-oauth2-strategy");
 dotenv.config({ path: "./config.env" });
 const DB = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
+const flash = require("connect-flash");
+const customMware = require("./config/middleware");
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -60,6 +62,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.setAuthenticatedUser);
+app.use(flash());
+app.use(customMware.setFlash);
 // app.use(passport.setAuthenticatedUser);
 app.use("/", require("./routes"));
 //for all unhandled routes

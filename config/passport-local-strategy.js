@@ -20,7 +20,7 @@ passport.use(
             return done(err);
           }
           if (!user || user.password != password) {
-            // req.flash("error", "Invalid username/password");
+            req.flash("error", "Invalid username/password");
             return done(null, false);
           }
           // console.log("sent to serial");

@@ -65,7 +65,14 @@
         }).show();
       <% } %>
     </script>
-
+    <script src="/js/toggle-likes.js"></script>
+    <script>
+      $(" .toggle-like-button").each(function () {
+        console.log("clicked");
+        let self = this;
+        let toggleLike = new ToggleLike(self);
+      });
+    </script>
     <script src="/js/new-post.js"></script>
   </body>
 </html>

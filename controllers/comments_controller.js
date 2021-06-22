@@ -1,4 +1,4 @@
-//const Like = require("../models/like");
+// const Like = require("../models/like");
 const Comment = require("./../models/comment");
 const Post = require("./../models/post");
 module.exports.create = async function (req, res) {
@@ -12,6 +12,8 @@ module.exports.create = async function (req, res) {
       });
       post.comments.push(comment);
       post.save();
+
+      req.flash("success", "comment added");
       res.redirect("/");
     }
   } catch (err) {
@@ -29,6 +31,9 @@ module.exports.destroy = async function (req, res) {
       let post = Post.findByIdAndUpdate(postId, {
         $pull: { comments: req.params.id },
       });
+      await Like.deleteMany({ likeable: comment, onModel: "Comment" });
+
+      req.flash("success", "comment removed");
       return res.redirect("back");
     } else {
       return res.redirect("back");

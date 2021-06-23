@@ -9,4 +9,5 @@ router.get(
   passport.checkAuthentication,
   commentsController.destroy
 );
+router.post("/toggle/:id", commentsController.toggleLike);
 module.exports = router;

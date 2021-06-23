@@ -139,3 +139,53 @@ module.exports.destroySession = function (req, res) {
 
   return res.redirect("/");
 };
+module.exports.follow = async function (req, res) {
+  try {
+    let userId = req.params.id;
+    let unfollowed = false;
+    let user = await User.updateOne(
+      { _id: req.user.id, following: { $ne: userId } },
+      {
+        $push: { following: userId },
+      }
+    );
+    let followuser = await User.updateOne(
+      { _id: userId, followers: { $ne: req.user.id } },
+      {
+        $push: { followers: req.user.id },
+      }
+    );
+    if (!user.nModified) {
+      if (!user.ok) {
+        return res.status(500).send({ error: "Could not follow user" });
+      }
+      // Nothing was modified in the previous query meaning that the user has already liked the post
+      // Remove the user's like
+      const userunfollowUpdate = await User.updateOne(
+        { _id: req.user.id },
+        {
+          $pull: { following: userId },
+        }
+      );
+      const unfollowuser = await User.updateOne(
+        { _id: userId },
+        {
+          $pull: { followers: req.user.id },
+        }
+      );
+      unfollowed = true;
+      if (!userunfollowUpdate.nModified) {
+        return res.status(500).send({ error: "Could not follow user." });
+      }
+    }
+    return res.status(200).json({
+      message: "request succesful",
+      data: {
+        unfollowed: unfollowed,
+      },
+    });
+  } catch (err) {
+    console.log("err in like", err);
+    return;
+  }
+};

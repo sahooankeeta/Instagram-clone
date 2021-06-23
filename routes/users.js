@@ -17,6 +17,7 @@ router.post(
   passport.checkAuthentication,
   userscontroller.update
 );
+router.post("/follow/:id", userscontroller.follow);
 router.post("/create", userscontroller.create);
 router.post(
   "/create-session",

@@ -31,8 +31,6 @@ module.exports.destroy = async function (req, res) {
       let post = Post.findByIdAndUpdate(postId, {
         $pull: { comments: req.params.id },
       });
-      await Like.deleteMany({ likeable: comment, onModel: "Comment" });
-
       req.flash("success", "comment removed");
       return res.redirect("back");
     } else {
@@ -40,6 +38,48 @@ module.exports.destroy = async function (req, res) {
     }
   } catch (err) {
     console.log("err in destroy comment", err);
+    return;
+  }
+};
+module.exports.toggleLike = async function (req, res) {
+  try {
+    let commentId = req.params.id;
+    let deleted = false;
+    let comment = await Comment.updateOne(
+      { _id: commentId, likes: { $ne: req.user.id } },
+      {
+        $push: { likes: req.user.id },
+      }
+    );
+    if (!comment.nModified) {
+      if (!comment.ok) {
+        return res
+          .status(500)
+          .send({ error: "Could not vote on the comment." });
+      }
+      // Nothing was modified in the previous query meaning that the user has already liked the comment
+      // Remove the user's like
+      const commentDislikeUpdate = await Comment.updateOne(
+        { _id: commentId },
+        {
+          $pull: { likes: req.user.id },
+        }
+      );
+      deleted = true;
+      if (!commentDislikeUpdate.nModified) {
+        return res
+          .status(500)
+          .send({ error: "Could not vote on the comment." });
+      }
+    }
+    return res.status(200).json({
+      message: "request succesful",
+      data: {
+        deleted: deleted,
+      },
+    });
+  } catch (err) {
+    console.log("err in like", err);
     return;
   }
 };

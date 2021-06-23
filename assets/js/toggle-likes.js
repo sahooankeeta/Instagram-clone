@@ -21,23 +21,36 @@ class ToggleLike {
           console.log(likesCount);
           if (data.data.deleted == true) {
             likesCount -= 1;
+
             $(self)
               .children("svg")
               .children("use")
               .attr("xlink:href", "/image/sprite.svg#icon-heart-outlined");
           } else {
             likesCount += 1;
+
             $(self)
               .children("svg")
               .children("use")
               .attr("xlink:href", "/image/sprite.svg#icon-heart");
           }
+
           $(self).attr("data-likes", likesCount);
-          $(self)
-            .parent()
-            .next()
-            .children(".popup-stats-unit")
-            .html(likesCount);
+          if ($(self).attr("class") == "post-comment-like") {
+            $(self)
+              .parent()
+              .children(".post-comment-block")
+              .children(".post-comment-stat")
+              .children(".comment-unit")
+              .html(likesCount);
+          } else {
+            $(self)
+              .parent()
+              .next()
+              .children(".popup-stats-unit")
+              .html(likesCount);
+          }
+
           // console.log($(self).parent().next().children("popup-stats-unit"));
           // console.log($(self).children("svg").children("use"));
           //$(self).children("svg").children("use").attr("xlink:href", "/image/sprite.svg#icon-heart");

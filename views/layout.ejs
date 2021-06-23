@@ -66,13 +66,22 @@
       <% } %>
     </script>
     <script src="/js/toggle-likes.js"></script>
+    <script src="/js/toggle-follow.js"></script>
     <script>
       $(" .toggle-like-button").each(function () {
-        console.log("clicked");
         let self = this;
         let toggleLike = new ToggleLike(self);
       });
+      $(" .post-comment-like").each(function () {
+        let self = this;
+        let toggleLike = new ToggleLike(self);
+      });
+      $(" .toggle-follow-button").each(function () {
+        let self = this;
+        let toggleFollow = new ToggleFollow(self);
+      });
     </script>
     <script src="/js/new-post.js"></script>
+    <script src="/js/home_posts.js"></script>
   </body>
 </html>

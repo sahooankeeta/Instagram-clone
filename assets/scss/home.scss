@@ -146,6 +146,11 @@ body {
     grid-gap: 1rem;
     align-items: center;
     margin-bottom: 1rem;
+    &-stat {
+      color: grey;
+      font-size: 1.4rem;
+      margin-top: 0.3rem;
+    }
     &-user {
       height: 5.5rem;
       width: 5.5rem;

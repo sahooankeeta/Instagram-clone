@@ -142,7 +142,11 @@ body {
   padding: 1rem;
   cursor: pointer;
 }
-
+.post-comment-stat {
+  color: grey;
+  font-size: 1.4rem;
+  margin-top: 0.3rem;
+}
 .post-comment {
   display: grid;
   grid-template-columns: min-content 5fr repeat(2, min-content);

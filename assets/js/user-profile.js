@@ -4,7 +4,7 @@ const dialog = document.querySelector(".post-popup-dialog");
 const popup = document.querySelector(".post-popup");
 // const btnCloseModal = document.querySelector(".close-preview");
 // const btnsOpenModal = document.querySelectorAll(".show-preview");
-console.log("run");
+
 const openModal = function () {
   console.log("preview open");
   dialog.classList.remove("hide");

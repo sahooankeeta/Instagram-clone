@@ -294,6 +294,29 @@ body {
   visibility: hidden;
 }
 .popup {
+  &-caption {
+    display: grid;
+    grid-template-columns: min-content 5fr repeat(2, min-content);
+    grid-gap: 1rem;
+    align-items: center;
+    margin-bottom: 1rem;
+    padding: 2rem;
+    border-bottom: 1px solid rgb(201, 198, 198);
+    &-user {
+      height: 5.8rem;
+      width: 5.8rem;
+      object-fit: cover;
+      border-radius: 100%;
+    }
+    &-body {
+      font-size: 1.6rem;
+    }
+    &-username {
+      text-decoration: none;
+      font-weight: 600;
+      color: black;
+    }
+  }
   &-header {
     grid-row: 1/2;
     grid-column: 2/-1;
@@ -332,7 +355,7 @@ body {
     overflow-y: auto;
     display: grid;
 
-    grid-template-rows: 1fr repeat(2, min-content);
+    grid-template-rows: min-content 1fr repeat(2, min-content);
     background-color: white;
     @include respond(tab-port) {
       grid-row: 3/-1;

@@ -1,171 +1,5 @@
 <link rel="stylesheet" href="/css/user-profile.css" />
-<div class="post-popup hide">
-  <div class="post-popup-overlay hide"></div>
-  <div class="post-popup-dialog hide">
-    <a href="profile"
-      ><svg class="post-popup-delete">
-        <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
-      </svg>
-    </a>
-    <img src="/image/preview-1.png" alt="" class="post-popup-image" />
-    <div class="popup-header">
-      <a href="#"
-        ><img class="popup-header-image" src="/image/default-user.jpg"
-      /></a>
-      <a class="popup-header-name" href="#"><b>hanna.khandwal</b></a>
-      <div class="popup-header-more">
-        <svg class="popup-header-more-icon">
-          <use xlink:href="/image/sprite.svg#icon-dots-three-horizontal"></use>
-        </svg>
-      </div>
-    </div>
-    <div class="popup-content">
-      <div class="popup-comments">
-        <div class="popup-comment">
-          <a href="#">
-            <img class="popup-comment-user" src="/image/profile-pic.jpg" />
-          </a>
-
-          <p class="popup-comment-body">
-            <span class="popup-comment-username">hanna.khandwal</span>
-            <span class="popup-comment-content"
-              >its so much fun we will never forget🤩🤩</span
-            >
-          </p>
-          <a class="popup-comment-like" href="#">
-            <svg>
-              <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
-            </svg>
-          </a>
-          <a class="popup-comment-delete" href="#">
-            <svg>
-              <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
-            </svg>
-          </a>
-        </div>
-        <div class="popup-comment">
-          <a href="#">
-            <img class="popup-comment-user" src="/image/profile-pic.jpg" />
-          </a>
-
-          <p class="popup-comment-body">
-            <span class="popup-comment-username">hanna.khandwal</span>
-            <span class="popup-comment-content"
-              >its so much fun we will never forget🤩🤩</span
-            >
-          </p>
-          <a class="popup-comment-like" href="#">
-            <svg>
-              <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
-            </svg>
-          </a>
-          <a class="popup-comment-delete" href="#">
-            <svg>
-              <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
-            </svg>
-          </a>
-        </div>
-        <div class="popup-comment">
-          <a href="#">
-            <img class="popup-comment-user" src="/image/profile-pic.jpg" />
-          </a>
-
-          <p class="popup-comment-body">
-            <span class="popup-comment-username">hanna.khandwal</span>
-            <span class="popup-comment-content"
-              >its so much fun we will never forget🤩🤩</span
-            >
-          </p>
-          <a class="popup-comment-like" href="#">
-            <svg>
-              <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
-            </svg>
-          </a>
-          <a class="popup-comment-delete" href="#">
-            <svg>
-              <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
-            </svg>
-          </a>
-        </div>
-        <div class="popup-comment">
-          <a href="#">
-            <img class="popup-comment-user" src="/image/profile-pic.jpg" />
-          </a>
-
-          <p class="popup-comment-body">
-            <span class="popup-comment-username">hanna.khandwal</span>
-            <span class="popup-comment-content"
-              >its so much fun we will never forget🤩🤩</span
-            >
-          </p>
-          <a class="popup-comment-like" href="#">
-            <svg>
-              <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
-            </svg>
-          </a>
-          <a class="popup-comment-delete" href="#">
-            <svg>
-              <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
-            </svg>
-          </a>
-        </div>
-        <!-- <div class="popup-comment">
-              <a href="#">
-                <img class="popup-comment-user" src="image/profile-pic.jpg" />
-              </a>
-
-              <p class="popup-comment-body">
-                <span class="popup-comment-username">hanna.khandwal</span>
-                <span class="popup-comment-content"
-                  >its so much fun we will never forget🤩🤩</span
-                >
-              </p>
-              <a class="popup-comment-like" href="#">
-                <svg>
-                  <use xlink:href="image/sprite.svg#icon-heart-outlined"></use>
-                </svg>
-              </a>
-              <a class="popup-comment-delete" href="#">
-                <svg>
-                  <use
-                    xlink:href="image/sprite.svg#icon-circle-with-cross"
-                  ></use>
-                </svg>
-              </a>
-            </div>
-            
-           
-            -->
-      </div>
-      <div class="popup-stats">
-        <div class="popup-stats-icons">
-          <a href="#" class="popup-stats-icon">
-            <svg class="">
-              <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
-            </svg>
-          </a>
-          <a href="#" class="popup-stats-icon">
-            <svg class="">
-              <use xlink:href="/image/sprite.svg#icon-bubble2"></use>
-            </svg>
-          </a>
-          <a href="#" class="popup-stats-icon">
-            <svg class="">
-              <use xlink:href="/image/sprite.svg#icon-direction"></use>
-            </svg>
-          </a>
-        </div>
-        <p class="popup-stats-count">
-          <span class="popup-stats-unit">14</span> likes
-        </p>
-      </div>
-      <form class="popup-comments-form" action="#">
-        <input type="text" name="comment" placeholder="Add comments . . ." />
-        <button type="submit">Post</button>
-      </form>
-    </div>
-  </div>
-</div>
+<div class="post-popup hide"></div>
 <section class="profile-container">
   <div class="profile-header">
     <img src="<%=profile_user.avatar%>" alt="" class="profile-header-img" />
@@ -223,84 +57,32 @@
   </div>
   <div class="profile-images">
     <%for (post of posts){%>
-    <figure class="preview">
-      <img class="preview-image" src="<%=post.image%>" />
-      <div class="preview-overlay">
-        <div class="preview-overlay-content">
-          <div class="preview-overlay-item">
-            <svg class="preview-overlay-icon">
-              <use xlink:href="/image/sprite.svg#icon-heart1"></use>
-            </svg>
-            <span class="preview-overlay-unit preview-overlay-likes">11</span>
-          </div>
-          <div class="preview-overlay-item">
-            <svg class="preview-overlay-icon">
-              <use xlink:href="/image/sprite.svg#icon-bubbles"></use>
-            </svg>
-            <span class="preview-overlay-unit preview-overlay-comments">5</span>
-          </div>
-        </div>
-      </div>
-    </figure>
-    <%}%>
-    <!-- <figure class="preview">
-      <img class="preview-image" src="/image/preview-2.jpg" />
-      <div class="preview-overlay">
-        <div class="preview-overlay-content">
-          <div class="preview-overlay-item">
-            <svg class="preview-overlay-icon">
-              <use xlink:href="/image/sprite.svg#icon-heart1"></use>
-            </svg>
-            <span class="preview-overlay-unit preview-overlay-likes">11</span>
-          </div>
-          <div class="preview-overlay-item">
-            <svg class="preview-overlay-icon">
-              <use xlink:href="/image/sprite.svg#icon-bubbles"></use>
-            </svg>
-            <span class="preview-overlay-unit preview-overlay-comments">5</span>
+    <a class="profile-image-block" href="/posts/view/<%=post.id%>">
+      <figure class="preview">
+        <img class="preview-image" src="<%=post.image%>" />
+        <div class="preview-overlay">
+          <div class="preview-overlay-content">
+            <div class="preview-overlay-item">
+              <svg class="preview-overlay-icon">
+                <use xlink:href="/image/sprite.svg#icon-heart1"></use>
+              </svg>
+              <span class="preview-overlay-unit preview-overlay-likes"
+                ><%=post.likes.length%></span
+              >
+            </div>
+            <div class="preview-overlay-item">
+              <svg class="preview-overlay-icon">
+                <use xlink:href="/image/sprite.svg#icon-bubbles"></use>
+              </svg>
+              <span class="preview-overlay-unit preview-overlay-comments"
+                ><%=post.comments.length%></span
+              >
+            </div>
           </div>
         </div>
-      </div>
-    </figure>
+      </figure>
+    </a>
 
-    <figure class="preview">
-      <img class="preview-image" src="/image/preview-3.jpg" />
-      <div class="preview-overlay">
-        <div class="preview-overlay-content">
-          <div class="preview-overlay-item">
-            <svg class="preview-overlay-icon">
-              <use xlink:href="/image/sprite.svg#icon-heart1"></use>
-            </svg>
-            <span class="preview-overlay-unit preview-overlay-likes">11</span>
-          </div>
-          <div class="preview-overlay-item">
-            <svg class="preview-overlay-icon">
-              <use xlink:href="/image/sprite.svg#icon-bubbles"></use>
-            </svg>
-            <span class="preview-overlay-unit preview-overlay-comments">5</span>
-          </div>
-        </div>
-      </div>
-    </figure>
-    <figure class="preview">
-      <img class="preview-image" src="/image/preview-4.jpg" />
-      <div class="preview-overlay">
-        <div class="preview-overlay-content">
-          <div class="preview-overlay-item">
-            <svg class="preview-overlay-icon">
-              <use xlink:href="/image/sprite.svg#icon-heart1"></use>
-            </svg>
-            <span class="preview-overlay-unit preview-overlay-likes">11</span>
-          </div>
-          <div class="preview-overlay-item">
-            <svg class="preview-overlay-icon">
-              <use xlink:href="/image/sprite.svg#icon-bubbles"></use>
-            </svg>
-            <span class="preview-overlay-unit preview-overlay-comments">5</span>
-          </div>
-        </div>
-      </div>
-    </figure> -->
+    <%}%>
   </div>
 </section>
-<script src="/js/user-profile.js"></script>

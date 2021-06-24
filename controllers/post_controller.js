@@ -86,3 +86,20 @@ module.exports.toggleLike = async function (req, res) {
     return;
   }
 };
+module.exports.view = async function (req, res) {
+  let post = await Post.findById(req.params.id);
+  post = await post
+    .populate("user")
+    .populate({
+      path: "comments",
+      populate: {
+        path: "user",
+      },
+    })
+    .execPopulate();
+
+  return res.status(200).json({
+    message: "success",
+    post,
+  });
+};

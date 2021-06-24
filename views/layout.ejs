@@ -67,6 +67,7 @@
     </script>
     <script src="/js/toggle-likes.js"></script>
     <script src="/js/toggle-follow.js"></script>
+    <script src="/js/post-view.js"></script>
     <script>
       $(" .toggle-like-button").each(function () {
         let self = this;
@@ -79,6 +80,10 @@
       $(" .toggle-follow-button").each(function () {
         let self = this;
         let toggleFollow = new ToggleFollow(self);
+      });
+      $(" .profile-image-block").each(function () {
+        let self = this;
+        let viewPost = new ViewPost(self);
       });
     </script>
     <script src="/js/new-post.js"></script>

@@ -331,7 +331,7 @@ body {
   grid-row: 2/-1;
   overflow-y: auto;
   display: grid;
-  grid-template-rows: 1fr repeat(2, min-content);
+  grid-template-rows: min-content 1fr repeat(2, min-content);
   background-color: white;
 }
 @media only screen and (max-width: 62.5em) {
@@ -366,7 +366,29 @@ body {
   padding: 1rem;
   cursor: pointer;
 }
-
+.popup-caption {
+  display: grid;
+  grid-template-columns: min-content 5fr repeat(2, min-content);
+  grid-gap: 1rem;
+  align-items: center;
+  margin-bottom: 1rem;
+  padding: 2rem;
+  border-bottom: 1px solid #c9c6c6;
+}
+.popup-caption-user {
+  height: 5.5rem;
+  width: 5.5rem;
+  object-fit: cover;
+  border-radius: 100%;
+}
+.popup-caption-body {
+  font-size: 1.6rem;
+}
+.popup-caption-username {
+  text-decoration: none;
+  font-weight: 600;
+  color: black;
+}
 .popup-comment {
   display: grid;
   grid-template-columns: min-content 5fr repeat(2, min-content);

@@ -4,6 +4,7 @@ const Comment = require("../models/comment");
 // const Like = require("../models/like");
 const path = require("path");
 const fs = require("fs");
+
 module.exports.create = function (req, res) {
   Post.uploadedAvatar(req, res, async function (err) {
     if (err) {
@@ -15,7 +16,16 @@ module.exports.create = function (req, res) {
         caption: req.body.caption,
         user: req.user._id,
       });
+      if (req.xhr) {
+        post = await post.populate("user").execPopulate();
 
+        return res.status(200).json({
+          data: {
+            post: post,
+          },
+          message: "Post created!",
+        });
+      }
       req.flash("success", "post added");
       res.redirect("/");
     } catch (err) {
@@ -35,11 +45,18 @@ module.exports.destroy = async function (req, res) {
           return;
         }
       });
-      // await Like.deleteMany({ likeable: post, onModel: "Post" });
-      // await Like.deleteMany({ _id: { $in: post.comments } });
 
       post.remove();
       await Comment.deleteMany({ post: req.params.id });
+      if (req.xhr) {
+        return res.status(200).json({
+          data: {
+            post_id: req.params.id,
+          },
+          message: "Post deleted",
+        });
+      }
+
       req.flash("success", "post deleted");
       return res.redirect("back");
     }

@@ -18,6 +18,8 @@ router.post(
   userscontroller.update
 );
 router.post("/follow/:id", userscontroller.follow);
+router.post("/forgotPassword", userscontroller.forgotPassword);
+router.post("resetPassword", userscontroller.resetPassword);
 router.post("/create", userscontroller.create);
 router.post(
   "/create-session",
@@ -31,6 +33,15 @@ router.get(
 router.get(
   "/auth/google/callback",
   passport.authenticate("google", { failureRedirect: "/users/sign-in" }),
+  userscontroller.createSession
+);
+router.get(
+  "/auth/github",
+  passport.authenticate("github", { scope: ["user :email"] })
+);
+router.get(
+  "/auth/github/callback",
+  passport.authenticate("github", { failureRedirect: "/users/sign-in" }),
   userscontroller.createSession
 );
 module.exports = router;

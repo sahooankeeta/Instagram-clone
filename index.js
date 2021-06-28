@@ -10,6 +10,7 @@ const passport = require("passport");
 const passportLocal = require("./config/passport-local-strategy");
 const MongoStore = require("connect-mongo");
 const passportGoogle = require("./config/passport-google-oauth2-strategy");
+const passportGithub = require("./config/passport-github-auth-strategy");
 dotenv.config({ path: "./config.env" });
 const DB = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
 const flash = require("connect-flash");

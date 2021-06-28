@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const cypto = require("crypto");
 const validator = require("validator");
 const brcypt = require("bcryptjs");
 const multer = require("multer");
@@ -44,6 +45,9 @@ const UserSchema = new mongoose.Schema(
         type: mongoose.Schema.Types.ObjectId,
       },
     ],
+    passwordChangedAt: Date,
+    passwordResetToken: String,
+    passwordResetExpires: Date,
   },
   {
     timestamps: true,
@@ -61,43 +65,16 @@ UserSchema.statics.uploadedAvatar = multer({ storage: storage }).single(
   "avatar"
 );
 UserSchema.statics.avatarPath = AVATAR_PATH;
-// UserSchema.pre("save", function (next) {
-//   const saltRounds = 10;
-//   // Check if the password has been modified
-//   if (this.modifiedPaths().includes("password")) {
-//     bcrypt.genSalt(saltRounds, (err, salt) => {
-//       if (err) return next(err);
-//       bcrypt.hash(this.password, salt, (err, hash) => {
-//         if (err) return next(err);
-//         this.password = hash;
-//         next();
-//       });
-//     });
-//   } else {
-//     next();
-//   }
-// });
-
-// UserSchema.pre("save", async function (next) {
-//   if (this.isNew) {
-//     try {
-//       const document = await User.findOne({
-//         $or: [{ email: this.email }, { username: this.username }],
-//       });
-//       if (document)
-//         return next(
-//           new RequestError(
-//             "A user with that email or username already exists.",
-//             400
-//           )
-//         );
-//       await mongoose.model("Followers").create({ user: this._id });
-//       await mongoose.model("Following").create({ user: this._id });
-//     } catch (err) {
-//       return next((err.statusCode = 400));
-//     }
-//   }
-// });
+UserSchema.methods.createPasswordResetToken = function () {
+  const resetToken = crypto.getRandomBytes(32).toString("hex");
+  this.passwordResetToken = crypto
+    .createHash("sha256")
+    .update(resetToken)
+    .digest("hex");
+  console.log({ resetToken }, this.passwordResetToken);
+  this.passwordResetExpires = Dtae.now() + 10 * 60 * 1000;
+  return resetToken;
+};
 
 const User = mongoose.model("User", UserSchema);
 module.exports = User;

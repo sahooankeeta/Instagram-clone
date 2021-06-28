@@ -26,7 +26,27 @@
       <div class="suggested-users">
         <h3>suggestions for you</h3>
         <div class="suggested-cards">
-          <%for(user of all_users){%> <%- include('suggested-user')%> <%}%>
+          <%for(user of all_users){%>
+          <div class="user-card" id="<%=user.id%>">
+            <a href="/users/profile/<%=user.id%>">
+              <img src="<%=user.avatar%>" alt="" class="user-card-image" />
+            </a>
+            <div class="user-card-details">
+              <a href="/users/profile/<%=user.id%>" class="user-card-username"
+                ><%=user.username%></a
+              >
+              <p class="user-card-name"><%=user.name%></p>
+            </div>
+            <a
+              data-followers="<%=user.followers.length%>"
+              href="/users/follow/<%=user.id%>"
+              class="user-card-follow toggle-follow-button"
+            >
+              <%if(user.followers.includes(locals.user.id)){%>unfollow<%}else{%>follow<%}%></a
+            >
+          </div>
+
+          <%}%>
         </div>
       </div>
     </div>

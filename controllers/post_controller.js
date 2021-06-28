@@ -104,19 +104,30 @@ module.exports.toggleLike = async function (req, res) {
   }
 };
 module.exports.view = async function (req, res) {
-  let post = await Post.findById(req.params.id);
-  post = await post
-    .populate("user")
-    .populate({
-      path: "comments",
-      populate: {
-        path: "user",
-      },
-    })
-    .execPopulate();
+  try {
+    let post = await Post.findById(req.params.id)
+      .populate("user")
+      .populate({
+        path: "comments",
+        populate: {
+          path: "user",
+        },
+      });
 
-  return res.status(200).json({
-    message: "success",
-    post,
-  });
+    // if (req.xhr) {
+    //   return res.status(200).json({
+    //     data: {
+    //       post,
+    //     },
+    //     message: "Post view",
+    //   });
+    // }
+    return res.render("post-view", {
+      title: "post",
+      post_view: post,
+    });
+  } catch (err) {
+    console.log("error in view", err);
+    res.redirect("back");
+  }
 };

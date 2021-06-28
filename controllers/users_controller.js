@@ -1,4 +1,5 @@
 const User = require("../models/user");
+const crypto = require("crypto");
 const Post = require("../models/post");
 const path = require("path");
 module.exports.profile = async function (req, res) {
@@ -188,4 +189,26 @@ module.exports.follow = async function (req, res) {
     console.log("err in like", err);
     return;
   }
+};
+module.exports.forgotPassword = async (req, res, next) => {
+  try {
+    const user = await User.findOne({ email: req.body.email });
+    if (!user)
+      return res.status(404, {
+        message: "no user with this email found",
+      });
+    const resetToken = User.createPasswordResetToken();
+    await User.save({ validateBeforeSve: false });
+  } catch (err) {}
+};
+module.exports.resetPassword = async (req, res, next) => {
+  const hashedToken = crypto
+    .createHash("sha256")
+    .update(req.params.token)
+    .digest("hex");
+  const user = await User.findOne({
+    passwordResetToken: hashedToken,
+    passwordResetExpires: { $gt: Date.now() },
+  });
+  if (!user) return next();
 };

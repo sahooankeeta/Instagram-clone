@@ -14,7 +14,6 @@ module.exports.create = async function (req, res) {
       post.save();
       comment = await comment.populate("user").execPopulate();
       if (req.xhr) {
-        console.log("cotroller");
         return res.status(200).json({
           data: {
             comment: comment,
@@ -24,7 +23,7 @@ module.exports.create = async function (req, res) {
       }
 
       req.flash("success", "comment added");
-      res.redirect("/");
+      res.redirect("back");
     }
   } catch (err) {
     console.log("err in create comment", err);
@@ -38,15 +37,16 @@ module.exports.destroy = async function (req, res) {
     if (comment.user == req.user.id) {
       let postId = comment.post;
       comment.remove();
-      let post = Post.findByIdAndUpdate(postId, {
+      let post = await Post.findByIdAndUpdate(postId, {
         $pull: { comments: req.params.id },
       });
+
       if (req.xhr) {
         return res.status(200).json({
           data: {
             comment_id: req.params.id,
           },
-          message: "Post deleted",
+          message: "Comment deleted",
         });
       }
 

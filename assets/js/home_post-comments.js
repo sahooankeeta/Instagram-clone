@@ -2,9 +2,13 @@ class PostComments {
   // constructor is used to initialize the instance of the class whenever a new instance is created
   constructor(postId) {
     this.postId = postId;
+    // if (window.location.href.indexOf("profile") > -1) {
+    //   this.postContainer = $(`.profile-image-block`);
+    // }
     this.postContainer = $(`#post-${postId}`);
+    //this.postContainer = $(`.xy`);
     this.newCommentForm = $(`#post-${postId}-comments-form`);
-    console.log("const created");
+
     this.createComment(postId);
 
     let self = this;
@@ -18,18 +22,23 @@ class PostComments {
     let pSelf = this;
     this.newCommentForm.submit(function (e) {
       e.preventDefault();
-      let self = this;
-      console.log("creating");
+      let self = $(this);
+
       $.ajax({
         type: "post",
         url: "/comments/create",
-        data: $(self).serialize(),
+        data: self.serialize(),
         success: function (data) {
-          console.log(data);
           let newComment = pSelf.newCommentDom(data.data.comment);
-          $(`#post-comments-${postId}`).prepend(newComment);
-          pSelf.deleteComment($(" .delete-comment-button", newComment));
+          console.log(window.location.href);
+          if (window.location.href.indexOf("posts") > -1) {
+            $(` .popup-comments`).append(newComment);
+          } else {
+            $(`#post-comments-${postId}`).append(newComment);
+          }
 
+          pSelf.deleteComment($(" .delete-comment-button", newComment));
+          this.newCommentForm.reset();
           // CHANGE :: enable the functionality of the toggle like button on the new comment
           new ToggleLike($(" .toggle-like-button", newComment));
           new Noty({
@@ -72,10 +81,6 @@ class PostComments {
       href="/comments/toggle/${comment._id}"
     >
      
-      <svg class="">
-        <use xlink:href="/image/sprite.svg#icon-heart"></use>
-      </svg>
-      
       <svg class="">
         <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
       </svg>

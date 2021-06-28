@@ -14,14 +14,17 @@
         processData: false,
         success: function (data) {
           //console.log("after success ", data);
-          let newPost = newPostDom(data.data.post);
-          $(".post-feed").prepend(newPost);
-          deletePost($(" .delete-post-button", newPost));
 
-          // call the create comment class
+          if (window.location.href.indexOf("profile") > -1) {
+            let newPost = newPostProfile(data.data.post);
+            $(" .profile-images").append(newPost);
+          } else {
+            let newPost = newPostHome(data.data.post);
+            $(".post-feed").prepend(newPost);
+            deletePost($(" .delete-post-button", newPost));
+          }
+
           new PostComments(data.data.post._id);
-
-          // CHANGE :: enable the functionality of the toggle like button on the new post
           new ToggleLike($(" .toggle-like-button", newPost));
 
           new Noty({
@@ -40,7 +43,34 @@
   };
 
   // method to create a post in DOM
-  let newPostDom = function (post) {
+  let newPostProfile = function (post) {
+    return `<a class="profile-image-block " href="/posts/view/${post._id}">
+    <figure class="preview">
+      <img class="preview-image" src="${post.image}" />
+      <div class="preview-overlay">
+        <div class="preview-overlay-content">
+          <div class="preview-overlay-item">
+            <svg class="preview-overlay-icon">
+              <use xlink:href="/image/sprite.svg#icon-heart1"></use>
+            </svg>
+            <span class="preview-overlay-unit preview-overlay-likes"
+              >${post.likes.length}</span
+            >
+          </div>
+          <div class="preview-overlay-item">
+            <svg class="preview-overlay-icon">
+              <use xlink:href="/image/sprite.svg#icon-bubbles"></use>
+            </svg>
+            <span class="preview-overlay-unit preview-overlay-comments"
+              >${post.comments.length}</span
+            >
+          </div>
+        </div>
+      </div>
+    </figure>
+  </a>`;
+  };
+  let newPostHome = function (post) {
     // CHANGE :: show the count of zero likes on this post
     return $(`<div id="post-${post._id}" class="post-dialog">
     <div class="post-header">
@@ -152,7 +182,6 @@
     });
   };
 
-  // loop over all the existing posts on the page (when the window loads for the first time) and call the delete post method on delete link of each, also add AJAX (using the class we've created) to the delete button of each
   let convertPostsToAjax = function () {
     $(".post-feed .post-dialog").each(function () {
       let self = $(this);
@@ -161,7 +190,8 @@
 
       // get the post's id by splitting the id attribute
       let postId = self.prop("id").split("-")[1];
-      //  new PostComments(postId);
+      new PostComments(postId);
+      new ToggleLike($(" .toggle-like-button", self));
     });
   };
 

@@ -10,6 +10,6 @@ router.get(
   postController.destroy
 );
 router.post("/toggle/:id", postController.toggleLike);
-router.post("/view/:id", postController.view);
+router.get("/view/:id", postController.view);
 module.exports = router;
 // passport.checkAuthentication,

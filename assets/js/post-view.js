@@ -18,18 +18,18 @@ class ViewPost {
         .done(function (data) {
           console.log(data.post.user);
 
-          function openModal() {
-            dialog.classList.remove("hide");
-            overlay.classList.remove("hide");
-            popup.classList.remove("hide");
-          }
-          const closeModal = function () {
-            console.log("preview close");
-            dialog.classList.add("hide");
-            overlay.classList.add("hide");
-            popup.classList.add("hide");
-            popup.innerHTML = "";
-          };
+          // function openModal() {
+          //   dialog.classList.remove("hide");
+          //   overlay.classList.remove("hide");
+          //   popup.classList.remove("hide");
+          // }
+          // const closeModal = function () {
+          //   console.log("preview close");
+          //   dialog.classList.add("hide");
+          //   overlay.classList.add("hide");
+          //   popup.classList.add("hide");
+          //   popup.innerHTML = "";
+          // };
 
           const markupPost = ` <div class="post-popup-overlay hide"></div><div class="post-popup-dialog hide">
           <a class="close-model"
@@ -109,6 +109,7 @@ class ViewPost {
               >
             </p>
             <a class="popup-comment-like" href="/comments/toggle/${comment._id}">
+           
               <svg>
                 <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
               </svg>
@@ -125,13 +126,13 @@ class ViewPost {
               .querySelector(".popup-comments")
               .insertAdjacentHTML("beforeend", markupComment);
           }
-          const overlay = document.querySelector(".post-popup-overlay");
-          const dialog = document.querySelector(".post-popup-dialog");
-          const popup = document.querySelector(".post-popup");
-          const closeBtn = document.querySelector(".close-model");
-          openModal();
-          overlay.addEventListener("click", closeModal);
-          closeBtn.addEventListener("click", closeModal);
+          // const overlay = document.querySelector(".post-popup-overlay");
+          // const dialog = document.querySelector(".post-popup-dialog");
+          // const popup = document.querySelector(".post-popup");
+          // const closeBtn = document.querySelector(".close-model");
+          // openModal();
+          // overlay.addEventListener("click", closeModal);
+          // closeBtn.addEventListener("click", closeModal);
         })
         .fail(function (errData) {
           console.log("error in completing the request");

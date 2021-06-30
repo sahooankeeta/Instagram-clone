@@ -12,6 +12,7 @@ router.get("/sign-up", userscontroller.signUp);
 router.get("/sign-in", userscontroller.signIn);
 router.get("/sign-out", userscontroller.destroySession);
 router.get("/update-settings/:id", userscontroller.viewUpdate);
+router.get("/resetpasswordform/:token", userscontroller.passwordresetform);
 router.post(
   "/update/:id",
   passport.checkAuthentication,
@@ -19,7 +20,7 @@ router.post(
 );
 router.post("/follow/:id", userscontroller.follow);
 router.post("/forgotPassword", userscontroller.forgotPassword);
-router.post("resetPassword", userscontroller.resetPassword);
+router.post("/resetPassword", userscontroller.resetPassword);
 router.post("/create", userscontroller.create);
 router.post(
   "/create-session",

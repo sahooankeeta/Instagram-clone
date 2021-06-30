@@ -11,6 +11,7 @@ const passportLocal = require("./config/passport-local-strategy");
 const MongoStore = require("connect-mongo");
 const passportGoogle = require("./config/passport-google-oauth2-strategy");
 const passportGithub = require("./config/passport-github-auth-strategy");
+const helmet = require("helmet");
 dotenv.config({ path: "./config.env" });
 const DB = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
 const flash = require("connect-flash");
@@ -27,6 +28,7 @@ mongoose
 
 app.use(express.urlencoded());
 app.use(cookieParser());
+app.use(helmet());
 app.use(express.static(`${__dirname}/assets`));
 app.use(expressLayouts);
 app.use("/uploads", express.static(__dirname + "/uploads"));

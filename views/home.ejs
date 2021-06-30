@@ -1,13 +1,15 @@
 <link rel="stylesheet" href="/css/home.css" />
 <div class="home-container">
   <div class="post-feed">
-    <% for(post of posts){%> <%- include('post')%> <%}%>
+    <%if(posts.length==0){%>
+    <div class="empty-posts">no post till now</div>
+    <%}else{%> <% for(post of posts){%> <%- include('post')%> <%}%> <%}%>
   </div>
   <%if(locals.user){%>
   <div class="sidebar">
     <div class="sidebar-content">
       <div class="sidebar-header">
-        <a href="#">
+        <a href="/users/profile/<%=locals.user.id%>">
           <img
             src="<%=locals.user.avatar%>"
             alt=""
@@ -27,7 +29,7 @@
         <h3>suggestions for you</h3>
         <div class="suggested-cards">
           <%for(user of all_users){%>
-          <div class="user-card" id="<%=user.id%>">
+          <div class="user-card" id="user-card-<%=user.id%>">
             <a href="/users/profile/<%=user.id%>">
               <img src="<%=user.avatar%>" alt="" class="user-card-image" />
             </a>

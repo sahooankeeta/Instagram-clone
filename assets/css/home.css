@@ -90,7 +90,9 @@ body {
   display: grid;
   grid-template-rows: 1fr repeat(2, min-content);
 }
-
+.empty-posts {
+  height: 20rem;
+}
 .post-caption {
   display: grid;
   grid-template-columns: min-content 5fr repeat(2, min-content);

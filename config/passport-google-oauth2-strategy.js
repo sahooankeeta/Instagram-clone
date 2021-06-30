@@ -2,6 +2,7 @@ const passport = require("passport");
 const googleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const crypto = require("crypto");
 const User = require("../models/user");
+const nodeMailer = require("../config/nodemailer");
 //tell passport to use new strategy for google login
 passport.use(
   new googleStrategy(
@@ -38,6 +39,22 @@ passport.use(
                 console.log("error in strategy", err);
                 return;
               }
+              nodeMailer.transporter.sendMail(
+                {
+                  from: "noreply@hello.com",
+                  to: user.email,
+                  subject: "Welcome TO Instagram-Clone",
+                  html: "<h1>enjoy your experiance</h1>",
+                },
+                (err, info) => {
+                  if (err) {
+                    console.log("err in sending mail", err);
+                    return;
+                  }
+                  console.log("email sent", info);
+                  return;
+                }
+              );
               return done(null, user);
             }
           );

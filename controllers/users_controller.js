@@ -1,7 +1,10 @@
 const User = require("../models/user");
 const crypto = require("crypto");
+const nodeMailer = require("../config/nodemailer");
 const Post = require("../models/post");
 const path = require("path");
+const jwt = require("jsonwebtoken");
+
 module.exports.profile = async function (req, res) {
   try {
     let user = await User.findById(req.params.id);
@@ -77,6 +80,12 @@ module.exports.signUp = function (req, res) {
     title: "Insta | Sign Up",
   });
 };
+module.exports.passwordresetform = function (req, res) {
+  return res.render("password-reset", {
+    title: "Insta | password reset",
+    token: req.params.token,
+  });
+};
 //render sign in page
 module.exports.signIn = function (req, res) {
   if (req.isAuthenticated()) {
@@ -88,7 +97,7 @@ module.exports.signIn = function (req, res) {
 };
 module.exports.create = function (req, res) {
   //console.log(req.body);
-  if (req.body.password != req.body.confirm_password)
+  if (req.body.password != req.body.passwordConfirm)
     return res.redirect("back");
   User.findOne({ email: req.body.email }, function (err, user) {
     if (err) {
@@ -112,27 +121,6 @@ module.exports.create = function (req, res) {
 module.exports.createSession = function (req, res) {
   req.flash("success", "logged in successfully");
   return res.redirect("/");
-  // User.findOne({ email: req.body.email }, function (err, user) {
-  //   if (err) {
-  //     console.log("error in finding user in signing in");
-  //     return;
-  //   }
-  //   // handle user found
-  //   if (user) {
-  //     // handle password which doesn't match
-  //     if (user.password != req.body.password) {
-  //       return res.redirect("back");
-  //     }
-
-  //     // handle session creation
-  //     res.cookie("user_id", user.id);
-  //     return res.redirect("/users/profile");
-  //   } else {
-  //     // handle user not found
-
-  //     return res.redirect("back");
-  //   }
-  // });
 };
 module.exports.destroySession = function (req, res) {
   req.flash("success", "logged out");
@@ -190,25 +178,113 @@ module.exports.follow = async function (req, res) {
     return;
   }
 };
-module.exports.forgotPassword = async (req, res, next) => {
-  try {
-    const user = await User.findOne({ email: req.body.email });
-    if (!user)
-      return res.status(404, {
-        message: "no user with this email found",
+module.exports.forgotPassword = async (req, res) => {
+  const { email } = req.body;
+  await User.findOne({ email }, (err, user) => {
+    if (err || !user)
+      return res.status(400).json({
+        error: "user with this email not found",
       });
-    const resetToken = User.createPasswordResetToken();
-    await User.save({ validateBeforeSve: false });
-  } catch (err) {}
-};
-module.exports.resetPassword = async (req, res, next) => {
-  const hashedToken = crypto
-    .createHash("sha256")
-    .update(req.params.token)
-    .digest("hex");
-  const user = await User.findOne({
-    passwordResetToken: hashedToken,
-    passwordResetExpires: { $gt: Date.now() },
+    const token = jwt.sign({ _id: user._id }, process.env.RESET_PASSWORD_KEY, {
+      expiresIn: "20m",
+    });
+    nodeMailer.transporter.sendMail(
+      {
+        from: "noreply@hello.com",
+        to: user.email,
+        subject: "Welcome TO Instagram-Clone",
+        html: `<p>password reset link</p><a href="http://localhost:8000/users/resetpasswordform/${token}">click here</a>`,
+      },
+      (err, info) => {
+        if (err) {
+          console.log("err in sending mail", err);
+          return;
+        }
+        console.log("email sent", info);
+        return;
+      }
+    );
+    return user.updateOne({ resetLink: token }, (err, success) => {
+      if (err)
+        return res.status(400).json({
+          error: "reset link error",
+        });
+      req.flash("success", "password reset mail sent");
+      return res.redirect("/");
+    });
   });
-  if (!user) return next();
+
+  // try {
+  //   const user = await User.findOne({ email: req.body.email });
+  //   if (!user)
+  //     return res.status(404).json({
+  //       message: "no user with this email found",
+  //     });
+  //   const resetToken = User.createPasswordResetToken();
+  //   await User.save({ validateBeforeSve: false });
+  // } catch (err) {
+  //   console.log("err in forgot", err);
+  //   return;
+  // }
+};
+module.exports.resetPassword = async (req, res) => {
+  const { resetLink, new_password, new_confirm_password } = req.body;
+  if (resetLink) {
+    jwt.verify(
+      resetLink,
+      process.env.RESET_PASSWORD_KEY,
+      async (err, decode) => {
+        if (err) {
+          return res.status(401).json({
+            error: "incorrect or expired token",
+          });
+        }
+        await User.findOne({ resetLink }, async (err, user) => {
+          if (err || !user) {
+            return res.status(400).json({
+              error: "user with this token not found",
+            });
+          }
+          if (new_password == new_confirm_password) {
+            user.password = new_password;
+            user.resetLink = "";
+            await user.save();
+            req.flash("sucess", "password changed");
+            return res.redirect("/users/sign-in");
+          } else {
+            req.flash("error", "err in password changed");
+            return res.redirect("/users/sign-in");
+          }
+        });
+      }
+    );
+  } else {
+    return res.status(401).json({
+      error: "reset auth error",
+    });
+  }
+
+  // const hashedToken = crypto
+  //   .createHash("sha256")
+  //   .update(req.params.token)
+  //   .digest("hex");
+  // const user = await User.findOne({
+  //   passwordResetToken: hashedToken,
+  //   passwordResetExpires: { $gt: Date.now() },
+  // });
+  // if (!user) {
+  //   console.log("token invalid or expired");
+  //   next();
+  // }
+  // if (req.body.password == req.body.confirm_password) {
+  //   user.password = req.body.password;
+  //   user.passwordResetExpires = undefined;
+  //   user.passwordResetToken = undefined;
+  //   await user.save();
+  //   req.flash("sucess", "password changed");
+  //   return res.redirect("/users/sign-in");
+  // } else {
+  //   req.flash("error", "err in password changed");
+  //   return res.redirect("/users/sign-in");
+  // }
 };

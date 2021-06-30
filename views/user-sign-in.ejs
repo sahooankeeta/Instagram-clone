@@ -5,7 +5,7 @@
       <div class="sign-in" id="sign-in">
         <div class="overlay-icon">
           <svg>
-            <use xlink:href="image/sprite.svg#icon-instagram"></use>
+            <use xlink:href="/image/sprite.svg#icon-instagram"></use>
           </svg>
         </div>
         <div class="overlay-heading">Welcome Back!</div>
@@ -16,13 +16,8 @@
           <span>or</span><a href="/users/sign-up">sign up</a>
         </div>
       </div>
-      <!-- <div class="sign-up" id="sign-up">
-            <h1>Hello, Friend!</h1>
-            <p>Enter your personal details and start a journey with us</p>
-            <button class="switch-button" id="slide-left-button">Sign Up</button>
-          </div> -->
     </div>
-    <div class="form">
+    <div class="signIn-form form">
       <div class="sign-in-info" id="sign-in-info">
         <h1 class="form-heading">Sign In</h1>
         <div class="social-media-buttons">
@@ -37,7 +32,7 @@
             </svg>
           </a>
         </div>
-        <p class="small">or use your email account:</p>
+
         <form
           action="/users/create-session"
           class="sign-in-form"
@@ -53,6 +48,23 @@
           />
           <p class="forgot-password small">Forgot your password?</p>
           <button class="control-button" type="submit">Sign In</button>
+        </form>
+      </div>
+    </div>
+    <div class="resetForm form hide">
+      <div class="reset-info" id="reset-info">
+        <h1 class="form-heading">Reset</h1>
+
+        <p class="small">Enter to recieve reset details</p>
+        <form
+          class="form reset-form"
+          id="reset-form"
+          action="/users/forgotPassword"
+          method="POST"
+        >
+          <input type="email" class="input" name="email" placeholder="Email" />
+
+          <button class="control-button" type="submit">submit</button>
         </form>
       </div>
     </div>

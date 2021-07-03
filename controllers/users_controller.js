@@ -213,19 +213,6 @@ module.exports.forgotPassword = async (req, res) => {
       return res.redirect("/");
     });
   });
-
-  // try {
-  //   const user = await User.findOne({ email: req.body.email });
-  //   if (!user)
-  //     return res.status(404).json({
-  //       message: "no user with this email found",
-  //     });
-  //   const resetToken = User.createPasswordResetToken();
-  //   await User.save({ validateBeforeSve: false });
-  // } catch (err) {
-  //   console.log("err in forgot", err);
-  //   return;
-  // }
 };
 module.exports.resetPassword = async (req, res) => {
   const { resetLink, new_password, new_confirm_password } = req.body;
@@ -263,28 +250,4 @@ module.exports.resetPassword = async (req, res) => {
       error: "reset auth error",
     });
   }
-
-  // const hashedToken = crypto
-  //   .createHash("sha256")
-  //   .update(req.params.token)
-  //   .digest("hex");
-  // const user = await User.findOne({
-  //   passwordResetToken: hashedToken,
-  //   passwordResetExpires: { $gt: Date.now() },
-  // });
-  // if (!user) {
-  //   console.log("token invalid or expired");
-  //   next();
-  // }
-  // if (req.body.password == req.body.confirm_password) {
-  //   user.password = req.body.password;
-  //   user.passwordResetExpires = undefined;
-  //   user.passwordResetToken = undefined;
-  //   await user.save();
-  //   req.flash("sucess", "password changed");
-  //   return res.redirect("/users/sign-in");
-  // } else {
-  //   req.flash("error", "err in password changed");
-  //   return res.redirect("/users/sign-in");
-  // }
 };

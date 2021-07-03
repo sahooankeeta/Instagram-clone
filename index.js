@@ -28,7 +28,7 @@ mongoose
 
 app.use(express.urlencoded());
 app.use(cookieParser());
-app.use(helmet());
+
 app.use(express.static(`${__dirname}/assets`));
 app.use(expressLayouts);
 app.use("/uploads", express.static(__dirname + "/uploads"));

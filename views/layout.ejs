@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
+
+    <title><%=title%></title>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"
     />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
 
-    <link rel="stylesheet" href="css/layout.css" />
-
-    <link rel="stylesheet" href="/css/header.css" />
-
-    <link rel="stylesheet" href="/css/footer.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.css"
@@ -21,40 +21,24 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
-    <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
+    <link rel="stylesheet" href="css/layout.css" />
 
-    <title><%=title%></title>
+    <link rel="stylesheet" href="/css/header.css" />
+
+    <link rel="stylesheet" href="/css/footer.css" />
   </head>
   <body>
     <%- include('header')%> <%- include('new-post')%> <%- body%> <%-
     include('footer')%>
 
-    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.form/3.51/jquery.form.min.js"></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
-      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"
-      integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    ></script>
-    <script type="text/javascript">
-      $(".mytextarea").emojioneArea({
-        pickerPosition: "right",
-      });
-    </script>
     <script>
       <% if(flash.success && flash.success.length>0){ %>
+
         new Noty({
             theme:'relax',
             text: '<%=flash.success%>',
             type:'success',
-            layout:'bottomRight',
+            layout:'topRight',
             timeout:1500
         }).show();
       <% } %>
@@ -67,6 +51,17 @@
             timeout:1500
         }).show();
       <% } %>
+    </script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/emojionearea/3.4.2/emojionearea.min.js"
+      integrity="sha512-hkvXFLlESjeYENO4CNi69z3A1puvONQV5Uh+G4TUDayZxSLyic5Kba9hhuiNLbHqdnKNMk2PxXKm0v7KDnWkYA=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
+    <script type="text/javascript">
+      $(".mytextarea").emojioneArea({
+        pickerPosition: "right",
+      });
     </script>
     <script src="/js/toggle-likes.js"></script>
     <script src="/js/home_post-comments.js"></script>
@@ -83,11 +78,9 @@
         let self = this;
         let toggleFollow = new ToggleFollow(self);
       });
-
       // $(" .profile-image-block").click(function () {
       //   let self = this;
       //   let x = self.href.split("/");
-
       //   let viewPost = new PostComments(x[x.length - 1]);
       // });
     </script>

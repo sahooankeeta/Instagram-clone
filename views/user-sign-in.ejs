@@ -70,3 +70,13 @@
     </div>
   </div>
 </div>
+<script src="text/javascript">
+  document
+    .querySelector(".forgot-password")
+    .addEventListener("click", function () {
+      document.querySelector(".resetForm").classList.toggle("hide");
+      document.querySelector(".signIn-form").classList.toggle("hide");
+      document.querySelector(".overlay-signup a").innerHTML = "sign in";
+      document.querySelector(".overlay-signup a").href = "back";
+    });
+</script>

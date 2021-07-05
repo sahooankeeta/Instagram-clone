@@ -1,8 +1,12 @@
+const http = require("http");
 const express = require("express");
+
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 const app = express();
 const port = 8000;
+
+const server = http.createServer(app);
 const mongoose = require("mongoose");
 const expressLayouts = require("express-ejs-layouts");
 const session = require("express-session");
@@ -11,11 +15,15 @@ const passportLocal = require("./config/passport-local-strategy");
 const MongoStore = require("connect-mongo");
 const passportGoogle = require("./config/passport-google-oauth2-strategy");
 const passportGithub = require("./config/passport-github-auth-strategy");
-const helmet = require("helmet");
+const chatServer = http.Server(app);
+const chatSockets = require("./config/chat_sockets").chatSockets(chatServer);
+chatServer.listen(5000);
+console.log("chat running on 5000");
 dotenv.config({ path: "./config.env" });
 const DB = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
 const flash = require("connect-flash");
 const customMware = require("./config/middleware");
+
 mongoose
   .connect(DB, {
     useNewUrlParser: true,
@@ -49,15 +57,6 @@ app.use(
     store: MongoStore.create({
       mongoUrl: DB,
     }),
-    // store: new MongoStore(
-    //   {
-    //     mongooseConnection: DB,
-    //     autoRemove: "disabled",
-    //   },
-    //   function (err) {
-    //     console.log(err || "connect-mongodb setup ok");
-    //   }
-    // ),
   })
 );
 
@@ -71,7 +70,7 @@ app.use(customMware.setFlash);
 app.use("/", require("./routes"));
 //for all unhandled routes
 
-app.listen(port, function (err) {
+server.listen(port, function (err) {
   if (err) console.log("error in server");
   console.log(`server running on ${port}`);
 });

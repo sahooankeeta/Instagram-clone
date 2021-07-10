@@ -1,0 +1,20 @@
+<div class="search_container hide">
+  <ul class="search-list">
+    <%for(auser of all_users){%>
+    <li class="search-item">
+      <div class="user-card">
+        <a href="/users/profile/<%=auser.id%>">
+          <img src="<%=auser.avatar%>" alt="" class="user-card-image" />
+        </a>
+        <div class="user-card-details">
+          <a href="/users/profile/<%=auser.id%>" class="user-card-username"
+            ><%=auser.username%></a
+          >
+          <p class="user-card-name"><%=auser.name%></p>
+        </div>
+      </div>
+    </li>
+    <%}%>
+  </ul>
+  <div class="no-result">no results found</div>
+</div>

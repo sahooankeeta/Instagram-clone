@@ -30,7 +30,8 @@ class PostComments {
         data: self.serialize(),
         success: function (data) {
           let newComment = pSelf.newCommentDom(data.data.comment);
-          console.log(window.location.href);
+          $('input[type="text"]').val("");
+          $(".emojionearea-editor").html("");
           if (window.location.href.indexOf("posts") > -1) {
             $(` .popup-comments`).append(newComment);
           } else {
@@ -38,7 +39,7 @@ class PostComments {
           }
 
           pSelf.deleteComment($(" .delete-comment-button", newComment));
-          this.newCommentForm.reset();
+
           // CHANGE :: enable the functionality of the toggle like button on the new comment
           new ToggleLike($(" .toggle-like-button", newComment));
           new Noty({
@@ -81,7 +82,7 @@ class PostComments {
       href="/comments/toggle/${comment._id}"
     >
      
-      <svg class="">
+      <svg class="icon-heart">
         <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
       </svg>
       

@@ -10,13 +10,19 @@
     </div>
     <%if(locals.user){%>
     <form class="header-search">
-      <input type="text" placeholder="search here . . " />
+      <input
+        type="text"
+        id="search-input"
+        onkeyup="myFunction()"
+        placeholder="search here . . "
+      />
       <button>
         <svg class="header-search-icon">
           <use xlink:href="/image/sprite.svg#icon-search"></use>
         </svg>
       </button>
     </form>
+    <%- include('search')%>
     <div class="header-actions">
       <ul class="header-actions-list">
         <li><a class="header-post">post</a></li>

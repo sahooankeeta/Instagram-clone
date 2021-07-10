@@ -10,10 +10,12 @@ module.exports.profile = async function (req, res) {
     let user = await User.findById(req.params.id);
     if (user) {
       let posts = await Post.find({ user: req.params.id });
+      let users = await User.find({ _id: { $ne: req.user.id } });
       return res.render("user-profile", {
         title: "Insta | Profile",
         profile_user: user,
         posts: posts,
+        all_users: users,
       });
     } else {
       return res.redirect("/users/sign-in");
@@ -200,7 +202,7 @@ module.exports.forgotPassword = async (req, res) => {
           console.log("err in sending mail", err);
           return;
         }
-        console.log("email sent", info);
+        // console.log("email sent", info);
         return;
       }
     );

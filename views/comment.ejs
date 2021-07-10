@@ -20,7 +20,7 @@
     href="/comments/toggle/<%=comment.id%>"
   >
     <%if(comment.likes.includes(locals.user.id)){%>
-    <svg class="">
+    <svg class="icon-heart">
       <use xlink:href="/image/sprite.svg#icon-heart"></use>
     </svg>
     <%}else{%>

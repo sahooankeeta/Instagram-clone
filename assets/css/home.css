@@ -55,10 +55,12 @@ body {
 }
 @media only screen and (max-width: 75em) {
   .post-image {
-    height: 70vw;
+    height: 35vw;
   }
 }
-
+.icon-heart {
+  fill: #f23b3b;
+}
 .post-header {
   display: flex;
   align-items: center;
@@ -92,6 +94,10 @@ body {
 }
 .empty-posts {
   height: 20rem;
+  text-transform: capitalize;
+  font-size: 3rem;
+
+  text-align: center;
 }
 .post-caption {
   display: grid;
@@ -173,7 +179,7 @@ body {
 .post-comment-like svg {
   height: 2rem;
   width: 2rem;
-  fill: #2c0404;
+  fill: #f23b3b;
 }
 .post-comment-delete svg {
   height: 2rem;

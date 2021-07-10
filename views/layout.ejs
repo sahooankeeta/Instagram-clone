@@ -24,12 +24,13 @@
     <link rel="stylesheet" href="css/layout.css" />
 
     <link rel="stylesheet" href="/css/header.css" />
+    <link rel="stylesheet" href="/css/search.css" />
 
     <link rel="stylesheet" href="/css/footer.css" />
   </head>
   <body>
-    <%- include('header')%> <%- include('new-post')%> <%- body%> <%-
-    include('footer')%>
+    <%- include('header')%> <%if(locals.user){%> <%}%> <%- include('new-post')%>
+    <%- body%> <%- include('footer')%>
 
     <script>
       <% if(flash.success && flash.success.length>0){ %>
@@ -60,8 +61,36 @@
     ></script>
     <script type="text/javascript">
       $(".mytextarea").emojioneArea({
-        pickerPosition: "right",
+        pickerPosition: "top",
       });
+    </script>
+    <script>
+      function myFunction() {
+        var input, filter, ul, li, a, i, txtValue, container;
+        var match = false;
+        input = document.getElementById("search-input");
+        filter = input.value.toUpperCase();
+        ul = document.querySelector(".search-list");
+        container = document.querySelector(".search_container");
+        li = ul.getElementsByTagName("li");
+        if (input == document.activeElement) container.classList.remove("hide");
+        if (filter.length == 0) container.classList.add("hide");
+        for (i = 0; i < li.length; i++) {
+          a = li[i].querySelector(".user-card-username");
+          txtValue = a.textContent || a.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            match = true;
+            li[i].style.display = "";
+          } else {
+            li[i].style.display = "none";
+          }
+        }
+        if (match === false) {
+          document.querySelector(".no-result").style.display = "block";
+        } else {
+          document.querySelector(".no-result").style.display = "none";
+        }
+      }
     </script>
     <script src="/js/toggle-likes.js"></script>
     <script src="/js/home_post-comments.js"></script>
@@ -69,6 +98,7 @@
 
     <script src="/js/toggle-follow.js"></script>
     <script src="/js/post-view.js"></script>
+
     <script>
       $(" .post-comment-like").each(function () {
         let self = this;

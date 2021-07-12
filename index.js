@@ -69,7 +69,9 @@ app.use(customMware.setFlash);
 // app.use(passport.setAuthenticatedUser);
 app.use("/", require("./routes"));
 //for all unhandled routes
-
+app.all("*", (req, res, next) => {
+  return res.redirect("/");
+});
 server.listen(port, function (err) {
   if (err) console.log("error in server");
   console.log(`server running on ${port}`);

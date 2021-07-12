@@ -28,7 +28,7 @@
       <div class="suggested-users">
         <h3>suggestions for you</h3>
         <div class="suggested-cards">
-          <%for(auser of all_users){%>
+          <%for(auser of suggested){%>
           <div class="user-card" id="user-card-<%=auser.id%>">
             <a href="/users/profile/<%=auser.id%>">
               <img src="<%=auser.avatar%>" alt="" class="user-card-image" />

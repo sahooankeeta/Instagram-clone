@@ -29,8 +29,8 @@
     <link rel="stylesheet" href="/css/footer.css" />
   </head>
   <body>
-    <%- include('header')%> <%if(locals.user){%> <%}%> <%- include('new-post')%>
-    <%- body%> <%- include('footer')%>
+    <%- include('header')%> <%- include('new-post')%> <%- body%> <%-
+    include('footer')%>
 
     <script>
       <% if(flash.success && flash.success.length>0){ %>

@@ -10,7 +10,11 @@
       <span class="post-comment-content"><%=comment.content%></span>
     </p>
     <p class="post-comment-stat">
+      <%if(comment.likes.length!=0){%> <%if(comment.likes.length){%>
+      <span class="post comment-unit"><%=comment.likes.length%></span> like
+      <%}else{%>
       <span class="post comment-unit"><%=comment.likes.length%></span> likes
+      <%}%> <%}%>
     </p>
   </div>
   <%if(locals.user){%>

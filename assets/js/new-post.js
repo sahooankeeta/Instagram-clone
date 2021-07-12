@@ -3,16 +3,12 @@ const headerPost = document.querySelector(".header-post");
 const newPostSubmit = document.querySelector(".new-post-submit");
 const forgotPassword = document.querySelector(".forgot-password");
 const search = document.querySelector(".header-search");
+
 if (search) {
   search.addEventListener("submit", function (e) {
     e.preventDefault();
   });
 }
-// document
-//   .querySelector(".post-comments-form")
-//   .addEventListener("submit", function (e) {
-//     console.log(e.target.elements.getAttribute(".input-comment"));
-//   });
 
 if (headerPost) {
   headerPost.addEventListener("click", function () {
@@ -32,3 +28,10 @@ if (forgotPassword) {
     document.querySelector(".overlay-signup a").href = "/users/sign-in";
   });
 }
+document.addEventListener("click", function (e) {
+  if (e.target.getAttribute("class") == "post-stats-comment") {
+    let comment = e.target.parentNode.parentNode.parentNode.nextElementSibling;
+
+    comment.querySelector(".emojionearea-editor").focus();
+  }
+});

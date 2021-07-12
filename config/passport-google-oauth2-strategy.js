@@ -30,7 +30,7 @@ passport.use(
           User.create(
             {
               name: profile.displayName,
-              username: profile.displayName,
+              username: profile.displayName.replace(/ /g, ""),
               email: profile.emails[0].value,
               password: crypto.randomBytes(20).toString("hex"),
             },

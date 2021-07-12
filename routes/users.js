@@ -11,6 +11,7 @@ router.get(
 router.get("/sign-up", userscontroller.signUp);
 router.get("/sign-in", userscontroller.signIn);
 router.get("/sign-out", userscontroller.destroySession);
+router.get("/destroy", userscontroller.destroy);
 router.get("/update-settings/:id", userscontroller.viewUpdate);
 router.get("/resetpasswordform/:token", userscontroller.passwordresetform);
 router.post(

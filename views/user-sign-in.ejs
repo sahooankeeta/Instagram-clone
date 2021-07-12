@@ -39,12 +39,19 @@
           id="sign-in-form"
           method="POST"
         >
-          <input type="email" class="input" placeholder="Email" name="email" />
+          <input
+            type="email"
+            class="input"
+            placeholder="Email"
+            name="email"
+            required
+          />
           <input
             type="password"
             class="input"
             placeholder="Password"
             name="password"
+            required
           />
           <p class="forgot-password small">Forgot your password?</p>
           <button class="control-button" type="submit">Sign In</button>
@@ -62,7 +69,13 @@
           action="/users/forgotPassword"
           method="POST"
         >
-          <input type="email" class="input" name="email" placeholder="Email" />
+          <input
+            type="email"
+            class="input"
+            name="email"
+            placeholder="Email"
+            required
+          />
 
           <button class="control-button" type="submit">submit</button>
         </form>

@@ -10,11 +10,25 @@
   >
     <div class="settings-item">
       <label for="name">name</label>
-      <input name="name" value="<%=update_user.name%>" type="text" />
+      <input name="name" value="<%=update_user.name%>" type="text" required />
     </div>
     <div class="settings-item">
       <label for="username">username</label>
-      <input name="username" value="<%=update_user.username%>" type="text" />
+      <input
+        name="username"
+        value="<%=update_user.username%>"
+        type="text"
+        required
+      />
+    </div>
+    <div class="settings-item">
+      <label for="email">email</label>
+      <input
+        name="email"
+        value="<%=update_user.email%>"
+        type="email"
+        required
+      />
     </div>
     <div class="settings-item">
       <label for="bio">bio</label>

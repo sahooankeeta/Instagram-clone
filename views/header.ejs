@@ -23,22 +23,41 @@
       </button>
     </form>
     <%- include('search')%>
-    <div class="header-actions">
-      <ul class="header-actions-list">
-        <li><a class="header-post">post</a></li>
-        <li>
-          <a href="/users/profile/<%=user.id%>"><%=user.username%></a>
-        </li>
-        <li><a href="/users/sign-out">logout</a></li>
-      </ul>
-    </div>
+
+    <ul class="header-actions">
+      <li><a class="header-post">post</a></li>
+      <li class="header-menu">
+        <input id="menu-view" type="checkbox" />
+        <label for="menu-view" class="header-menu-view">
+          <svg class="header-icon header-icon-close">
+            <use
+              xlink:href="/image/sprite.svg#icon-chevron-with-circle-up"
+            ></use>
+          </svg>
+          <svg class="header-icon header-icon-open">
+            <use
+              xlink:href="/image/sprite.svg#icon-chevron-with-circle-down"
+            ></use>
+          </svg>
+        </label>
+
+        <ul class="header-menu-list">
+          <li>
+            <a href="/users/profile/<%=user.id%>">profile</a>
+          </li>
+          <li><a href="/users/destroy">deactivate</a></li>
+          <li><a href="/users/sign-out">logout</a></li>
+        </ul>
+      </li>
+    </ul>
+
     <%}else{%>
-    <div class="header-actions">
-      <ul class="header-actions-list">
-        <li><a href="/users/sign-in">sign in</a></li>
-        <li><a href="/users/sign-up">sign up</a></li>
-      </ul>
-    </div>
+
+    <ul class="header-actions">
+      <li><a href="/users/sign-in">sign in</a></li>
+      <li><a href="/users/sign-up">sign up</a></li>
+    </ul>
+
     <%}%>
   </div>
 </header>

@@ -1,9 +1,10 @@
 // const Like = require("../models/like");
 const Comment = require("./../models/comment");
 const Post = require("./../models/post");
+const Notification = require("./../models/notification");
 module.exports.create = async function (req, res) {
   try {
-    let post = await Post.findById(req.body.post);
+    let post = await Post.findById(req.body.post).populate("user");
     if (post) {
       let comment = await Comment.create({
         content: req.body.content,
@@ -13,12 +14,31 @@ module.exports.create = async function (req, res) {
       post.comments.push(comment);
       post.save();
       comment = await comment.populate("user").execPopulate();
+      if (req.user.id != post.user.id) {
+        await Notification.create(
+          {
+            senderName: req.user.username,
+            senderAvatar: req.user.avatar,
+            senderId: req.user.id,
+            receiverId: post.user.id,
+            notificationMsg: "has commented your post",
+            notificationInfo: post.image,
+            notificationType: "comment",
+          },
+          (err, not) => {
+            if (err) {
+              console.log("error in send like notification");
+              return;
+            }
+          }
+        );
+      }
       if (req.xhr) {
         return res.status(200).json({
           data: {
             comment: comment,
           },
-          message: "Post created!",
+          message: "Comment created!",
         });
       }
 

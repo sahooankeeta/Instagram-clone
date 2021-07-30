@@ -3,7 +3,7 @@ const googleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const crypto = require("crypto");
 const User = require("../models/user");
 const nodeMailer = require("../config/nodemailer");
-//tell passport to use new strategy for google login
+//tell passport to use new strategy for google auth login
 passport.use(
   new googleStrategy(
     {
@@ -22,11 +22,11 @@ passport.use(
           console.log("eoor is strategr");
           return;
         }
-        // if found set this as req.user
+
         if (user) {
           return done(null, user);
         } else {
-          //if not found,create user and set it as req.user
+          //if user not found,create user and set it as logged in user
           User.create(
             {
               name: profile.displayName,
@@ -39,19 +39,20 @@ passport.use(
                 console.log("error in strategy", err);
                 return;
               }
+              //if new user created send confirmation mail
               nodeMailer.transporter.sendMail(
                 {
                   from: "noreply@hello.com",
                   to: user.email,
-                  subject: "Welcome TO Instagram-Clone",
-                  html: "<h1>enjoy your experiance</h1>",
+                  subject: "Welcome To Instagram-Clone",
+                  html: "<h1>enjoy your experiance :)</h1>",
                 },
                 (err, info) => {
                   if (err) {
                     console.log("err in sending mail", err);
                     return;
                   }
-                  console.log("email sent", info);
+
                   return;
                 }
               );

@@ -25,6 +25,38 @@ body {
     [center-end] 1fr [full-end];
   justify-content: center;
 }
+.profile-image {
+  position: relative;
+  width: 18rem;
+  height: 18rem;
+  border-radius: 100%;
+}
+@media only screen and (max-width: 37.5em) {
+  .profile-image {
+    height: 15rem;
+    width: 15rem;
+  }
+}
+.empty-posts {
+  grid-column: center-start/center-end;
+  text-align: center;
+  font-size: 2rem;
+  margin: 1.5rem 0;
+}
+.profile-image-delete {
+  position: absolute;
+  bottom: 2rem;
+  right: 0;
+  background-color: white;
+  border: 1px solid grey;
+  border-radius: 100%;
+  padding: 0.5rem;
+}
+.profile-image-delete svg {
+  height: 2rem;
+  width: 2rem;
+  fill: #645a5a;
+}
 @media only screen and (max-width: 62.5em) {
   .profile-container {
     padding-left: 1rem;
@@ -56,6 +88,7 @@ body {
   width: 18rem;
   height: 18rem;
   border-radius: 100%;
+  position: absolute;
   object-fit: cover;
 }
 @media only screen and (max-width: 37.5em) {
@@ -219,6 +252,11 @@ body {
   height: inherit;
   width: inherit;
 }
+.close-model {
+  position: absolute;
+  right: 0;
+  top: -3rem;
+}
 .post-popup-delete {
   position: absolute;
   right: 0;
@@ -329,7 +367,7 @@ body {
 
 .popup-content {
   grid-row: 2/-1;
-  overflow-y: auto;
+
   display: grid;
   grid-template-rows: min-content 1fr repeat(2, min-content);
   background-color: white;
@@ -342,7 +380,7 @@ body {
 
 .popup-comments {
   padding: 0 2rem;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .popup-comments-form {
   display: flex;

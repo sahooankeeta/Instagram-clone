@@ -26,6 +26,69 @@
 
     <ul class="header-actions">
       <li><a class="header-post">post</a></li>
+      <li class="header-notification">
+        <input
+          id="notification-view"
+          type="checkbox"
+          class="header-notification-checkbox"
+        />
+        <label for="notification-view" class="header-notification-view">
+          <svg class="header-icon header-icon-close">
+            <use xlink:href="/image/sprite.svg#icon-heart"></use>
+          </svg>
+          <svg class="header-icon header-icon-open">
+            <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
+          </svg>
+        </label>
+        <ul class="header-notification-list">
+          <%if(notifications.length==0){%>
+          <li class="notification-item">no notifications yet</li>
+          <%}%> <%for(not of notifications){%>
+          <li class="notification-item">
+            <a href="/users/profile/<%=not.senderId%>"
+              ><img
+                class="notification-avatar"
+                src="<%=not.senderAvatar%>"
+                alt="sender profile-pic"
+            /></a>
+
+            <div class="notification-content">
+              <a
+                class="notification-username"
+                href="/users/profile/<%=not.senderId%>"
+                ><%=not.senderName%></a
+              >
+              <span class="notification-text"><%=not.notificationMsg%></span>
+            </div>
+            <%if(not.notificationType=='like'||not.notificationType=='comment'){%>
+            <div class="notification-info">
+              <img
+                class="notification-image"
+                src="<%=not.notificationInfo%>"
+                alt="post-image"
+              />
+            </div>
+            <%}else if(not.notificationType=='followRequest'){%>
+            <div class="notification-info">
+              <a
+                href="/users/follow/?from=<%=not.senderId%>"
+                class="
+                  notification-btn notification-confirm
+                  toggle-follow-button
+                "
+                ><%if(followers.includes(not.senderId)){%>follow<%}else{%>confirm<%}%></a
+              >
+              <a
+                href="/notifications/destroy/<%=not.id%>"
+                class="notification-btn notification-delete"
+                >delete</a
+              >
+            </div>
+            <%}%>
+          </li>
+          <%}%>
+        </ul>
+      </li>
       <li class="header-menu">
         <input id="menu-view" type="checkbox" />
         <label for="menu-view" class="header-menu-view">

@@ -29,7 +29,7 @@
 
           new Noty({
             theme: "relax",
-            text: "Post published!",
+            text: "POST PUBLISHED!",
             type: "success",
             layout: "topRight",
             timeout: 1500,
@@ -169,7 +169,7 @@
           $(`#post-${data.data.post_id}`).remove();
           new Noty({
             theme: "relax",
-            text: "Post Deleted",
+            text: "POST DELETED",
             type: "success",
             layout: "topRight",
             timeout: 1500,

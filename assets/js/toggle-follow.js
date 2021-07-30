@@ -16,13 +16,19 @@ class ToggleFollow {
       })
         .done(function (data) {
           let followersCount = parseInt($(self).attr("data-followers"));
-          console.log(followersCount);
+
           if (data.data.unfollowed == true) {
             followersCount -= 1;
             $(self).html("follow");
           } else {
             followersCount += 1;
-            $(self).html("unfollow");
+            console.log($(self).html);
+            if ($(self).html() == "confirm") {
+              $(self).closest(".notification-info").remove();
+              $(self)
+                .closest(".notification-text")
+                .html("has started following you");
+            } else $(self).html("unfollow");
           }
           $(self).attr("data-followers", followersCount);
           if (window.location.href.indexOf("profile") > -1) {

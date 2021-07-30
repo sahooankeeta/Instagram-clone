@@ -1,6 +1,6 @@
 console.log("runnung");
 const headerPost = document.querySelector(".header-post");
-const newPostSubmit = document.querySelector(".new-post-submit");
+const newPostForm = document.querySelector(".new-post");
 const forgotPassword = document.querySelector(".forgot-password");
 const search = document.querySelector(".header-search");
 
@@ -15,9 +15,15 @@ if (headerPost) {
     document.querySelector(".new-post").classList.remove("hide");
   });
 }
-if (newPostSubmit) {
-  newPostSubmit.addEventListener("click", function () {
+if (newPostForm) {
+  newPostForm.addEventListener("submit", function () {
     document.querySelector(".new-post").classList.add("hide");
+    newPostForm.querySelector(".emojionearea-editor").innerHTML = "";
+    newPostForm.querySelector(".new-post-file").value = "";
+  });
+  newPostForm.addEventListener("click", function (e) {
+    if (e.target.closest(".new-form-close"))
+      document.querySelector(".new-post").classList.add("hide");
   });
 }
 if (forgotPassword) {

@@ -44,7 +44,7 @@ class PostComments {
           new ToggleLike($(" .toggle-like-button", newComment));
           new Noty({
             theme: "relax",
-            text: "Comment published!",
+            text: "COMMENT PUBLISHED!",
             type: "success",
             layout: "topRight",
             timeout: 1500,
@@ -114,7 +114,7 @@ class PostComments {
 
           new Noty({
             theme: "relax",
-            text: "Comment Deleted",
+            text: "COMMENT DELETED",
             type: "success",
             layout: "topRight",
             timeout: 1500,

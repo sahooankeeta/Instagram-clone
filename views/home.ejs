@@ -28,7 +28,10 @@
       <div class="suggested-users">
         <h3>suggestions for you</h3>
         <div class="suggested-cards">
-          <%for(auser of suggested){%>
+          <%if(suggested.length==0){%>
+          <h2>No users to suggest .</h2>
+          <%}%> <%for(auser of suggested){%>
+          <%if(auser.accountType=='private'){%>
           <div class="user-card" id="user-card-<%=auser.id%>">
             <a href="/users/profile/<%=auser.id%>">
               <img src="<%=auser.avatar%>" alt="" class="user-card-image" />
@@ -39,15 +42,16 @@
               >
               <p class="user-card-name"><%=auser.name%></p>
             </div>
+
             <a
-              data-followers="<%=auser.followers.length%>"
-              href="/users/follow/<%=auser.id%>"
-              class="user-card-follow toggle-follow-button"
+              href="/notifications/requestFollow/<%=auser.id%>"
+              class="user-card-follow toggle-request-button"
             >
-              <%if(auser.followers.includes(locals.user.id)){%>unfollow<%}else{%>follow<%}%></a
+              <%if(requests.includes(auser.id)){%>cancel
+              request<%}else{%>follow<%}%></a
             >
           </div>
-          <%}%>
+          <%}%><%}%>
         </div>
       </div>
     </div>

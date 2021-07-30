@@ -6,13 +6,18 @@
     class="new-post-container"
     method="POST"
   >
-    <input type="file" name="image" required />
+    <button class="new-form-close">
+      <svg class="form-close-icon">
+        <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
+      </svg>
+    </button>
+    <input type="file" class="new-post-file" name="image" required />
     <textarea
       name="caption"
       placeholder="Write a caption"
       class="new-post-caption mytextarea"
       required
     ></textarea>
-    <input class="new-post-submit" type="submit" value="Share" />
+    <button class="new-post-submit" type="submit">Share</button>
   </form>
 </div>

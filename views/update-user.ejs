@@ -40,6 +40,32 @@
       <label for="avatar">profile image</label>
       <input type="file" name="avatar" />
     </div>
+    <div class="settings-item">
+      <div class="form__radio-group">
+        <input
+          type="radio"
+          name="accountType"
+          class="form__radio-input"
+          value="public"
+          id="public"
+        />
+        <label for="public" class="form__radio-label">
+          <span class="form__radio-button"></span>public</label
+        >
+      </div>
+      <div class="form__radio-group">
+        <input
+          type="radio"
+          name="accountType"
+          class="form__radio-input"
+          value="private"
+          id="private"
+        />
+        <label for="private" class="form__radio-label"
+          ><span class="form__radio-button"></span>private</label
+        >
+      </div>
+    </div>
     <button type="submit">submit</button>
   </form>
 </div>

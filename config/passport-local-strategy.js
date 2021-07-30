@@ -9,23 +9,27 @@ passport.use(
       usernameField: "email",
       passReqToCallback: true,
     },
-    function (req, email, password, done) {
+    async function (req, email, password, done) {
       //find user and establish identity
-      User.findOne(
+      await User.findOne(
         {
           email: email,
         },
-        function (err, user) {
+        async function (err, user) {
           if (err) {
-            //req.flash("error", err);
             return done(err);
           }
-          if (!user || !user.correctPassword(password, user.password)) {
-            req.flash("error", "Invalid username/password");
+          //check password
+          let passwordCheck = await user.correctPassword(
+            password,
+            user.password
+          );
+          //if user not found or password not matched
+          if (!user || !passwordCheck) {
+            req.flash("error", "INVALID USERNAME / PASSWORD");
             return done(null, false);
           }
-          // console.log("sent to serial");
-          
+
           return done(null, user);
         }
       );
@@ -34,11 +38,9 @@ passport.use(
 );
 //serializing
 passport.serializeUser(function (user, done) {
-  //console.log("in serial");
   done(null, user.id);
 });
 passport.deserializeUser(function (id, done) {
-  //console.log("deserial");
   User.findById(id, function (err, user) {
     if (err) {
       console.log("Err in finding user");

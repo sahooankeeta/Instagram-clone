@@ -4,8 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- <link rel="shortcut icon" type="image/png" href="img/favicon.png"> -->
-
     <title><%=title%></title>
     <link
       rel="stylesheet"
@@ -97,6 +95,8 @@
     <script src="/js/home_posts.js"></script>
 
     <script src="/js/toggle-follow.js"></script>
+    <script src="/js/toggle-request.js"></script>
+    <script src="/js/delete-request.js"></script>
     <script src="/js/post-view.js"></script>
 
     <script>
@@ -108,11 +108,14 @@
         let self = this;
         let toggleFollow = new ToggleFollow(self);
       });
-      // $(" .profile-image-block").click(function () {
-      //   let self = this;
-      //   let x = self.href.split("/");
-      //   let viewPost = new PostComments(x[x.length - 1]);
-      // });
+      $(" .toggle-request-button").each(function () {
+        let self = this;
+        let toggleRequest = new ToggleRequest(self);
+      });
+      $(" .notification-delete").each(function () {
+        let self = this;
+        let deleteRequest = new DeleteRequest(self);
+      });
     </script>
     <script src="/js/new-post.js"></script>
     <script

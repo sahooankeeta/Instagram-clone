@@ -138,7 +138,10 @@ a {
   opacity: 0;
   visibility: hidden;
 }
-
+#notification-view {
+  opacity: 0;
+  visibility: hidden;
+}
 input[type="checkbox"]:checked ~ .header-menu-list {
   opacity: 1;
   visibility: visible;
@@ -154,6 +157,48 @@ input[type="checkbox"]:checked ~ .header-menu-view .header-icon-open {
   opacity: 0;
   visibility: hidden;
 }
+
+.header-notification-checkbox:checked ~ .header-notification-list {
+  opacity: 1;
+  visibility: visible;
+  display: block;
+}
+
+.header-notification-checkbox:checked
+  ~ .header-notification-view
+  .header-icon-close {
+  opacity: 1;
+  visibility: visible;
+}
+
+.header-notification-checkbox:checked
+  ~ .header-notification-view
+  .header-icon-open {
+  opacity: 0;
+  visibility: hidden;
+}
+.header-notification-list {
+  position: absolute;
+  border: none;
+  top: 100%;
+  right: 5rem;
+  max-height: 40rem;
+  overflow: auto;
+  width: 42rem;
+  background-color: white;
+  opacity: 0;
+  visibility: hidden;
+  list-style-type: none;
+}
+.header-notification-list li {
+  text-align: center;
+  padding: 1rem 1.5rem;
+  font-size: 1.6rem;
+  text-transform: capitalize;
+}
+.header-notification-list li:hover {
+  background-color: #fcf7f7;
+}
 @media only screen and (max-width: 37.5em) {
   .header-actions {
     width: 40%;
@@ -167,6 +212,7 @@ input[type="checkbox"]:checked ~ .header-menu-view .header-icon-open {
 .new-post-container {
   display: grid;
   width: 50%;
+  position: relative;
   margin: 0 auto;
   grid-template-rows: repeat(2, min-content);
 }
@@ -182,6 +228,19 @@ input[type="checkbox"]:checked ~ .header-menu-view .header-icon-open {
   outline: none;
   border: none;
 }
+.new-form-close {
+  background-color: transparent;
+  position: absolute;
+  right: 0;
+  top: -3rem;
+  border: none;
+  cursor: pointer;
+}
+.form-close-icon {
+  height: 3rem;
+  width: 3rem;
+  fill: blue;
+}
 .new-post-submit {
   width: 10rem;
   cursor: pointer;
@@ -195,4 +254,42 @@ input[type="checkbox"]:checked ~ .header-menu-view .header-icon-open {
 
 .hide {
   display: none;
+}
+
+.notification-item {
+  display: flex;
+  align-items: center;
+}
+
+.notification-avatar {
+  height: 3rem;
+  width: 3rem;
+  margin-right: 1.5rem;
+  border-radius: 100%;
+}
+
+.notification-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-right: auto;
+}
+
+.notification-image {
+  height: 3rem;
+  width: 3rem;
+}
+
+.notification-username {
+  font-weight: 600;
+  text-transform: none;
+  color: black;
+}
+
+.notification-btn {
+  text-decoration: none;
+  background-color: blue;
+  color: white;
+  text-transform: capitalize;
+  padding: 1rem;
 }

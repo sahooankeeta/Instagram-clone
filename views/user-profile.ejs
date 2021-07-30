@@ -1,7 +1,18 @@
 <link rel="stylesheet" href="/css/user-profile.css" />
 <section class="profile-container">
   <div class="profile-header">
-    <img src="<%=profile_user.avatar%>" alt="" class="profile-header-img" />
+    <div class="profile-image">
+      <img src="<%=profile_user.avatar%>" alt="" class="profile-header-img" />
+      <%if(locals.user.id==profile_user.id &&
+      profile_user.avatar.indexOf('default')==-1){%>
+      <a href="/users/remove-profile-image" class="profile-image-delete">
+        <svg>
+          <use xlink:href="/image/sprite.svg#icon-bin"></use>
+        </svg>
+      </a>
+      <%}%>
+    </div>
+
     <div class="profile-header-info">
       <div class="profile-buttons">
         <div class="profile-username"><%=profile_user.username%></div>
@@ -11,14 +22,28 @@
           class="profile-btn"
           >update</a
         >
+        <%}else{%> <%if(followers.includes(locals.user.id)){%>
+        <a
+          data-followers="<%=followers.length%>"
+          href="/users/follow/?to=<%=profile_user.id%>"
+          class="profile-btn toggle-follow-button"
+          >unfollow</a
+        >
+        <%}else{%> <%if(profile_user.accountType=='public'){%>
+        <a
+          data-followers="<%=followers.length%>"
+          href="/users/follow/?to=<%=profile_user.id%>"
+          class="profile-btn toggle-follow-button"
+          ><%if(followers.includes(locals.user.id)){%>unfollow<%}else{%>follow<%}%></a
+        >
         <%}else{%>
         <a
-          data-followers="<%=profile_user.followers.length%>"
-          href="/users/follow/<%=profile_user.id%>"
-          class="profile-btn toggle-follow-button"
-          ><%if(profile_user.followers.includes(locals.user.id)){%>unfollow<%}else{%>follow<%}%></a
+          href="/notifications/requestFollow/<%=profile_user.id%>"
+          class="profile-btn toggle-request-button"
+          ><%if(requests.includes(profile_user.id)){%>cancel
+          request<%}else{%>follow<%}%></a
         >
-        <%}%>
+        <%}%> <%}%> <%}%>
       </div>
       <div class="profile-stats">
         <p class="stat-posts">
@@ -27,13 +52,13 @@
         </p>
         <p class="stat-followers">
           <span class="profile-stats-unit followers-unit"
-            ><%=profile_user.followers.length%></span
+            ><%=followers.length%></span
           >
           followers
         </p>
         <p class="stat-following">
           <span class="profile-stats-unit following-unit"
-            ><%=profile_user.following.length%></span
+            ><%=following.length%></span
           >
           following
         </p>
@@ -54,8 +79,11 @@
       <div class="profile-category-name">posts</div>
     </div>
   </div>
+  <%if(followers.includes(locals.user._id)||locals.user.id==profile_user.id||profile_user.accountType=='public'){%>
   <div class="profile-images">
-    <%for (post of posts){%>
+    <%if(posts.length==0){%>
+    <div class="empty-posts">no posts till now</div>
+    <%}else{%> <%for (post of posts){%>
     <a class="profile-image-block" href="/posts/view/<%=post.id%>">
       <figure class="preview">
         <img class="preview-image" src="<%=post.image%>" />
@@ -82,6 +110,11 @@
       </figure>
     </a>
 
-    <%}%>
+    <%}%> <%}%>
   </div>
+  <%}else{%>
+  <div class="empty-posts">
+    This is a private account. You need to follow to view the posts .
+  </div>
+  <%}%>
 </section>

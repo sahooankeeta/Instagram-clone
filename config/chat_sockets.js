@@ -1,13 +1,11 @@
 const moment = require("moment");
 const Message = require("./../models/message");
 const { userJoin, userLeave, getCurrentUser } = require("./chat_user");
+
 module.exports.chatSockets = function (socketServer) {
   let io = require("socket.io")(socketServer);
   io.sockets.on("connection", function (socket) {
-    // console.log("new user received", socket.id);
-
     socket.on("disconnect", function () {
-      // console.log("disconnected");
       const user = userLeave(socket.id);
       io.emit("leave_room", user);
     });
@@ -17,7 +15,6 @@ module.exports.chatSockets = function (socketServer) {
       io.in(data.chatroom).emit("user_leftmsg", data);
     });
     socket.on("join_room", function (data) {
-      // console.log("joining req received", data);
       socket.join(data.chatroom);
       userJoin(socket.id, data.username, data.chatroom);
       data.time = moment().format("h:mm a");

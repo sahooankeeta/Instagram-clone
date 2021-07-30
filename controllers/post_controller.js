@@ -1,10 +1,11 @@
 const Post = require("../models/post");
+const User = require("../models/user");
 const Comment = require("../models/comment");
-
-// const Like = require("../models/like");
+const Notification = require("../models/notification");
 const path = require("path");
 const fs = require("fs");
 
+//create a new post
 module.exports.create = function (req, res) {
   Post.uploadedAvatar(req, res, async function (err) {
     if (err) {
@@ -26,17 +27,21 @@ module.exports.create = function (req, res) {
           message: "Post created!",
         });
       }
-      req.flash("success", "post added");
-      res.redirect("/");
+      req.flash("success", "New Post Created !!");
+      return res.redirect("/");
     } catch (err) {
+      req.flash("error", "Error in creating post");
       console.log("err in creating post", err);
-      return;
+      return res.redirect("/");
     }
   });
 };
+//delete a post
 module.exports.destroy = async function (req, res) {
   try {
+    //find post to be deleted
     let post = await Post.findById(req.params.id);
+    //remove post image
     if (post.user == req.user.id) {
       const p = path.join(__dirname, "..", post.image);
       fs.unlink(p, (err) => {
@@ -47,6 +52,7 @@ module.exports.destroy = async function (req, res) {
       });
 
       post.remove();
+      //delete associated comments of post
       await Comment.deleteMany({ post: req.params.id });
       if (req.xhr) {
         return res.status(200).json({
@@ -62,19 +68,22 @@ module.exports.destroy = async function (req, res) {
     }
   } catch (err) {
     console.log("err in destroy post", err);
-    return;
+    return res.redirect("back");
   }
 };
+//control post like action
 module.exports.toggleLike = async function (req, res) {
   try {
     let postId = req.params.id;
     let deleted = false;
+    //add like if not present already
     let post = await Post.updateOne(
       { _id: postId, likes: { $ne: req.user.id } },
       {
         $push: { likes: req.user.id },
       }
     );
+
     if (!post.nModified) {
       if (!post.ok) {
         return res.status(500).send({ error: "Could not vote on the post." });
@@ -92,6 +101,30 @@ module.exports.toggleLike = async function (req, res) {
         return res.status(500).send({ error: "Could not vote on the post." });
       }
     }
+    if (!deleted) {
+      post = await Post.findById(postId).populate("user");
+
+      if (req.user.username !== post.user.username) {
+        //send notification that user has liked a post
+        await Notification.create(
+          {
+            senderName: req.user.username,
+            senderAvatar: req.user.avatar,
+            senderId: req.user.id,
+            receiverId: post.user.id,
+            notificationMsg: "has liked your post",
+            notificationInfo: post.image,
+            notificationType: "like",
+          },
+          (err, not) => {
+            if (err) {
+              console.log("error in send like notification");
+              return res.redirect("back");
+            }
+          }
+        );
+      }
+    }
     return res.status(200).json({
       message: "request succesful",
       data: {
@@ -100,9 +133,10 @@ module.exports.toggleLike = async function (req, res) {
     });
   } catch (err) {
     console.log("err in like", err);
-    return;
+    return res.redirect("back");
   }
 };
+//view the selected post
 module.exports.view = async function (req, res) {
   try {
     let post = await Post.findById(req.params.id)
@@ -113,21 +147,19 @@ module.exports.view = async function (req, res) {
           path: "user",
         },
       });
+    let users = await User.find({ _id: { $ne: req.user.id } });
+    let nots = await Notification.find({ receiverId: req.user.id }).sort(
+      "-createdAt"
+    );
 
-    // if (req.xhr) {
-    //   return res.status(200).json({
-    //     data: {
-    //       post,
-    //     },
-    //     message: "Post view",
-    //   });
-    // }
     return res.render("post-view", {
       title: "post",
       post_view: post,
+      all_users: users,
+      notifications: nots,
     });
   } catch (err) {
     console.log("error in view", err);
-    res.redirect("back");
+    return res.redirect("back");
   }
 };

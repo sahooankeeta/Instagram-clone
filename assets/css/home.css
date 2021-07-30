@@ -192,6 +192,7 @@ body {
 }
 .post-stats-icons {
   display: flex;
+  cursor: pointer;
 }
 .post-stats-icon svg {
   height: 2.5rem;

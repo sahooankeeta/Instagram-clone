@@ -2,6 +2,8 @@ const Post = require("../models/post");
 const User = require("../models/user");
 const Comment = require("../models/comment");
 const Notification = require("../models/notification");
+const Followers = require("../models/followers");
+const Following = require("../models/following");
 const path = require("path");
 const fs = require("fs");
 
@@ -151,12 +153,18 @@ module.exports.view = async function (req, res) {
     let nots = await Notification.find({ receiverId: req.user.id }).sort(
       "-createdAt"
     );
+    let followers = await Followers.find({ user: post.user });
+    let following = await Following.find({ user: post.user });
+    followers = followers[0].followers;
+    following = following[0].following;
 
     return res.render("post-view", {
       title: "post",
       post_view: post,
       all_users: users,
       notifications: nots,
+      followers: followers,
+      following: following,
     });
   } catch (err) {
     console.log("error in view", err);

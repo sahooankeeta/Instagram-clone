@@ -1,6 +1,6 @@
 <div id="post-<%=post.id%>" class="post-dialog">
   <div class="post-header">
-    <a href="#"
+    <a href="/users/profile/<%=post.user.id%>"
       ><img class="post-header-image" src="<%=post.user.avatar%>"
     /></a>
     <a class="post-header-name" href="/users/profile/<%=post.user.id%>"
@@ -16,11 +16,22 @@
       <%}%>
     </div>
   </div>
-  <img src="<%= post.image%>" alt="" class="post-image" />
+  <div class="post-image-content">
+    <div class="slider">
+      <%for(image in post.image){%>
+      <div class="slide">
+        <img src="<%=post.image[image]%>" alt="Postimage" />
+      </div>
+      <%}%>
+      <button class="slider__btn slider__btn--left">&larr;</button>
+      <button class="slider__btn slider__btn--right">&rarr;</button>
+      <div class="dots"></div>
+    </div>
+  </div>
 
   <div class="post-content">
     <div class="post-caption">
-      <a href="#">
+      <a href="/users/profile/<%=post.user.id%>">
         <img
           class="post-caption-user"
           src="<%=post.user.avatar%>"
@@ -29,7 +40,9 @@
       </a>
 
       <p class="post-caption-body">
-        <a href="#" class="post-caption-username"><%=post.user.username%></a>
+        <a href="/users/profile/<%=post.user.id%>" class="post-caption-username"
+          ><%=post.user.username%></a
+        >
         <span class="post-caption-content"><%=post.caption%></span>
       </p>
     </div>

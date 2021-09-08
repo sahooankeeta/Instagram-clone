@@ -198,6 +198,16 @@ body {
   height: 20rem;
   object-fit: cover;
 }
+.preview-multiple {
+  position: absolute;
+  right: 1rem;
+  top: 0.5rem;
+  color: white;
+  font-weight: 600;
+  background-color: rgba(0, 0, 0, 0.856);
+  padding: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.856);
+}
 .preview-overlay {
   position: absolute;
   height: 100%;
@@ -367,7 +377,7 @@ body {
 
 .popup-content {
   grid-row: 2/-1;
-
+  grid-column: 2/-1;
   display: grid;
   grid-template-rows: min-content 1fr repeat(2, min-content);
   background-color: white;

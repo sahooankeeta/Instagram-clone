@@ -4,10 +4,7 @@ const path = require("path");
 const AVATAR_PATH = path.join("/uploads/posts/avatars");
 const PostSchema = new mongoose.Schema(
   {
-    image: {
-      type: String,
-      required: true,
-    },
+    image: [{ type: String }],
 
     caption: String,
 
@@ -37,12 +34,10 @@ let storage = multer.diskStorage({
     cb(null, path.join(__dirname, "..", AVATAR_PATH));
   },
   filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now());
+    cb(null, file.fieldname + "-" + Date.now() + file.originalname);
   },
 });
-PostSchema.statics.uploadedAvatar = multer({ storage: storage }).single(
-  "image"
-);
+PostSchema.statics.uploadedAvatar = multer({ storage: storage }).array("image");
 PostSchema.statics.avatarPath = AVATAR_PATH;
 const Post = mongoose.model("Post", PostSchema);
 module.exports = Post;

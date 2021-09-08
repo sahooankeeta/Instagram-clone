@@ -15,10 +15,14 @@ module.exports.create = function (req, res) {
     }
     try {
       let post = await Post.create({
-        image: path.join("/uploads/posts/avatars/" + req.file.filename),
         caption: req.body.caption,
         user: req.user._id,
       });
+
+      req.files.forEach((file) =>
+        post.image.push(path.join("/uploads/posts/avatars/" + file.filename))
+      );
+      post.save();
       if (req.xhr) {
         post = await post.populate("user").execPopulate();
 
@@ -30,7 +34,8 @@ module.exports.create = function (req, res) {
         });
       }
       req.flash("success", "New Post Created !!");
-      return res.redirect("/");
+      return;
+      // return res.redirect("/");
     } catch (err) {
       req.flash("error", "Error in creating post");
       console.log("err in creating post", err);
@@ -135,7 +140,7 @@ module.exports.toggleLike = async function (req, res) {
     });
   } catch (err) {
     console.log("err in like", err);
-    return res.redirect("back");
+    // return res.redirect("back");
   }
 };
 //view the selected post
@@ -168,6 +173,5 @@ module.exports.view = async function (req, res) {
     });
   } catch (err) {
     console.log("error in view", err);
-    return res.redirect("back");
   }
 };

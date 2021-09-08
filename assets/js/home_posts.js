@@ -25,7 +25,7 @@
           }
 
           new PostComments(data.data.post._id);
-          new ToggleLike($(" .toggle-like-button", newPost));
+           new ToggleLike($(" .toggle-like-button", newPost));
 
           new Noty({
             theme: "relax",

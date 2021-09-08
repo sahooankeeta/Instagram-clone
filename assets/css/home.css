@@ -49,15 +49,6 @@ body {
   margin-bottom: 3rem;
 }
 
-.post-image {
-  width: 100%;
-  height: 40rem;
-}
-@media only screen and (max-width: 75em) {
-  .post-image {
-    height: 35vw;
-  }
-}
 .icon-heart {
   fill: #f23b3b;
 }
@@ -122,7 +113,14 @@ body {
   font-weight: 600;
   color: black;
 }
-
+.post-image-content {
+  height: 40rem;
+}
+@media only screen and (max-width: 75em) {
+  .post-image-content {
+    height: 35vw;
+  }
+}
 .post-comments {
   padding: 2rem;
   max-height: 20rem;
@@ -290,4 +288,54 @@ body {
   text-transform: uppercase;
   font-weight: 600;
   letter-spacing: 1px;
+}
+.slider {
+  position: relative;
+  height: inherit;
+  overflow: hidden;
+}
+.slider__btn {
+  position: absolute;
+  font-size: 3rem;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+.slider__btn--left {
+  left: 2rem;
+}
+.slider__btn--right {
+  right: 2rem;
+}
+.slide {
+  position: absolute;
+  height: inherit;
+  width: 100%;
+  transition: all 0.2s;
+}
+
+.slide img {
+  width: 100%;
+  height: inherit;
+}
+
+.dots {
+  position: absolute;
+  bottom: 0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.dots__dot {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 100%;
+  cursor: pointer;
+  border: 1px solid white;
+}
+.dots__dot--active {
+  background-color: grey;
 }

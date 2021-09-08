@@ -101,7 +101,14 @@
 
     <script>
       $(" .post-comment-like").each(function () {
+        console.log("in comment like");
         let self = this;
+        let toggleLike = new ToggleLike(self);
+      });
+      $(" .toggle-like-button").each(function () {
+        console.log("in post like");
+        let self = this;
+
         let toggleLike = new ToggleLike(self);
       });
       $(" .toggle-follow-button").each(function () {

@@ -11,7 +11,16 @@
         <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
       </svg>
     </a>
-    <img src="<%=post_view.image%>" alt="" class="post-popup-image" />
+    <div class="slider">
+      <%for(image in post_view.image){%>
+      <div class="slide">
+        <img src="<%=post_view.image[image]%>" alt="Postimage" />
+      </div>
+      <%}%>
+      <button class="slider__btn slider__btn--left">&larr;</button>
+      <button class="slider__btn slider__btn--right">&rarr;</button>
+      <div class="dots"></div>
+    </div>
     <div class="popup-header">
       <a href="/users/profile/<%=post_view.user.id%>"
         ><img class="popup-header-image" src="<%=post_view.user.avatar%>"
@@ -27,12 +36,14 @@
     </div>
     <div class="popup-content">
       <div class="popup-caption">
-        <a href="#">
+        <a href="/users/profile/<%=post_view.user.id%>">
           <img class="popup-caption-user" src="<%=post_view.user.avatar%>" />
         </a>
 
         <p class="popup-caption-body">
-          <a href="#" class="popup-caption-username"
+          <a
+            href="/users/profile/<%=post_view.user.id%>"
+            class="popup-caption-username"
             ><%=post_view.user.username%></a
           >
           <span class="popup-caption-content"><%=post_view.caption%></span>
@@ -91,7 +102,11 @@
       </div>
       <div class="popup-stats">
         <div class="popup-stats-icons">
-          <a href="#" class="popup-stats-icon">
+          <a
+            data-likes="<%=post_view.likes.length%>"
+            href="/posts/toggle/<%=post_view._id%>"
+            class="popup-stats-icon icon-heart toggle-like-button"
+          >
             <%if(post_view.likes.includes(locals.user.id)){%>
             <svg class="">
               <use xlink:href="/image/sprite.svg#icon-heart"></use>

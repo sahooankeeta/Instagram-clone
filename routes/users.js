@@ -10,6 +10,8 @@ router.get(
 );
 router.get("/sign-up", userscontroller.signUp);
 router.get("/sign-in", userscontroller.signIn);
+router.get("/newpost", userscontroller.newpost);
+
 router.get("/sign-out", userscontroller.destroySession);
 router.get("/destroy", userscontroller.destroy);
 router.get("/remove-profile-image", userscontroller.removeProfileImage);

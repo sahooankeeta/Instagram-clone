@@ -17,15 +17,12 @@
     </div>
   </div>
   <div class="post-image-content">
-    <div class="slider">
+    <div class="single-item">
       <%for(image in post.image){%>
       <div class="slide">
-        <img src="<%=post.image[image]%>" alt="Postimage" />
+        <img class="post-image" src="<%=post.image[image]%>" alt="Postimage" />
       </div>
       <%}%>
-      <button class="slider__btn slider__btn--left">&larr;</button>
-      <button class="slider__btn slider__btn--right">&rarr;</button>
-      <div class="dots"></div>
     </div>
   </div>
 
@@ -57,11 +54,11 @@
           class="post-stats-icon icon-heart toggle-like-button"
         >
           <%if(post.likes.includes(locals.user.id)){%>
-          <svg class="">
+          <svg>
             <use xlink:href="/image/sprite.svg#icon-heart"></use>
           </svg>
           <%}else{%>
-          <svg class="">
+          <svg>
             <use xlink:href="/image/sprite.svg#icon-heart-outlined"></use>
           </svg>
           <%}%>

@@ -387,7 +387,20 @@ body {
     grid-row: 3/-1;
   }
 }
-
+.comment-button-like svg {
+  height: 2.2rem;
+  width: 2.2rem;
+  fill: #f23b3b;
+}
+.post-popup-image-content {
+  height: inherit;
+}
+.post-popup-image {
+  height: inherit;
+}
+.slick-track {
+  height: inherit;
+}
 .popup-comments {
   padding: 0 2rem;
   overflow-y: auto;

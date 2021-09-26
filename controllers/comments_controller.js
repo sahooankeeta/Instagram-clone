@@ -17,12 +17,10 @@ module.exports.create = async function (req, res) {
       if (req.user.id != post.user.id) {
         await Notification.create(
           {
-            senderName: req.user.username,
-            senderAvatar: req.user.avatar,
-            senderId: req.user.id,
-            receiverId: post.user.id,
+            sender: req.user.id,
+            receiver: post.user._id,
             notificationMsg: "has commented your post",
-            notificationInfo: post.image,
+            notificationInfo: post.image[0],
             notificationType: "comment",
           },
           (err, not) => {
@@ -111,6 +109,7 @@ module.exports.toggleLike = async function (req, res) {
           .send({ error: "Could not vote on the comment." });
       }
     }
+    console.log("comment");
     return res.status(200).json({
       message: "request succesful",
       data: {

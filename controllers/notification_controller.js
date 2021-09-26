@@ -42,10 +42,8 @@ module.exports.followRequest = async function (req, res) {
     if (!unrequested) {
       await Notification.create(
         {
-          senderName: req.user.username,
-          senderAvatar: req.user.avatar,
-          senderId: req.user.id,
-          receiverId: req.params.id,
+          sender: req.user.id,
+          receiver: req.params.id,
           notificationMsg: "has requested to follow you",
           notificationType: "followRequest",
         },

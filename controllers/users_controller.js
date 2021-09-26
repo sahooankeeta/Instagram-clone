@@ -20,9 +20,14 @@ module.exports.profile = async function (req, res) {
       let users = await User.find({ _id: { $ne: req.user.id } });
       let followers = await Followers.find({ user: req.params.id });
       let following = await Following.find({ user: req.params.id });
-      let nots = await Notification.find({ receiverId: req.user.id }).sort(
-        "-createdAt"
-      );
+      let nots = await Notification.find({ receiver: req.user.id })
+        .sort("-createdAt")
+        .populate({
+          path: "sender",
+          populate: {
+            path: "user",
+          },
+        });
       let requests = await FollowRequest.find({ user: req.user.id });
       requests = requests[0].followRequests;
       followers = followers[0].followers;
@@ -51,15 +56,23 @@ module.exports.viewUpdate = async function (req, res) {
   try {
     let user = await User.findById(req.params.id);
     let users = await User.find({ _id: { $ne: req.user.id } });
-    let nots = await Notification.find({ receiverId: req.user.id }).sort(
-      "-createdAt"
-    );
+    let nots = await Notification.find({ receiver: req.user.id })
+      .sort("-createdAt")
+      .populate({
+        path: "sender",
+        populate: {
+          path: "user",
+        },
+      });
+    let followers = await Followers.find({ user: req.params.id });
+    followers = followers[0].followers;
     if (user) {
       return res.render("update-user", {
         title: "Insta | Profile",
         update_user: user,
         all_users: users,
         notifications: nots,
+        followers: followers,
       });
     } else {
       return res.redirect("/users/profile/" + req.params.id);
@@ -144,6 +157,25 @@ module.exports.signUp = function (req, res) {
     title: "Insta | Sign Up",
   });
 };
+module.exports.newpost = async function (req, res) {
+  let users = await User.find({ _id: { $ne: req.user.id } });
+  let nots = await Notification.find({ receiver: req.user.id })
+    .sort("-createdAt")
+    .populate({
+      path: "sender",
+      populate: {
+        path: "user",
+      },
+    });
+  let followers = await Followers.find({ user: req.user.id });
+  followers = followers[0].followers;
+  return res.render("new-post", {
+    title: "Insta | Post",
+    all_users: users,
+    notifications: nots,
+    followers: followers,
+  });
+};
 //deactivate user account
 module.exports.destroy = async function (req, res) {
   try {
@@ -161,12 +193,14 @@ module.exports.destroy = async function (req, res) {
     await Post.find({ user: req.user.id }, (err, posts) => {
       if (err) return;
       posts.map((post) => {
-        const postimage = path.join(__dirname, "..", post.image);
-        fs.unlink(postimage, (err) => {
-          if (err) {
-            console.log("err in removing post image");
-            return;
-          }
+        post.image.map((i) => {
+          const postimage = path.join(__dirname, "..", i);
+          fs.unlink(postimage, (err) => {
+            if (err) {
+              console.log("err in removing post image");
+              return res.redirect("back");
+            }
+          });
         });
       });
     });
@@ -211,6 +245,12 @@ module.exports.create = function (req, res) {
       return;
     }
     if (!user) {
+      if (req.body.password.length < 6) {
+        console.log("here");
+        req.flash("error", "Password criteria not fulfilled.");
+
+        return res.redirect("back");
+      }
       User.create(
         {
           name: req.body.name,
@@ -318,8 +358,8 @@ module.exports.follow = async function (req, res) {
     if (unfollowed == false) {
       // await Notification.deleteOne({ senderId: user }, { receiverId: userId });
       let not = await Notification.findOne(
-        { senderId: user },
-        { receiverId: userId },
+        { sender: user._id },
+        { receiver: userId },
         { notificationType: "followRequest" },
         (err, not) => {
           if (err) {
@@ -332,11 +372,11 @@ module.exports.follow = async function (req, res) {
       not.notificationMsg = "has started following you";
       not.notificationType = "follow";
       await not.save();
-      // await Notification.findOneAndUpdate(
-      //   { senderId: user },
-      //   { receiverId: userId },
-      //   { $set: { notificationMsg: "has started following you" } }
-      // );
+      await Notification.findOneAndUpdate(
+        { senderId: user },
+        { receiverId: userId },
+        { $set: { notificationMsg: "has started following you" } }
+      );
       const removeRequest = await FollowRequest.updateOne(
         { user: user },
         { $pull: { followRequests: userId } }

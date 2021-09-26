@@ -1,5 +1,6 @@
-<link rel="stylesheet" href="/css/user-profile.css" />
 <link rel="stylesheet" href="/css/home.css" />
+<link rel="stylesheet" href="/css/user-profile.css" />
+
 <div class="post-popup">
   <a
     href="/users/profile/<%=post_view.user.id%>"
@@ -11,15 +12,18 @@
         <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
       </svg>
     </a>
-    <div class="slider">
-      <%for(image in post_view.image){%>
-      <div class="slide">
-        <img src="<%=post_view.image[image]%>" alt="Postimage" />
+    <div class="post-popup-image-content">
+      <div class="single-item">
+        <%for(image in post_view.image){%>
+        <div class="slide">
+          <img
+            class="post-popup-image"
+            src="<%=post_view.image[image]%>"
+            alt="Postimage"
+          />
+        </div>
+        <%}%>
       </div>
-      <%}%>
-      <button class="slider__btn slider__btn--left">&larr;</button>
-      <button class="slider__btn slider__btn--right">&rarr;</button>
-      <div class="dots"></div>
     </div>
     <div class="popup-header">
       <a href="/users/profile/<%=post_view.user.id%>"
@@ -52,7 +56,7 @@
       <div class="popup-comments">
         <%for( comment of post_view.comments){%>
         <div id="comment-<%=comment.id%>" class="post-comment">
-          <a href="#">
+          <a href="/users/profile/<%=comment.user.id%>">
             <img class="post-comment-user" src="<%=comment.user.avatar%>" />
           </a>
           <div class="post-comment-block">
@@ -72,7 +76,7 @@
           <%if(locals.user){%>
           <a
             data-likes="<%=comment.likes.length%>"
-            class="post-comment-like"
+            class="toggle-like-button comment-button-like"
             href="/comments/toggle/<%=comment.id%>"
           >
             <%if(comment.likes.includes(locals.user.id)){%>

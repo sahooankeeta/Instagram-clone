@@ -40,7 +40,6 @@ class PostComments {
 
           pSelf.deleteComment($(" .delete-comment-button", newComment));
 
-          // CHANGE :: enable the functionality of the toggle like button on the new comment
           new ToggleLike($(" .toggle-like-button", newComment));
           new Noty({
             theme: "relax",
@@ -51,7 +50,7 @@ class PostComments {
           }).show();
         },
         error: function (error) {
-          console.log(error.responseText);
+          console.log(error);
         },
       });
     });

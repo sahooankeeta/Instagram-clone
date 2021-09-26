@@ -42,9 +42,11 @@ body {
 }
 
 .post-dialog {
-  width: 100%;
-  display: grid;
-  grid-template-rows: repeat(3, min-content);
+  grid-column: 2 / 8;
+  display: flex;
+  flex-direction: column;
+  /* display: grid;
+  grid-template-rows: repeat(3, min-content); */
   background-color: white;
   margin-bottom: 3rem;
 }
@@ -153,6 +155,9 @@ body {
   font-size: 1.4rem;
   margin-top: 0.3rem;
 }
+/* .post-image {
+  width: 100%;
+} */
 .post-comment {
   display: grid;
   grid-template-columns: min-content 5fr repeat(2, min-content);
@@ -289,11 +294,24 @@ body {
   font-weight: 600;
   letter-spacing: 1px;
 }
-.slider {
+.single-item {
   position: relative;
   height: inherit;
-  overflow: hidden;
+  /* //  overflow: hidden; */
 }
+.single-item {
+  height: inherit;
+  width: 100%;
+}
+
+.single-item img {
+  width: 100%;
+  height: inherit;
+}
+.slide {
+  height: inherit;
+}
+/*
 .slider__btn {
   position: absolute;
   font-size: 3rem;
@@ -304,8 +322,8 @@ body {
   border: none;
   font-weight: 600;
   cursor: pointer;
-}
-.slider__btn--left {
+} */
+/* .slider__btn--left {
   left: 2rem;
 }
 .slider__btn--right {
@@ -338,4 +356,4 @@ body {
 }
 .dots__dot--active {
   background-color: grey;
-}
+} */

@@ -9,6 +9,8 @@
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.css"
     />
+    <link rel="stylesheet" type="text/css" href="/js/slick/slick.css" />
+    <link rel="stylesheet" type="text/css" href="/js/slick/slick-theme.css" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noty/3.1.4/noty.min.js"></script>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
@@ -27,8 +29,7 @@
     <link rel="stylesheet" href="/css/footer.css" />
   </head>
   <body>
-    <%- include('header')%> <%- include('new-post')%> <%- body%> <%-
-    include('footer')%>
+    <%- include('header')%> <%- body%> <%- include('footer')%>
 
     <script>
       <% if(flash.success && flash.success.length>0){ %>
@@ -38,7 +39,7 @@
             text: '<%=flash.success%>',
             type:'success',
             layout:'topRight',
-            timeout:1500
+            timeout:2500
         }).show();
       <% } %>
       <% if(flash.error && flash.error.length>0){ %>
@@ -100,17 +101,6 @@
     <script src="/js/post-view.js"></script>
 
     <script>
-      $(" .post-comment-like").each(function () {
-        console.log("in comment like");
-        let self = this;
-        let toggleLike = new ToggleLike(self);
-      });
-      $(" .toggle-like-button").each(function () {
-        console.log("in post like");
-        let self = this;
-
-        let toggleLike = new ToggleLike(self);
-      });
       $(" .toggle-follow-button").each(function () {
         let self = this;
         let toggleFollow = new ToggleFollow(self);
@@ -136,6 +126,13 @@
     <script>
         <% if(locals.user){%> new ChatEngine("chat-window",'<%=locals.user.username%>')
       <%}%>
+    </script>
+    <script type="text/javascript" src="/js/slick/slick.min.js"></script>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $(".single-item").slick();
+      });
     </script>
   </body>
 </html>

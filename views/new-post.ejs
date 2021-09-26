@@ -1,4 +1,4 @@
-<div class="new-post hide">
+<div class="new-post">
   <form
     action="/posts/create"
     enctype="multipart/form-data"
@@ -6,11 +6,11 @@
     class="new-post-container"
     method="POST"
   >
-    <button class="new-form-close">
+    <!-- <button class="new-form-close">
       <svg class="form-close-icon">
         <use xlink:href="/image/sprite.svg#icon-circle-with-cross"></use>
       </svg>
-    </button>
+    </button> -->
     <input type="file" class="new-post-file" name="image" multiple required />
     <textarea
       name="caption"

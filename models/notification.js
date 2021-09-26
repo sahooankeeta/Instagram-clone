@@ -2,17 +2,13 @@ const mongoose = require("mongoose");
 
 const NotificationSchema = new mongoose.Schema(
   {
-    senderName: {
-      type: String,
+    sender: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
-    senderAvatar: {
-      type: String,
-    },
-    senderId: {
-      type: String,
-    },
-    receiverId: {
-      type: String,
+    receiver: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
     },
     notificationMsg: {
       type: String,

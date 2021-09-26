@@ -36,9 +36,14 @@ module.exports.home = async function (req, res) {
     let messages = await Message.find({}).sort("-createdAt");
     let users = await User.find({ _id: { $ne: req.user.id } });
     //gathering notification
-    let nots = await Notification.find({ receiverId: req.user.id }).sort(
-      "-createdAt"
-    );
+    let nots = await Notification.find({ receiver: req.user.id })
+      .sort("-createdAt")
+      .populate({
+        path: "sender",
+        populate: {
+          path: "user",
+        },
+      });
     //gathering follow requests
     let requests = await FollowRequest.find({ user: req.user.id });
     requests = requests[0].followRequests;

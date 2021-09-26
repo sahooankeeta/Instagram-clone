@@ -23,19 +23,19 @@ module.exports.create = function (req, res) {
         post.image.push(path.join("/uploads/posts/avatars/" + file.filename))
       );
       post.save();
-      if (req.xhr) {
-        post = await post.populate("user").execPopulate();
+      // if (req.xhr) {
+      //   post = await post.populate("user").execPopulate();
 
-        return res.status(200).json({
-          data: {
-            post: post,
-          },
-          message: "Post created!",
-        });
-      }
+      //   return res.status(200).json({
+      //     data: {
+      //       post: post,
+      //     },
+      //     message: "Post created!",
+      //   });
+      // }
       req.flash("success", "New Post Created !!");
-      return;
-      // return res.redirect("/");
+      //return;
+      return res.redirect("/");
     } catch (err) {
       req.flash("error", "Error in creating post");
       console.log("err in creating post", err);
@@ -50,12 +50,14 @@ module.exports.destroy = async function (req, res) {
     let post = await Post.findById(req.params.id);
     //remove post image
     if (post.user == req.user.id) {
-      const p = path.join(__dirname, "..", post.image);
-      fs.unlink(p, (err) => {
-        if (err) {
-          console.log("err in removing file");
-          return;
-        }
+      post.image.map((i) => {
+        const p = path.join(__dirname, "..", i);
+        fs.unlink(p, (err) => {
+          if (err) {
+            console.log("err in removing file");
+            return;
+          }
+        });
       });
 
       post.remove();
@@ -83,6 +85,7 @@ module.exports.toggleLike = async function (req, res) {
   try {
     let postId = req.params.id;
     let deleted = false;
+
     //add like if not present already
     let post = await Post.updateOne(
       { _id: postId, likes: { $ne: req.user.id } },
@@ -109,18 +112,16 @@ module.exports.toggleLike = async function (req, res) {
       }
     }
     if (!deleted) {
-      post = await Post.findById(postId).populate("user");
+      post = await Post.findById(postId).populate("senderId");
 
       if (req.user.username !== post.user.username) {
         //send notification that user has liked a post
         await Notification.create(
           {
-            senderName: req.user.username,
-            senderAvatar: req.user.avatar,
-            senderId: req.user.id,
-            receiverId: post.user.id,
+            sender: req.user.id,
+            receiver: post.user._id,
             notificationMsg: "has liked your post",
-            notificationInfo: post.image,
+            notificationInfo: post.image[0],
             notificationType: "like",
           },
           (err, not) => {
@@ -132,6 +133,9 @@ module.exports.toggleLike = async function (req, res) {
         );
       }
     }
+    //console.log(deleted);
+    //return res.redirect("/");
+    console.log("toggle");
     return res.status(200).json({
       message: "request succesful",
       data: {
@@ -140,7 +144,7 @@ module.exports.toggleLike = async function (req, res) {
     });
   } catch (err) {
     console.log("err in like", err);
-    // return res.redirect("back");
+    return res.redirect("back");
   }
 };
 //view the selected post

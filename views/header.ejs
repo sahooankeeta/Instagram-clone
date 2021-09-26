@@ -25,7 +25,7 @@
     <%- include('search')%>
 
     <ul class="header-actions">
-      <li><a class="header-post">post</a></li>
+      <li><a class="header-post" href="/users/newpost">post</a></li>
       <li class="header-notification">
         <input
           id="notification-view"
@@ -45,18 +45,18 @@
           <li class="notification-item">no notifications yet</li>
           <%}%> <%for(not of notifications){%>
           <li class="notification-item">
-            <a href="/users/profile/<%=not.senderId%>"
+            <a href="/users/profile/<%=not.sender._id%>"
               ><img
                 class="notification-avatar"
-                src="<%=not.senderAvatar%>"
+                src="<%=not.sender.avatar%>"
                 alt="sender profile-pic"
             /></a>
 
             <div class="notification-content">
               <a
                 class="notification-username"
-                href="/users/profile/<%=not.senderId%>"
-                ><%=not.senderName%></a
+                href="/users/profile/<%=not.sender._id%>"
+                ><%=not.sender.name%></a
               >
               <span class="notification-text"><%=not.notificationMsg%></span>
             </div>
@@ -71,12 +71,12 @@
             <%}else if(not.notificationType=='followRequest'){%>
             <div class="notification-info">
               <a
-                href="/users/follow/?from=<%=not.senderId%>"
+                href="/users/follow/?from=<%=not.sender._id%>"
                 class="
                   notification-btn notification-confirm
                   toggle-follow-button
                 "
-                ><%if(followers.includes(not.senderId)){%>follow<%}else{%>confirm<%}%></a
+                ><%if(followers.includes(not.sender)){%>follow<%}else{%>confirm<%}%></a
               >
               <a
                 href="/notifications/destroy/<%=not.id%>"

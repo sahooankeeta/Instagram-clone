@@ -22,12 +22,13 @@ class ToggleFollow {
             $(self).html("follow");
           } else {
             followersCount += 1;
-            console.log($(self).html);
+
             if ($(self).html() == "confirm") {
-              $(self).closest(".notification-info").remove();
+              console.log("here");
               $(self)
                 .closest(".notification-text")
                 .html("has started following you");
+              $(self).closest(".notification-info").remove();
             } else $(self).html("unfollow");
           }
           $(self).attr("data-followers", followersCount);

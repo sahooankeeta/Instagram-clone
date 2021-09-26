@@ -1,16 +1,18 @@
-// CHANGE :: create a class to toggle likes when a link is clicked, using AJAX
 class ToggleLike {
   constructor(toggleElement) {
     this.toggler = toggleElement;
+    // console.log(toggleElement);
+
     this.toggleLike();
   }
 
   toggleLike() {
     $(this.toggler).click(function (e) {
+      // console.log(e);
       e.preventDefault();
       let self = this;
       console.log("preventing default");
-      // this is a new way of writing ajax which you might've studied, it looks like the same as promises
+
       $.ajax({
         type: "POST",
         url: $(self).attr("href"),
@@ -36,28 +38,17 @@ class ToggleLike {
           }
 
           $(self).attr("data-likes", likesCount);
-          if ($(self).attr("class") == "post-comment-like") {
-            $(self)
-              .parent()
-              .children(".post-comment-block")
-              .children(".post-comment-stat")
-              .children(".comment-unit")
-              .html(likesCount);
-          } else {
-            $(self)
-              .parent()
-              .next()
-              .children(".popup-stats-unit")
-              .html(likesCount);
-          }
 
-          // console.log($(self).parent().next().children("popup-stats-unit"));
-          // console.log($(self).children("svg").children("use"));
-          //$(self).children("svg").children("use").attr("xlink:href", "/image/sprite.svg#icon-heart");
+          $(self)
+            .closest(".post-comment")
+            .children(".post-comment-block")
+            .children(".post-comment-stat")
+            .children(".comment-unit")
+            .html(likesCount);
         })
         .fail(function (errData) {
-          console.log("error in completing the request");
-          return errData;
+          console.log("error in completing the request", err);
+          return res.redirect("back");
         });
     });
   }

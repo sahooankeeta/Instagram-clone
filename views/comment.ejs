@@ -13,7 +13,7 @@
     </p>
     <p class="post-comment-stat">
       <%if(comment.likes.length!=0){%> <%if(comment.likes.length){%>
-      <span class="post comment-unit"><%=comment.likes.length%></span> like
+      <span class="post comment-unit"><%=comment.likes.length%></span> likes
       <%}else{%>
       <span class="post comment-unit"><%=comment.likes.length%></span> likes
       <%}%> <%}%>
@@ -22,11 +22,11 @@
   <%if(locals.user){%>
   <a
     data-likes="<%=comment.likes.length%>"
-    class="post-comment-like"
+    class="post-stats-icon icon-heart toggle-like-button"
     href="/comments/toggle/<%=comment.id%>"
   >
     <%if(comment.likes.includes(locals.user.id)){%>
-    <svg class="icon-heart">
+    <svg class="">
       <use xlink:href="/image/sprite.svg#icon-heart"></use>
     </svg>
     <%}else{%>

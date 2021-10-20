@@ -338,6 +338,16 @@ module.exports.follow = async function (req, res) {
       // Nothing was modified in the above query meaning that the user is already following
       // Unfollow instead
       unfollowed = true;
+      await Notification.findOneAndDelete(
+        { sender: user, receiver: userId, notificationType: "follow" },
+        (err) => {
+          if (err) {
+            console.log("error in deletee");
+            return;
+          }
+          //console.log("deleted");
+        }
+      );
       const followerUnfollowUpdate = await Followers.updateOne(
         {
           user: userId,
@@ -357,26 +367,42 @@ module.exports.follow = async function (req, res) {
     }
     if (unfollowed == false) {
       // await Notification.deleteOne({ senderId: user }, { receiverId: userId });
-      let not = await Notification.findOne(
-        { sender: user._id },
-        { receiver: userId },
-        { notificationType: "followRequest" },
-        (err, not) => {
+
+      await Notification.findOneAndDelete(
+        { sender: user, receiver: userId, notificationType: "followRequest" },
+        (err) => {
           if (err) {
-            console.log("could not find not");
+            console.log("error in deletee");
             return;
           }
-          return not;
+          //console.log("deleted");
         }
       );
-      not.notificationMsg = "has started following you";
-      not.notificationType = "follow";
-      await not.save();
-      await Notification.findOneAndUpdate(
-        { senderId: user },
-        { receiverId: userId },
-        { $set: { notificationMsg: "has started following you" } }
+
+      await Notification.create(
+        {
+          sender: user,
+          receiver: userId,
+          notificationMsg: "has started following you",
+          notificationType: "follow",
+        },
+        (err, not) => {
+          if (err) {
+            console.log("err in send noti");
+            return;
+          }
+          //console.log("created");
+        }
       );
+      // not.notificationMsg = "has started following you";
+      // not.notificationType = "follow";
+      // await not.save();
+      // console.log(not)
+      // await Notification.findOneAndUpdate(
+      //{senderId: user },
+      //   { receiverId: userId },
+      //   { $set: { notificationMsg: "has started following you" } }
+      // );
       const removeRequest = await FollowRequest.updateOne(
         { user: user },
         { $pull: { followRequests: userId } }

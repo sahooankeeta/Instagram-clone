@@ -23,16 +23,7 @@ module.exports.create = function (req, res) {
         post.image.push(path.join("/uploads/posts/avatars/" + file.filename))
       );
       post.save();
-      // if (req.xhr) {
-      //   post = await post.populate("user").execPopulate();
 
-      //   return res.status(200).json({
-      //     data: {
-      //       post: post,
-      //     },
-      //     message: "Post created!",
-      //   });
-      // }
       req.flash("success", "New Post Created !!");
       //return;
       return res.redirect("/");
@@ -55,7 +46,7 @@ module.exports.destroy = async function (req, res) {
         fs.unlink(p, (err) => {
           if (err) {
             console.log("err in removing file");
-            return;
+            return res.redirect("back");
           }
         });
       });
@@ -76,7 +67,6 @@ module.exports.destroy = async function (req, res) {
       return res.redirect("back");
     }
   } catch (err) {
-    console.log("err in destroy post", err);
     return res.redirect("back");
   }
 };
@@ -112,7 +102,7 @@ module.exports.toggleLike = async function (req, res) {
       }
     }
     if (!deleted) {
-      post = await Post.findById(postId).populate("senderId");
+      post = await Post.findById(postId).populate("user");
 
       if (req.user.username !== post.user.username) {
         //send notification that user has liked a post
@@ -126,16 +116,28 @@ module.exports.toggleLike = async function (req, res) {
           },
           (err, not) => {
             if (err) {
-              console.log("error in send like notification");
               return res.redirect("back");
             }
           }
         );
       }
+    } else {
+      post = await Post.findById(postId).populate("senderId");
+
+      await Notification.findOneAndDelete(
+        {
+          sender: req.user.id,
+          receiver: post.user._id,
+          notificationType: "like",
+        },
+        (err, not) => {
+          if (err) {
+            return res.redirect("back");
+          }
+        }
+      );
     }
-    //console.log(deleted);
-    //return res.redirect("/");
-    console.log("toggle");
+
     return res.status(200).json({
       message: "request succesful",
       data: {
@@ -143,7 +145,6 @@ module.exports.toggleLike = async function (req, res) {
       },
     });
   } catch (err) {
-    console.log("err in like", err);
     return res.redirect("back");
   }
 };
@@ -176,6 +177,6 @@ module.exports.view = async function (req, res) {
       following: following,
     });
   } catch (err) {
-    console.log("error in view", err);
+    return res.redirect("back");
   }
 };

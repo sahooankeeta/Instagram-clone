@@ -26,7 +26,7 @@ class ToggleFollow {
             if ($(self).html() == "confirm") {
               console.log("here");
               $(self)
-                .closest(".notification-text")
+                .closest(".notification-item").children(".notification-content").children(".notification-text")
                 .html("has started following you");
               $(self).closest(".notification-info").remove();
             } else $(self).html("unfollow");

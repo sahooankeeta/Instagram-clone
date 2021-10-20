@@ -45,6 +45,16 @@ class ToggleLike {
             .children(".post-comment-stat")
             .children(".comment-unit")
             .html(likesCount);
+          $(self)
+            .closest(".post-stats")
+            .children(".post-stats-count")
+            .children(".post-stats-unit")
+            .html(likesCount);
+          $(self)
+            .closest(".popup-stats")
+            .children(".popup-stats-count")
+            .children(".popup-stats-unit")
+            .html(likesCount);
         })
         .fail(function (errData) {
           console.log("error in completing the request", err);

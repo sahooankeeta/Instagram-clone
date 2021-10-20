@@ -11,11 +11,13 @@ module.exports.home = async function (req, res) {
     //list of users of the logged in user follows
     let f = await Following.find({ user: req.user.id });
     f = f[0].following;
+
     //public account users
     let public = await User.find(
       { accountType: "public" },
       (err, publicUser) => publicUser._id
     );
+
     //feed will contains posts of public account users and those the user follows sorted according to time of creation
     let posts = await Post.find({
       $or: [
@@ -32,6 +34,7 @@ module.exports.home = async function (req, res) {
           path: "user",
         },
       });
+
     //gathering messages for chatcord
     let messages = await Message.find({}).sort("-createdAt");
     let users = await User.find({ _id: { $ne: req.user.id } });
@@ -44,27 +47,27 @@ module.exports.home = async function (req, res) {
           path: "user",
         },
       });
+
     //gathering follow requests
     let requests = await FollowRequest.find({ user: req.user.id });
     requests = requests[0].followRequests;
+
     //gathering atmax 4 users to suggest
     let suggestedUsers;
     if (requests.length == 0 && f.length == 0) {
       suggestedUsers = await User.find({
-        $and: [{ _id: { $ne: res.locals.user.id } }],
+        _id: { $ne: req.user.id },
       }).limit(4);
     } else if (requests.length == 0) {
       suggestedUsers = await User.find({
-        $and: [{ _id: { $ne: f } }, { _id: { $ne: res.locals.user.id } }],
+        $and: [{ _id: { $nin: f } }, { _id: { $ne: req.user._id } }],
       }).limit(4);
     } else {
       suggestedUsers = await User.find({
-        $and: [
-          { _id: { $ne: requests } },
-          { _id: { $ne: res.locals.user.id } },
-        ],
+        $and: [{ _id: { $nin: requests } }, { _id: { $ne: req.user.id } }],
       }).limit(4);
     }
+
     //rendering the home page
     return res.render("home", {
       title: "Insta | Home",
@@ -77,7 +80,6 @@ module.exports.home = async function (req, res) {
       requests: requests,
     });
   } catch (err) {
-    console.log("Error in home controller", err);
-    return;
+    return res.redirect("/users/sign-out");
   }
 };

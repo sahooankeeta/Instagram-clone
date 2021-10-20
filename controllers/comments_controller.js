@@ -25,7 +25,6 @@ module.exports.create = async function (req, res) {
           },
           (err, not) => {
             if (err) {
-              console.log("error in send like notification");
               return;
             }
           }
@@ -44,8 +43,7 @@ module.exports.create = async function (req, res) {
       res.redirect("back");
     }
   } catch (err) {
-    console.log("err in create comment", err);
-    return;
+    return res.redirect("back");
   }
 };
 
@@ -74,8 +72,7 @@ module.exports.destroy = async function (req, res) {
       return res.redirect("back");
     }
   } catch (err) {
-    console.log("err in destroy comment", err);
-    return;
+    return res.redirect("back");
   }
 };
 module.exports.toggleLike = async function (req, res) {
@@ -118,6 +115,6 @@ module.exports.toggleLike = async function (req, res) {
     });
   } catch (err) {
     console.log("err in like", err);
-    return;
+    return res.redirect("back");
   }
 };

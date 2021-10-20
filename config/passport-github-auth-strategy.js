@@ -1,20 +1,20 @@
 var passport = require("passport");
+const dotenv = require("dotenv");
 const crypto = require("crypto");
 const User = require("../models/user");
 const axios = require("axios");
-
+const path = require("path");
+dotenv.config({ path: path.join(__dirname, "./../config.env") });
 var session = require("express-session");
 var GitHubStrategy = require("passport-github2").Strategy;
 
-const GITHUB_CLIENT_ID = "90c60346cce71b5a28a7";
-const GITHUB_CLIENT_SECRET = "6709bbf218191255c4a6e57a153a86a1b0a3ccca";
 const GITHUB_CALLBACK_URL = "http://localhost:8000/users/auth/github/callback";
 //tell passport to use new strategy for github auth login
 passport.use(
   new GitHubStrategy(
     {
-      clientID: GITHUB_CLIENT_ID,
-      clientSecret: GITHUB_CLIENT_SECRET,
+      clientID: process.env.GITHUB_CLIENT_ID,
+      clientSecret: process.env.GITHUB_CLIENT_SECRET,
       callbackURL: GITHUB_CALLBACK_URL,
     },
     async function (accessToken, refreshToken, profile, done) {

@@ -50,15 +50,14 @@ module.exports.followRequest = async function (req, res) {
         (err, not) => {
           if (err) {
             console.log("err in send noti");
-            return;
+            return res.redirect("/");
           }
-          console.log("sent");
         }
       );
     } else {
       await Notification.findOneAndDelete(
-        { senderId: req.user.id },
-        { receiverId: req.params.id }
+        { sender: req.user.id },
+        { receiver: req.params.id }
       );
     }
     return res.status(200).json({
@@ -68,22 +67,20 @@ module.exports.followRequest = async function (req, res) {
       },
     });
   } catch (err) {
-    console.log("error in sending follow request", err);
-    return;
+    return res.redirect("/");
   }
 };
 module.exports.deleteRequest = async function (req, res) {
   try {
     let deleted = true;
+    const notification = await Notification.findById(req.params.id);
     await Notification.deleteOne({ _id: req.params.id }, (err, deleted) => {
       if (err) {
-        console.log("error in delete notification", err);
-        return;
+        return res.redirect("back");
       }
-      console.log("deleted notification");
     });
     const removeFollowRequest = await FollowRequest.updateOne(
-      { user: req.params.id },
+      { user: notification.sender },
       { $pull: { followRequests: req.user.id } }
     );
 
@@ -94,11 +91,6 @@ module.exports.deleteRequest = async function (req, res) {
       },
     });
   } catch (err) {
-    console.log("error in deleting follow request", err);
-    return;
+    return res.redirect("back");
   }
-};
-module.exports.likeNotification = async function (req, res) {
-  try {
-  } catch (err) {}
 };

@@ -8,7 +8,7 @@ dotenv.config({ path: path.join(__dirname, "./../config.env") });
 var session = require("express-session");
 var GitHubStrategy = require("passport-github2").Strategy;
 
-const GITHUB_CALLBACK_URL = "http://localhost:8000/users/auth/github/callback";
+const GITHUB_CALLBACK_URL = process.env.GITHUB_CALLBACK;
 //tell passport to use new strategy for github auth login
 passport.use(
   new GitHubStrategy(

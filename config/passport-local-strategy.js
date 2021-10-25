@@ -20,10 +20,9 @@ passport.use(
             return done(err);
           }
           //check password
-          let passwordCheck = await user.correctPassword(
-            password,
-            user.password
-          );
+          let passwordCheck;
+          if (user)
+            passwordCheck = await user.correctPassword(password, user.password);
           //if user not found or password not matched
           if (!user || !passwordCheck) {
             req.flash("error", "INVALID USERNAME / PASSWORD");

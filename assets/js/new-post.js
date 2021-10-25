@@ -1,4 +1,4 @@
-console.log("runnung");
+//console.log("runnung");
 const forgotPassword = document.querySelector(".forgot-password");
 const search = document.querySelector(".header-search");
 

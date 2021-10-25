@@ -11,16 +11,16 @@ class ToggleLike {
       // console.log(e);
       e.preventDefault();
       let self = this;
-      console.log("preventing default");
+      // console.log("preventing default");
 
       $.ajax({
         type: "POST",
         url: $(self).attr("href"),
       })
         .done(function (data) {
-          console.log(data);
+          //console.log(data);
           let likesCount = parseInt($(self).attr("data-likes"));
-          console.log(likesCount);
+          //console.log(likesCount);
           if (data.data.deleted == true) {
             likesCount -= 1;
 
@@ -57,7 +57,7 @@ class ToggleLike {
             .html(likesCount);
         })
         .fail(function (errData) {
-          console.log("error in completing the request", err);
+          //console.log("error in completing the request", err);
           return res.redirect("back");
         });
     });

@@ -22,7 +22,7 @@ passport.use(
         user
       ) {
         if (err) {
-          console.log("eoor is strategr");
+          // console.log("eoor is strategr");
           return;
         }
 
@@ -39,7 +39,7 @@ passport.use(
             },
             function (err, user) {
               if (err) {
-                console.log("error in strategy", err);
+                //console.log("error in strategy", err);
                 return;
               }
               //if new user created send confirmation mail
@@ -52,7 +52,7 @@ passport.use(
                 },
                 (err, info) => {
                   if (err) {
-                    console.log("err in sending mail", err);
+                    //console.log("err in sending mail", err);
                     return;
                   }
 

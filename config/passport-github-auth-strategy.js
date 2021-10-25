@@ -42,7 +42,7 @@ passport.use(
           },
           function (err, user) {
             if (err) {
-              console.log("error in strategy", err);
+              //console.log("error in strategy", err);
               return;
             }
             return done(null, user);

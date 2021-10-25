@@ -49,7 +49,7 @@ module.exports.followRequest = async function (req, res) {
         },
         (err, not) => {
           if (err) {
-            console.log("err in send noti");
+            //console.log("err in send noti");
             return res.redirect("/");
           }
         }

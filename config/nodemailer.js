@@ -20,7 +20,7 @@ let renderTemplate = (data, relativePath) => {
     data,
     function (err, template) {
       if (err) {
-        console.log("err in nodemailer", err);
+        //console.log("err in nodemailer", err);
         return;
       }
       mailHTML = template;

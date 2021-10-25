@@ -18,7 +18,7 @@ const passportGithub = require("./config/passport-github-auth-strategy");
 const chatServer = http.Server(app);
 const chatSockets = require("./config/chat_sockets").chatSockets(chatServer);
 chatServer.listen(5000);
-console.log("chat running on 5000");
+//console.log("chat running on 5000");
 dotenv.config({ path: "./config.env" });
 const DB = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
 const flash = require("connect-flash");

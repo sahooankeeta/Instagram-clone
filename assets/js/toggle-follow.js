@@ -8,7 +8,7 @@ class ToggleFollow {
     $(this.toggler).click(function (e) {
       e.preventDefault();
       let self = this;
-      console.log("preventing default");
+      //console.log("preventing default");
 
       $.ajax({
         type: "POST",
@@ -24,9 +24,10 @@ class ToggleFollow {
             followersCount += 1;
 
             if ($(self).html() == "confirm") {
-              console.log("here");
               $(self)
-                .closest(".notification-item").children(".notification-content").children(".notification-text")
+                .closest(".notification-item")
+                .children(".notification-content")
+                .children(".notification-text")
                 .html("has started following you");
               $(self).closest(".notification-info").remove();
             } else $(self).html("unfollow");
@@ -42,7 +43,7 @@ class ToggleFollow {
           }
         })
         .fail(function (errData) {
-          console.log("error in completing the request");
+          //console.log("error in completing the request");
         });
     });
   }

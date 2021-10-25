@@ -8,7 +8,7 @@ class DeleteRequest {
     $(this.toggler).click(function (e) {
       e.preventDefault();
       let self = this;
-      console.log("preventing default");
+      //console.log("preventing default");
 
       $.ajax({
         type: "POST",
@@ -20,7 +20,7 @@ class DeleteRequest {
           }
         })
         .fail(function (errData) {
-          console.log("error in deleting notification");
+          //console.log("error in deleting notification");
         });
     });
   }

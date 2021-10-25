@@ -8,7 +8,7 @@ class ToggleRequest {
     $(this.toggler).click(function (e) {
       e.preventDefault();
       let self = this;
-      console.log("preventing default");
+      //console.log("preventing default");
 
       $.ajax({
         type: "POST",
@@ -22,7 +22,7 @@ class ToggleRequest {
           }
         })
         .fail(function (errData) {
-          console.log("error in completing the request");
+          //console.log("error in completing the request");
         });
     });
   }

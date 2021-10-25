@@ -11,7 +11,7 @@ const fs = require("fs");
 module.exports.create = function (req, res) {
   Post.uploadedAvatar(req, res, async function (err) {
     if (err) {
-      console.log("err in multer--");
+      //console.log("err in multer--");
     }
     try {
       let post = await Post.create({
@@ -29,7 +29,7 @@ module.exports.create = function (req, res) {
       return res.redirect("/");
     } catch (err) {
       req.flash("error", "Error in creating post");
-      console.log("err in creating post", err);
+      //console.log("err in creating post", err);
       return res.redirect("/");
     }
   });
@@ -45,7 +45,7 @@ module.exports.destroy = async function (req, res) {
         const p = path.join(__dirname, "..", i);
         fs.unlink(p, (err) => {
           if (err) {
-            console.log("err in removing file");
+            //console.log("err in removing file");
             return res.redirect("back");
           }
         });
@@ -128,6 +128,7 @@ module.exports.toggleLike = async function (req, res) {
         {
           sender: req.user.id,
           receiver: post.user._id,
+          notificationInfo: post.image[0],
           notificationType: "like",
         },
         (err, not) => {

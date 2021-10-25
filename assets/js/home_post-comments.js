@@ -50,7 +50,7 @@ class PostComments {
           }).show();
         },
         error: function (error) {
-          console.log(error);
+          // console.log(error);
         },
       });
     });
@@ -120,7 +120,7 @@ class PostComments {
           }).show();
         },
         error: function (error) {
-          console.log(error.responseText);
+          //console.log(error.responseText);
         },
       });
     });

@@ -57,6 +57,21 @@ module.exports.destroy = async function (req, res) {
         $pull: { comments: req.params.id },
       });
 
+      await Notification.findOneAndDelete(
+        {
+          sender: req.user.id,
+          receiver: post.user._id,
+          notificationInfo: post.image[0],
+          notificationType: "comment",
+        },
+        (err) => {
+          if (err) {
+            //console.log("error in deletee");
+            return;
+          }
+          // console.log("deleted");
+        }
+      );
       if (req.xhr) {
         return res.status(200).json({
           data: {
@@ -106,7 +121,7 @@ module.exports.toggleLike = async function (req, res) {
           .send({ error: "Could not vote on the comment." });
       }
     }
-    console.log("comment");
+    //console.log("comment");
     return res.status(200).json({
       message: "request succesful",
       data: {
@@ -114,7 +129,7 @@ module.exports.toggleLike = async function (req, res) {
       },
     });
   } catch (err) {
-    console.log("err in like", err);
+    //console.log("err in like", err);
     return res.redirect("back");
   }
 };

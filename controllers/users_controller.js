@@ -47,7 +47,7 @@ module.exports.profile = async function (req, res) {
       return res.redirect("/users/sign-out");
     }
   } catch (err) {
-    console.log("error in user profile", err);
+    //console.log("error in user profile", err);
     return res.redirect("/");
   }
 };
@@ -78,7 +78,7 @@ module.exports.viewUpdate = async function (req, res) {
       return res.redirect("/users/profile/" + req.params.id);
     }
   } catch (err) {
-    console.log("err in viewupdate", err);
+    //console.log("err in viewupdate", err);
     return;
   }
 };
@@ -89,7 +89,7 @@ module.exports.update = async function (req, res) {
       let user = await User.findById(req.params.id);
       User.uploadedAvatar(req, res, function (err) {
         if (err) {
-          console.log("multer err");
+          //console.log("multer err");
         }
 
         user.name = req.body.name;
@@ -102,10 +102,10 @@ module.exports.update = async function (req, res) {
             const p = path.join(__dirname, "..", user.avatar);
             fs.unlink(p, (err) => {
               if (err) {
-                console.log("err in removing file");
+                //console.log("err in removing file");
                 return;
               }
-              console.log("removed pre file");
+              //console.log("removed pre file");
             });
           }
           user.avatar = path.join(
@@ -132,10 +132,10 @@ module.exports.removeProfileImage = async function (req, res) {
       const p = path.join(__dirname, "..", user.avatar);
       fs.unlink(p, (err) => {
         if (err) {
-          console.log("err in removing file");
+          //console.log("err in removing file");
           return;
         }
-        console.log("removed pre file");
+        //console.log("removed pre file");
       });
     }
     user.avatar = "/uploads/users/avatars/default-user.jpg";
@@ -143,7 +143,7 @@ module.exports.removeProfileImage = async function (req, res) {
     return res.redirect(`/users/profile/${req.user.id}`);
   } catch (err) {
     if (err) {
-      console.log("err in delete profile image");
+      //console.log("err in delete profile image");
       return;
     }
   }
@@ -184,8 +184,8 @@ module.exports.destroy = async function (req, res) {
       const p = path.join(__dirname, "..", user.avatar);
       fs.unlink(p, (err) => {
         if (err) {
-          console.log("err in removing user profile");
-          return;
+          //console.log("err in removing user profile");
+          return res.redirect("/");
         }
       });
     }
@@ -197,7 +197,7 @@ module.exports.destroy = async function (req, res) {
           const postimage = path.join(__dirname, "..", i);
           fs.unlink(postimage, (err) => {
             if (err) {
-              console.log("err in removing post image");
+              //console.log("err in removing post image");
               return res.redirect("back");
             }
           });
@@ -215,8 +215,8 @@ module.exports.destroy = async function (req, res) {
     req.flash("success", "Your account has been deactivated");
     return res.redirect("/");
   } catch (err) {
-    console.log("err in destroy user", err);
-    return;
+    //console.log("err in destroy user", err);
+    return res.redirect("/");
   }
 };
 //render password reset form with token
@@ -241,12 +241,12 @@ module.exports.create = function (req, res) {
     return res.redirect("back");
   User.findOne({ email: req.body.email }, function (err, user) {
     if (err) {
-      console.log(" sign up err");
-      return;
+      //console.log(" sign up err");
+      return res.redirect("back");
     }
     if (!user) {
       if (req.body.password.length < 6) {
-        console.log("here");
+        //console.log("here");
         req.flash("error", "Password criteria not fulfilled.");
 
         return res.redirect("back");
@@ -260,7 +260,7 @@ module.exports.create = function (req, res) {
         },
         function (err, user) {
           if (err) return;
-          console.log("user created");
+          //console.log("user created");
         }
       );
       //send mail confirming user account
@@ -273,7 +273,7 @@ module.exports.create = function (req, res) {
         },
         (err, info) => {
           if (err) {
-            console.log("err in sending mail", err);
+            //console.log("err in sending mail", err);
             return;
           }
           // console.log("email sent", info);
@@ -342,7 +342,7 @@ module.exports.follow = async function (req, res) {
         { sender: user, receiver: userId, notificationType: "follow" },
         (err) => {
           if (err) {
-            console.log("error in deletee");
+            //console.log("error in deletee");
             return;
           }
           //console.log("deleted");
@@ -372,7 +372,7 @@ module.exports.follow = async function (req, res) {
         { sender: user, receiver: userId, notificationType: "followRequest" },
         (err) => {
           if (err) {
-            console.log("error in deletee");
+            //console.log("error in deletee");
             return;
           }
           //console.log("deleted");
@@ -388,7 +388,7 @@ module.exports.follow = async function (req, res) {
         },
         (err, not) => {
           if (err) {
-            console.log("err in send noti");
+            //console.log("err in send noti");
             return;
           }
           //console.log("created");
@@ -415,7 +415,7 @@ module.exports.follow = async function (req, res) {
       },
     });
   } catch (err) {
-    console.log("err in follow", err);
+    //console.log("err in follow", err);
     return;
   }
 };
@@ -441,7 +441,7 @@ module.exports.forgotPassword = async (req, res) => {
       (err, info) => {
         if (err) {
           req.flash("could not send email,try again");
-          console.log("err in sending mail", err);
+          //console.log("err in sending mail", err);
           return;
         }
         req.flash("success", "email sent for reset password");

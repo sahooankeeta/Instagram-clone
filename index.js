@@ -70,7 +70,7 @@ app.use(customMware.setFlash);
 app.use("/", require("./routes"));
 //for all unhandled routes
 app.all("*", (req, res, next) => res.redirect("/sign-out"));
-server.listen(port, function (err) {
+server.listen(process.env.PORT || port, function (err) {
   if (err) console.log("error in server");
   console.log(`server running on ${port}`);
 });

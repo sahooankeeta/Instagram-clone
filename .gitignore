@@ -1,3 +1,7 @@
 node_modules/
 config.env
 package-lock.json
+uploads/posts/avatars/*
+uploads/users/avatars/*
+!uploads/posts/avatars/.gitkeep
+!uploads/users/avatars/.gitkeep

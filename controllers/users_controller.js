@@ -8,6 +8,8 @@ const Following = require("../models/following");
 const FollowRequest = require("../models/follow-requests");
 const Notification = require("../models/notification");
 const path = require("path");
+const dotenv = require("dotenv");
+dotenv.config({ path: path.join(__dirname, "./../config.env") });
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 
@@ -394,15 +396,7 @@ module.exports.follow = async function (req, res) {
           //console.log("created");
         }
       );
-      // not.notificationMsg = "has started following you";
-      // not.notificationType = "follow";
-      // await not.save();
-      // console.log(not)
-      // await Notification.findOneAndUpdate(
-      //{senderId: user },
-      //   { receiverId: userId },
-      //   { $set: { notificationMsg: "has started following you" } }
-      // );
+
       const removeRequest = await FollowRequest.updateOne(
         { user: user },
         { $pull: { followRequests: userId } }
@@ -436,7 +430,7 @@ module.exports.forgotPassword = async (req, res) => {
         from: "noreply@hello.com",
         to: user.email,
         subject: "Welcome TO Instagram-Clone",
-        html: `<p>password reset link</p><a href="http://localhost:8000/users/resetpasswordform/${token}">click here</a>`,
+        html: `<p>password reset link</p><a href="${process.env.APP_BASE_URL}/users/resetpasswordform/${token}">click here</a>`,
       },
       (err, info) => {
         if (err) {

@@ -8,6 +8,8 @@ const Following = require("../models/following");
 const FollowRequest = require("../models/follow-requests");
 const Notification = require("../models/notification");
 const path = require("path");
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../utils/multer");
 const dotenv = require("dotenv");
 dotenv.config({ path: path.join(__dirname, "./../config.env") });
 const fs = require("fs");
@@ -89,35 +91,24 @@ module.exports.update = async function (req, res) {
   if (req.user.id == req.params.id) {
     try {
       let user = await User.findById(req.params.id);
-      User.uploadedAvatar(req, res, function (err) {
-        if (err) {
-          //console.log("multer err");
-        }
+      user.name = req.body.name;
 
-        user.name = req.body.name;
-
-        user.username = req.body.username.replace(/ /g, "");
-        user.bio = req.body.bio;
-        user.accountType = req.body.accountType;
-        if (req.file) {
-          if (user.avatar.indexOf("default") == -1) {
-            const p = path.join(__dirname, "..", user.avatar);
-            fs.unlink(p, (err) => {
-              if (err) {
-                //console.log("err in removing file");
-                return;
-              }
-              //console.log("removed pre file");
-            });
-          }
-          user.avatar = path.join(
-            "/uploads/users/avatars/" + req.file.filename
-          );
+      user.username = req.body.username.replace(/ /g, "");
+      user.bio = req.body.bio;
+      user.accountType = req.body.accountType;
+      if (req.file) {
+        if (user.avatar_id) {
+          await cloudinary.uploader.destroy(user.avatar_id);
         }
-        user.save();
-        req.flash("success", "Profile updated successfully");
-        return res.redirect("/users/profile/" + req.user.id);
-      });
+        let response = await cloudinary.uploader.upload(req.file.path);
+
+        user.avatar = response.secure_url;
+        user.avatar_id = response.public_id;
+        fs.unlinkSync(req.file.path);
+      }
+      user.save();
+      req.flash("success", "Profile updated successfully");
+      return res.redirect("/users/profile/" + req.user.id);
     } catch (err) {
       req.flash("error", "Sorry could not update profile");
       return res.redirect("/users/profile/" + req.user.id);
@@ -131,16 +122,10 @@ module.exports.removeProfileImage = async function (req, res) {
   try {
     let user = await User.findById(req.user.id);
     if (user.avatar.indexOf("default") == -1) {
-      const p = path.join(__dirname, "..", user.avatar);
-      fs.unlink(p, (err) => {
-        if (err) {
-          //console.log("err in removing file");
-          return;
-        }
-        //console.log("removed pre file");
-      });
+      await cloudinary.uploader.destroy(user.avatar_id);
     }
     user.avatar = "/uploads/users/avatars/default-user.jpg";
+    user.avatar_id = "";
     user.save();
     return res.redirect(`/users/profile/${req.user.id}`);
   } catch (err) {
@@ -192,18 +177,12 @@ module.exports.destroy = async function (req, res) {
       });
     }
 
-    await Post.find({ user: req.user.id }, (err, posts) => {
+    await Post.find({ user: req.user.id }, async (err, posts) => {
       if (err) return;
-      posts.map((post) => {
-        post.image.map((i) => {
-          const postimage = path.join(__dirname, "..", i);
-          fs.unlink(postimage, (err) => {
-            if (err) {
-              //console.log("err in removing post image");
-              return res.redirect("back");
-            }
-          });
-        });
+      posts.map(async (post) => {
+        for (image of post.images) {
+          await cloudinary.uploader.destroy(image.imgId);
+        }
       });
     });
 

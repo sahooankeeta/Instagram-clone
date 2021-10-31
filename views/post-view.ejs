@@ -14,11 +14,11 @@
     </a>
     <div class="post-popup-image-content">
       <div class="single-item">
-        <%for(image in post_view.image){%>
+        <%for(image in post_view.images){%>
         <div class="slide">
           <img
             class="post-popup-image"
-            src="<%=post_view.image[image]%>"
+            src="<%=post_view.images[image].imgUrl%>"
             alt="Postimage"
           />
         </div>

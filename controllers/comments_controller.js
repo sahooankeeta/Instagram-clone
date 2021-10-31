@@ -20,7 +20,7 @@ module.exports.create = async function (req, res) {
             sender: req.user.id,
             receiver: post.user._id,
             notificationMsg: "has commented your post",
-            notificationInfo: post.image[0],
+            notificationInfo: post.images[0].imgUrl,
             notificationType: "comment",
           },
           (err, not) => {
@@ -61,7 +61,7 @@ module.exports.destroy = async function (req, res) {
         {
           sender: req.user.id,
           receiver: post.user._id,
-          notificationInfo: post.image[0],
+          notificationInfo: post.images[0].imgUrl,
           notificationType: "comment",
         },
         (err) => {

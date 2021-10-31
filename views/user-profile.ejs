@@ -86,10 +86,10 @@
     <%}else{%> <%for (post of posts){%>
     <a class="profile-image-block" href="/posts/view/<%=post.id%>">
       <figure class="preview">
-        <%if(post.image.length>1){%>
-        <div class="preview-multiple">+<%=post.image.length-1%></div>
+        <%if(post.images.length>1){%>
+        <div class="preview-multiple">+<%=post.images.length-1%></div>
         <%}%>
-        <img class="preview-image" src="<%=post.image[0]%>" />
+        <img class="preview-image" src="<%=post.images[0].imgUrl%>" />
         <div class="preview-overlay">
           <div class="preview-overlay-content">
             <div class="preview-overlay-item">

@@ -4,35 +4,37 @@ const Comment = require("../models/comment");
 const Notification = require("../models/notification");
 const Followers = require("../models/followers");
 const Following = require("../models/following");
+const dotenv = require("dotenv");
 const path = require("path");
+const cloudinary = require("../utils/cloudinary");
+const upload = require("../utils/multer");
 const fs = require("fs");
 
 //create a new post
-module.exports.create = function (req, res) {
-  Post.uploadedAvatar(req, res, async function (err) {
-    if (err) {
-      //console.log("err in multer--");
+module.exports.create = async function (req, res) {
+  try {
+    let urls = [];
+
+    for (const file of req.files) {
+      let response = await cloudinary.uploader.upload(file.path);
+      urls.push({ imgId: response.public_id, imgUrl: response.secure_url });
+      fs.unlinkSync(file.path);
     }
-    try {
+    if (urls) {
       let post = await Post.create({
         caption: req.body.caption,
         user: req.user._id,
+        images: urls,
       });
-
-      req.files.forEach((file) =>
-        post.image.push(path.join("/uploads/posts/avatars/" + file.filename))
-      );
-      post.save();
-
-      req.flash("success", "New Post Created !!");
-      //return;
-      return res.redirect("/");
-    } catch (err) {
-      req.flash("error", "Error in creating post");
-      //console.log("err in creating post", err);
-      return res.redirect("/");
     }
-  });
+    req.flash("success", "New Post Created !!");
+    //return;
+    return res.redirect("/");
+  } catch (err) {
+    req.flash("error", "Error in creating post");
+    console.log("err in creating post", err);
+    return res.redirect("/");
+  }
 };
 //delete a post
 module.exports.destroy = async function (req, res) {
@@ -41,16 +43,9 @@ module.exports.destroy = async function (req, res) {
     let post = await Post.findById(req.params.id);
     //remove post image
     if (post.user == req.user.id) {
-      post.image.map((i) => {
-        const p = path.join(__dirname, "..", i);
-        fs.unlink(p, (err) => {
-          if (err) {
-            //console.log("err in removing file");
-            return res.redirect("back");
-          }
-        });
-      });
-
+      for (image of post.images) {
+        await cloudinary.uploader.destroy(image.imgId);
+      }
       post.remove();
       //delete associated comments of post
       await Comment.deleteMany({ post: req.params.id });
@@ -111,7 +106,7 @@ module.exports.toggleLike = async function (req, res) {
             sender: req.user.id,
             receiver: post.user._id,
             notificationMsg: "has liked your post",
-            notificationInfo: post.image[0],
+            notificationInfo: post.images[0].imgUrl,
             notificationType: "like",
           },
           (err, not) => {
@@ -128,7 +123,7 @@ module.exports.toggleLike = async function (req, res) {
         {
           sender: req.user.id,
           receiver: post.user._id,
-          notificationInfo: post.image[0],
+          notificationInfo: post.images[0].imgUrl,
           notificationType: "like",
         },
         (err, not) => {

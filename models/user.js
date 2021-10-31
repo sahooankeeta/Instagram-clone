@@ -23,7 +23,6 @@ const UserSchema = new mongoose.Schema(
     },
     username: {
       type: String,
-
       lowercase: true,
       unique: true,
       default: this.name,
@@ -45,6 +44,10 @@ const UserSchema = new mongoose.Schema(
       type: String,
       default: path.join("/uploads/users/avatars/", "default-user.jpg"),
     },
+    avatar_id: {
+      type: String,
+      default: "",
+    },
     bio: {
       type: String,
     },
@@ -54,18 +57,6 @@ const UserSchema = new mongoose.Schema(
     timestamps: true,
   }
 );
-let storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, path.join(__dirname, "..", AVATAR_PATH));
-  },
-  filename: function (req, file, cb) {
-    cb(null, file.fieldname + "-" + Date.now());
-  },
-});
-UserSchema.statics.uploadedAvatar = multer({ storage: storage }).single(
-  "avatar"
-);
-UserSchema.statics.avatarPath = AVATAR_PATH;
 
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();

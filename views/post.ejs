@@ -18,9 +18,13 @@
   </div>
   <div class="post-image-content">
     <div class="single-item">
-      <%for(image in post.image){%>
+      <%for(image in post.images){%>
       <div class="slide">
-        <img class="post-image" src="<%=post.image[image]%>" alt="Postimage" />
+        <img
+          class="post-image"
+          src="<%=post.images[image].imgUrl%>"
+          alt="Postimage"
+        />
       </div>
       <%}%>
     </div>

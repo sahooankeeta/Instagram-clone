@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const passport = require("passport");
 const userscontroller = require("./../controllers/users_controller");
-
+const upload = require("./../utils/multer");
 router.get(
   "/profile/:id",
   passport.checkAuthentication,
@@ -20,6 +20,7 @@ router.get("/resetpasswordform/:token", userscontroller.passwordresetform);
 router.post(
   "/update/:id",
   passport.checkAuthentication,
+  upload.single("avatar"),
   userscontroller.update
 );
 router.post("/follow", userscontroller.follow);

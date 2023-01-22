@@ -1,6 +1,6 @@
 const http = require("http");
 const express = require("express");
-
+const path=require("path");
 const cookieParser = require("cookie-parser");
 const dotenv = require("dotenv");
 const app = express();
@@ -22,7 +22,7 @@ chatServer.listen(5000);
 dotenv.config({ path: "./config.env" });
 const DB = process.env.DATABASE.replace("<password>", process.env.PASSWORD);
 const flash = require("connect-flash");
-const customMware = require("./config/middleware");
+const customMware = require(path.join(__dirname,"/config/middleware"));
 
 mongoose
   .connect(DB, {
@@ -42,7 +42,7 @@ app.use(expressLayouts);
 app.use("/uploads", express.static(__dirname + "/uploads"));
 
 app.set("view engine", "ejs");
-app.set("views", "./views");
+app.set("views",path.join(__dirname, "/views"));
 
 app.use(
   session({

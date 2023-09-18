@@ -4,7 +4,7 @@ const crypto = require("crypto");
 const User = require("../models/user");
 const axios = require("axios");
 const path = require("path");
-dotenv.config({ path: path.join(__dirname, "./../config.env") });
+dotenv.config();
 var session = require("express-session");
 var GitHubStrategy = require("passport-github2").Strategy;
 

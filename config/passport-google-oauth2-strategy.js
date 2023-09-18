@@ -1,7 +1,7 @@
 const passport = require("passport");
 const dotenv = require("dotenv");
 const path = require("path");
-dotenv.config({ path: path.join(__dirname, "./../config.env") });
+dotenv.config();
 const googleStrategy = require("passport-google-oauth").OAuth2Strategy;
 const crypto = require("crypto");
 const User = require("../models/user");

@@ -1,4 +1,5 @@
 # Instagram-clone
+
 <h2>Login Page</h2>
 <a href="https://drive.google.com/uc?export=view&id=1yFrw78AaFZykQn75O9rIbk3bdS6Z9zVE"><img src="https://drive.google.com/uc?export=view&id=1yFrw78AaFZykQn75O9rIbk3bdS6Z9zVE"  />
  
@@ -28,7 +29,7 @@
    <ul>
     <li>Redirect into Instagram-clone folder using <br><strong>$cd Instagram-clone</strong></li>
     <li>Install npm dependencies using <strong>$ npm install</strong> in the current directory</li>
-    <li>Create a config.env file in the current directory with these data<br>
+    <li>Create a .env file in the current directory with these data<br>
      <div>
       NODE_ENV=development<br>
       PORT=8000<br>

@@ -11,7 +11,7 @@ const path = require("path");
 const cloudinary = require("../utils/cloudinary");
 const upload = require("../utils/multer");
 const dotenv = require("dotenv");
-dotenv.config({ path: path.join(__dirname, "./../config.env") });
+dotenv.config();
 const fs = require("fs");
 const jwt = require("jsonwebtoken");
 
